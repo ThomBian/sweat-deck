@@ -52,6 +52,36 @@ export const tDifficulty = (d: Difficulty): string => {
   }
 };
 
+export const tDifficultyDescription = (d: Difficulty): string => {
+  switch (d) {
+    case 'beginner':
+      return t`A forgiving spread—plenty of low reps to build the habit.`;
+    case 'intermediate':
+      return t`The balanced lane—enough work to feel it, not enough to drown.`;
+    case 'hard':
+      return t`More volume, fewer breathers. Expect 6s, 7s, 8s as your normal.`;
+    case 'advanced':
+      return t`The bell curve slides high—8s, 9s, 10s are the new normal.`;
+    case 'hell':
+      return t`Nines and tens dominate. A low card is a gift from the deck.`;
+  }
+};
+
+export const tDifficultyRepHint = (d: Difficulty): string => {
+  switch (d) {
+    case 'beginner':
+      return t`Most: 2–4 · Rare: 9–10`;
+    case 'intermediate':
+      return t`Most: 4–6 · Rare: 2 or 10`;
+    case 'hard':
+      return t`Most: 6–8 · Rare: 2–3`;
+    case 'advanced':
+      return t`Most: 8–10 · Rare: 2–3`;
+    case 'hell':
+      return t`Most: 9–10 · Rare: 2`;
+  }
+};
+
 export const tSuit = (s: Suit): string => {
   switch (s) {
     case 'hearts':

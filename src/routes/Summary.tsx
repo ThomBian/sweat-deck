@@ -6,7 +6,8 @@ import { Button } from '@/components/ui/button';
 import { DURATION, EASE_OUT } from '@/lib/motion';
 import { MAIN_PAD } from '@/lib/layout';
 import { tSummaryKudoFor } from '@/lib/summaryKudos';
-import { DIFFICULTY_META, DIFFICULTY_TONE_PILL } from '@/domain/difficultyMeta';
+import { DIFFICULTY_TONE, DIFFICULTY_TONE_PILL } from '@/domain/difficultyMeta';
+import { tDifficulty, tDifficultyDescription } from '@/i18n/labels';
 import { getLimitSecFromConfig } from '@/lib/sessionTimer';
 import { cn } from '@/lib/utils';
 
@@ -27,7 +28,7 @@ export default function Summary() {
     completedDeck,
     endedInOvertime,
   });
-  const dMeta = DIFFICULTY_META[config.difficulty];
+  const diffTone = DIFFICULTY_TONE[config.difficulty];
 
   const tMotion = reduceMotion ? 0.1 : 0.28;
   const statY = reduceMotion ? 0 : 6;
@@ -51,11 +52,15 @@ export default function Summary() {
       <p
         className={cn(
           'max-w-sm rounded-lg border px-3 py-2 text-center text-sm',
-          DIFFICULTY_TONE_PILL[dMeta.tone],
+          DIFFICULTY_TONE_PILL[diffTone],
         )}
       >
-        <span className="font-display font-semibold text-foreground">{dMeta.label}</span>
-        <span className="mt-1 block text-muted-foreground">{dMeta.description}</span>
+        <span className="font-display font-semibold text-foreground">
+          {tDifficulty(config.difficulty)}
+        </span>
+        <span className="mt-1 block text-muted-foreground">
+          {tDifficultyDescription(config.difficulty)}
+        </span>
       </p>
       <dl className="grid w-full max-w-sm grid-cols-2 gap-x-6 gap-y-4 text-center">
         <motion.div

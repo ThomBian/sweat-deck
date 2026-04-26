@@ -54,6 +54,10 @@ msgstr "500m SkiErg Sprint"
 msgid "A cap ends the run at time; no limit means you play the stack."
 msgstr "A cap ends the run at time; no limit means you play the stack."
 
+#: src/i18n/labels.ts
+msgid "A forgiving spread—plenty of low reps to build the habit."
+msgstr "A forgiving spread—plenty of low reps to build the habit."
+
 #: src/i18n/LocaleEffect.tsx
 msgid "A gamified card-driven workout. Draw, move, repeat—one deck, no program builder."
 msgstr "A gamified card-driven workout. Draw, move, repeat—one deck, no program builder."
@@ -106,6 +110,10 @@ msgstr "Bodyweight"
 msgid "Bodyweight Rows"
 msgstr "Bodyweight Rows"
 
+#: src/components/Timer.tsx
+msgid "Bonus round — past the timer"
+msgstr "Bonus round — past the timer"
+
 #: src/i18n/exercises.ts
 msgid "Broad Jumps"
 msgstr "Broad Jumps"
@@ -129,6 +137,10 @@ msgstr "Calf Raises"
 #: src/routes/Summary.tsx
 msgid "Cards drawn"
 msgstr "Cards drawn"
+
+#: src/routes/Play.tsx
+msgid "Close"
+msgstr "Close"
 
 #: src/i18n/labels.ts
 msgid "Clubs"
@@ -211,8 +223,8 @@ msgid "Elapsed"
 msgstr "Elapsed"
 
 #: src/components/Timer.tsx
-msgid "Elapsed session time"
-msgstr "Elapsed session time"
+#~ msgid "Elapsed session time"
+#~ msgstr "Elapsed session time"
 
 #: src/routes/Onboarding.tsx
 msgid "Face cards are fixed high-intensity challenges."
@@ -350,13 +362,41 @@ msgstr "Man-Makers"
 msgid "Max-Effort Leg Burnout"
 msgstr "Max-Effort Leg Burnout"
 
+#: src/i18n/labels.ts
+msgid "More volume, fewer breathers. Expect 6s, 7s, 8s as your normal."
+msgstr "More volume, fewer breathers. Expect 6s, 7s, 8s as your normal."
+
+#: src/i18n/labels.ts
+msgid "Most: 2–4 · Rare: 9–10"
+msgstr "Most: 2–4 · Rare: 9–10"
+
+#: src/i18n/labels.ts
+msgid "Most: 4–6 · Rare: 2 or 10"
+msgstr "Most: 4–6 · Rare: 2 or 10"
+
+#: src/i18n/labels.ts
+msgid "Most: 6–8 · Rare: 2–3"
+msgstr "Most: 6–8 · Rare: 2–3"
+
+#: src/i18n/labels.ts
+msgid "Most: 8–10 · Rare: 2–3"
+msgstr "Most: 8–10 · Rare: 2–3"
+
+#: src/i18n/labels.ts
+msgid "Most: 9–10 · Rare: 2"
+msgstr "Most: 9–10 · Rare: 2"
+
 #: src/components/SetupWizard.tsx
 msgid "Next"
 msgstr "Next"
 
 #: src/routes/Summary.tsx
-msgid "Nice work"
-msgstr "Nice work"
+#~ msgid "Nice work"
+#~ msgstr "Nice work"
+
+#: src/i18n/labels.ts
+msgid "Nines and tens dominate. A low card is a gift from the deck."
+msgstr "Nines and tens dominate. A low card is a gift from the deck."
 
 #: src/components/Deck.tsx
 msgid "No cards left in the deck"
@@ -389,6 +429,14 @@ msgstr "Overhead Press"
 #: src/routes/History.tsx
 msgid "Past sessions will land here."
 msgstr "Past sessions will land here."
+
+#: src/routes/Play.tsx
+msgid "Pause"
+msgstr "Pause"
+
+#: src/routes/Play.tsx
+msgid "Paused"
+msgstr "Paused"
 
 #: src/components/setup/TrainingIntroStep.tsx
 msgid "Pick your level, gear, and focus—then you'll shuffle in and draw the deck."
@@ -431,8 +479,16 @@ msgid "Replay tutorial"
 msgstr "Replay tutorial"
 
 #: src/routes/Summary.tsx
-msgid "Respect—deck served"
-msgstr "Respect—deck served"
+#~ msgid "Respect—deck served"
+#~ msgstr "Respect—deck served"
+
+#: src/lib/summaryKudos.ts
+msgid "Respect. Work logged."
+msgstr "Respect. Work logged."
+
+#: src/routes/Play.tsx
+msgid "Resume"
+msgstr "Resume"
 
 #: src/i18n/exercises.ts
 msgid "Romanian Deadlifts"
@@ -451,9 +507,21 @@ msgstr "Rules haven't changed—here's the quick refresher."
 msgid "Saving…"
 msgstr "Saving…"
 
+#: src/components/Timer.tsx
+msgid "Session elapsed"
+msgstr "Session elapsed"
+
 #: src/routes/Summary.tsx
-msgid "Session in the books"
-msgstr "Session in the books"
+#~ msgid "Session in the books"
+#~ msgstr "Session in the books"
+
+#: src/lib/summaryKudos.ts
+msgid "Session in the books—on your own terms."
+msgstr "Session in the books—on your own terms."
+
+#: src/components/Timer.tsx
+msgid "Session time"
+msgstr "Session time"
 
 #: src/i18n/exercises.ts
 msgid "Shoulder Press"
@@ -495,6 +563,10 @@ msgstr "Standing Calf Raises"
 msgid "Start a new training"
 msgstr "Start a new training"
 
+#: src/lib/summaryKudos.ts
+msgid "Start somewhere—you started today."
+msgstr "Start somewhere—you started today."
+
 #. placeholder {0}: step + 1
 #. placeholder {1}: steps.length
 #: src/components/SetupWizard.tsx
@@ -509,6 +581,10 @@ msgstr "Sweat Deck"
 msgid "Sweat Deck — Card-driven workouts"
 msgstr "Sweat Deck — Card-driven workouts"
 
+#: src/routes/Play.tsx
+msgid "Take a breath. Your clock is on hold—resume when you are ready."
+msgstr "Take a breath. Your clock is on hold—resume when you are ready."
+
 #: src/components/ExercisePanel.tsx
 msgid "Tap the stack to draw your first card."
 msgstr "Tap the stack to draw your first card."
@@ -516,6 +592,14 @@ msgstr "Tap the stack to draw your first card."
 #: src/routes/Onboarding.tsx
 msgid "That's the gist—short enough to remember between sets."
 msgstr "That's the gist—short enough to remember between sets."
+
+#: src/i18n/labels.ts
+msgid "The balanced lane—enough work to feel it, not enough to drown."
+msgstr "The balanced lane—enough work to feel it, not enough to drown."
+
+#: src/i18n/labels.ts
+msgid "The bell curve slides high—8s, 9s, 10s are the new normal."
+msgstr "The bell curve slides high—8s, 9s, 10s are the new normal."
 
 #: src/components/ExercisePanel.tsx
 #~ msgid "The deck's ready—tap the stack to turn the first card."
@@ -541,6 +625,14 @@ msgstr "Thrusters"
 msgid "Time limit?"
 msgstr "Time limit?"
 
+#: src/components/Timer.tsx
+msgid "Time remaining"
+msgstr "Time remaining"
+
+#: src/components/Timer.tsx
+msgid "Time remaining in session"
+msgstr "Time remaining in session"
+
 #: src/routes/Onboarding.tsx
 msgid "Try again"
 msgstr "Try again"
@@ -552,6 +644,10 @@ msgstr "Upper"
 #: src/i18n/labels.ts
 msgid "Upper Body"
 msgstr "Upper Body"
+
+#: src/routes/Play.tsx
+msgid "View difficulty details"
+msgstr "View difficulty details"
 
 #: src/i18n/exercises.ts
 msgid "Walking Lunges"
@@ -601,13 +697,25 @@ msgstr "Which focus?"
 msgid "Workout complete"
 msgstr "Workout complete"
 
+#: src/lib/summaryKudos.ts
+msgid "You finished the deck. On Hell. That's a flex."
+msgstr "You finished the deck. On Hell. That's a flex."
+
 #: src/routes/Onboarding.tsx
 msgid "You play with a full 54-card deck (jokers included)."
 msgstr "You play with a full 54-card deck (jokers included)."
 
 #: src/routes/Summary.tsx
-msgid "You ran the table"
-msgstr "You ran the table"
+#~ msgid "You ran the table"
+#~ msgstr "You ran the table"
+
+#: src/lib/summaryKudos.ts
+msgid "You ran the table. Deck cleared."
+msgstr "You ran the table. Deck cleared."
+
+#: src/lib/summaryKudos.ts
+msgid "You went past the bell—bonus round for real."
+msgstr "You went past the bell—bonus round for real."
 
 #: src/routes/Setup.tsx
 msgid "Your last session's picks load automatically when you've played before."

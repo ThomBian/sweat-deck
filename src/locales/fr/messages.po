@@ -54,6 +54,10 @@ msgstr "Sprint SkiErg 500 m"
 msgid "A cap ends the run at time; no limit means you play the stack."
 msgstr "Une limite de temps clôt la session ; sans limite, vous jouez tout le paquet."
 
+#: src/i18n/labels.ts
+msgid "A forgiving spread—plenty of low reps to build the habit."
+msgstr "Progression douce : des répétitions légères pour ancrer l’habitude."
+
 #: src/i18n/LocaleEffect.tsx
 msgid "A gamified card-driven workout. Draw, move, repeat—one deck, no program builder."
 msgstr "Un entraînement gamifié par les cartes. Tirez, bougez, enchaînez — un paquet, sans programme compliqué."
@@ -106,6 +110,10 @@ msgstr "Poids du corps"
 msgid "Bodyweight Rows"
 msgstr "Tirages au poids du corps"
 
+#: src/components/Timer.tsx
+msgid "Bonus round — past the timer"
+msgstr "Manche bonus — au-delà du chrono"
+
 #: src/i18n/exercises.ts
 msgid "Broad Jumps"
 msgstr "Sauts en longueur"
@@ -129,6 +137,10 @@ msgstr "Élévations mollets"
 #: src/routes/Summary.tsx
 msgid "Cards drawn"
 msgstr "Cartes tirées"
+
+#: src/routes/Play.tsx
+msgid "Close"
+msgstr "Fermer"
 
 #: src/i18n/labels.ts
 msgid "Clubs"
@@ -211,8 +223,8 @@ msgid "Elapsed"
 msgstr "Durée"
 
 #: src/components/Timer.tsx
-msgid "Elapsed session time"
-msgstr "Temps de session écoulé"
+#~ msgid "Elapsed session time"
+#~ msgstr "Temps de session écoulé"
 
 #: src/routes/Onboarding.tsx
 msgid "Face cards are fixed high-intensity challenges."
@@ -350,13 +362,41 @@ msgstr "Man-makers"
 msgid "Max-Effort Leg Burnout"
 msgstr "Brûlure des jambes max"
 
+#: src/i18n/labels.ts
+msgid "More volume, fewer breathers. Expect 6s, 7s, 8s as your normal."
+msgstr "Plus de volume, moins de relâche. 6, 7, 8 répétitions : votre fil conducteur."
+
+#: src/i18n/labels.ts
+msgid "Most: 2–4 · Rare: 9–10"
+msgstr "Souvent : 2–4 · Rares : 9–10"
+
+#: src/i18n/labels.ts
+msgid "Most: 4–6 · Rare: 2 or 10"
+msgstr "Souvent : 4–6 · Rares : 2 ou 10"
+
+#: src/i18n/labels.ts
+msgid "Most: 6–8 · Rare: 2–3"
+msgstr "Souvent : 6–8 · Rares : 2–3"
+
+#: src/i18n/labels.ts
+msgid "Most: 8–10 · Rare: 2–3"
+msgstr "Souvent : 8–10 · Rares : 2–3"
+
+#: src/i18n/labels.ts
+msgid "Most: 9–10 · Rare: 2"
+msgstr "Souvent : 9–10 · Rares : 2"
+
 #: src/components/SetupWizard.tsx
 msgid "Next"
 msgstr "Suivant"
 
 #: src/routes/Summary.tsx
-msgid "Nice work"
-msgstr "Beau travail"
+#~ msgid "Nice work"
+#~ msgstr "Beau travail"
+
+#: src/i18n/labels.ts
+msgid "Nines and tens dominate. A low card is a gift from the deck."
+msgstr "Les 9 et 10 mènent le jeu. Une basse carte est un cadeau du paquet."
 
 #: src/components/Deck.tsx
 msgid "No cards left in the deck"
@@ -389,6 +429,14 @@ msgstr "Développé militaire"
 #: src/routes/History.tsx
 msgid "Past sessions will land here."
 msgstr "Vos sessions passées apparaîtront ici."
+
+#: src/routes/Play.tsx
+msgid "Pause"
+msgstr "Pause"
+
+#: src/routes/Play.tsx
+msgid "Paused"
+msgstr "En pause"
 
 #: src/components/setup/TrainingIntroStep.tsx
 msgid "Pick your level, gear, and focus—then you'll shuffle in and draw the deck."
@@ -431,8 +479,16 @@ msgid "Replay tutorial"
 msgstr "Revoir le tutoriel"
 
 #: src/routes/Summary.tsx
-msgid "Respect—deck served"
-msgstr "Respect — le jeu a parlé"
+#~ msgid "Respect—deck served"
+#~ msgstr "Respect — le jeu a parlé"
+
+#: src/lib/summaryKudos.ts
+msgid "Respect. Work logged."
+msgstr "Respect. Effort noté."
+
+#: src/routes/Play.tsx
+msgid "Resume"
+msgstr "Reprendre"
 
 #: src/i18n/exercises.ts
 msgid "Romanian Deadlifts"
@@ -451,9 +507,21 @@ msgstr "Règles inchangées — petit rappel."
 msgid "Saving…"
 msgstr "Enregistrement…"
 
+#: src/components/Timer.tsx
+msgid "Session elapsed"
+msgstr "Temps de séance"
+
 #: src/routes/Summary.tsx
-msgid "Session in the books"
-msgstr "Session au compteur"
+#~ msgid "Session in the books"
+#~ msgstr "Session au compteur"
+
+#: src/lib/summaryKudos.ts
+msgid "Session in the books—on your own terms."
+msgstr "Séance bouclée — à votre rythme."
+
+#: src/components/Timer.tsx
+msgid "Session time"
+msgstr "Chrono de séance"
 
 #: src/i18n/exercises.ts
 msgid "Shoulder Press"
@@ -495,6 +563,10 @@ msgstr "Élévations mollets debout"
 msgid "Start a new training"
 msgstr "Démarrer un entraînement"
 
+#: src/lib/summaryKudos.ts
+msgid "Start somewhere—you started today."
+msgstr "Tout part d’un début — vous avez lancé la chose aujourd’hui."
+
 #. placeholder {0}: step + 1
 #. placeholder {1}: steps.length
 #: src/components/SetupWizard.tsx
@@ -509,6 +581,10 @@ msgstr "Sweat Deck"
 msgid "Sweat Deck — Card-driven workouts"
 msgstr "Sweat Deck — entraînements menés par les cartes"
 
+#: src/routes/Play.tsx
+msgid "Take a breath. Your clock is on hold—resume when you are ready."
+msgstr "Respirez. Le chrono est en pause — reprenez quand vous voulez."
+
 #: src/components/ExercisePanel.tsx
 msgid "Tap the stack to draw your first card."
 msgstr "Touchez le paquet pour tirer votre première carte."
@@ -516,6 +592,14 @@ msgstr "Touchez le paquet pour tirer votre première carte."
 #: src/routes/Onboarding.tsx
 msgid "That's the gist—short enough to remember between sets."
 msgstr "Voilà l’essentiel — assez court pour s’en souvenir entre les séries."
+
+#: src/i18n/labels.ts
+msgid "The balanced lane—enough work to feel it, not enough to drown."
+msgstr "L’équilibre : assez d’effort pour le sentir, pas assez pour sombrer."
+
+#: src/i18n/labels.ts
+msgid "The bell curve slides high—8s, 9s, 10s are the new normal."
+msgstr "La courbe monte : 8, 9, 10 deviennent le quotidien."
 
 #: src/components/ExercisePanel.tsx
 #~ msgid "The deck's ready—tap the stack to turn the first card."
@@ -541,6 +625,14 @@ msgstr "Thrusters"
 msgid "Time limit?"
 msgstr "Limite de temps ?"
 
+#: src/components/Timer.tsx
+msgid "Time remaining"
+msgstr "Temps restant"
+
+#: src/components/Timer.tsx
+msgid "Time remaining in session"
+msgstr "Temps restant sur la séance"
+
 #: src/routes/Onboarding.tsx
 msgid "Try again"
 msgstr "Réessayer"
@@ -552,6 +644,10 @@ msgstr "Haut du corps"
 #: src/i18n/labels.ts
 msgid "Upper Body"
 msgstr "Haut du corps"
+
+#: src/routes/Play.tsx
+msgid "View difficulty details"
+msgstr "Voir les détails de la difficulté"
 
 #: src/i18n/exercises.ts
 msgid "Walking Lunges"
@@ -601,13 +697,25 @@ msgstr "Quel objectif ?"
 msgid "Workout complete"
 msgstr "Séance terminée"
 
+#: src/lib/summaryKudos.ts
+msgid "You finished the deck. On Hell. That's a flex."
+msgstr "Vous avez fini le paquet. En mode enfer. Le respect."
+
 #: src/routes/Onboarding.tsx
 msgid "You play with a full 54-card deck (jokers included)."
 msgstr "Vous jouez avec un jeu de 54 cartes (jokers compris)."
 
 #: src/routes/Summary.tsx
-msgid "You ran the table"
-msgstr "Toute la donne"
+#~ msgid "You ran the table"
+#~ msgstr "Toute la donne"
+
+#: src/lib/summaryKudos.ts
+msgid "You ran the table. Deck cleared."
+msgstr "Tout le paquet est passé. Terminé."
+
+#: src/lib/summaryKudos.ts
+msgid "You went past the bell—bonus round for real."
+msgstr "Après le gong, vous avez enchaîné — vraie manche bonus."
 
 #: src/routes/Setup.tsx
 msgid "Your last session's picks load automatically when you've played before."

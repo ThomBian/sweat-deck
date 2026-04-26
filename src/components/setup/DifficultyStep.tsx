@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import type { Difficulty } from '@/domain/difficulty';
-import { DIFFICULTY_META } from '@/domain/difficultyMeta';
+import { tDifficulty, tDifficultyDescription, tDifficultyRepHint } from '@/i18n/labels';
 import { SetupOptionButton } from '@/components/setup/SetupOptionButton';
 import { useSetupOptionsMotion } from '@/lib/setupMotion';
 
@@ -20,21 +20,20 @@ export function DifficultyStep({ value, onChange }: Props) {
     >
       {VALUES.map((v) => {
         const selected = v === value;
-        const meta = DIFFICULTY_META[v];
         return (
           <motion.div key={v} variants={item} className="min-w-0 w-full">
             <SetupOptionButton
               selected={selected}
               aria-pressed={selected}
-              aria-label={meta.label}
+              aria-label={tDifficulty(v)}
               onClick={() => onChange(v)}
             >
-              <span className="block font-display text-base font-semibold">{meta.label}</span>
+              <span className="block font-display text-base font-semibold">{tDifficulty(v)}</span>
               <span className="mt-1.5 block text-sm font-normal text-muted-foreground">
-                {meta.description}
+                {tDifficultyDescription(v)}
               </span>
               <span className="mt-1.5 block text-xs font-medium text-muted-foreground/90">
-                {meta.repHint}
+                {tDifficultyRepHint(v)}
               </span>
             </SetupOptionButton>
           </motion.div>

@@ -12,7 +12,8 @@ import { Button } from '@/components/ui/button';
 import { EASE_OUT } from '@/lib/motion';
 import { MAIN_PAD } from '@/lib/layout';
 import { useVisibilityPause } from '@/hooks/useVisibilityPause';
-import { DIFFICULTY_META, DIFFICULTY_TONE_PILL } from '@/domain/difficultyMeta';
+import { DIFFICULTY_TONE, DIFFICULTY_TONE_PILL } from '@/domain/difficultyMeta';
+import { tDifficulty, tDifficultyDescription, tDifficultyRepHint } from '@/i18n/labels';
 import { cn } from '@/lib/utils';
 
 const stagger = 0.06;
@@ -30,7 +31,7 @@ export default function Play() {
   const resume = useGameStore((s) => s.resume);
   const pausedAt = useGameStore((s) => s.pausedAt);
   const config = useGameStore((s) => s.config);
-  const meta = DIFFICULTY_META[config.difficulty];
+  const tone = DIFFICULTY_TONE[config.difficulty];
 
   useVisibilityPause();
 
@@ -83,20 +84,24 @@ export default function Play() {
                 className={cn(
                   'min-h-9 max-w-full rounded-lg border px-2.5 py-1.5 text-left text-sm font-medium transition-colors',
                   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60',
-                  DIFFICULTY_TONE_PILL[meta.tone],
+                  DIFFICULTY_TONE_PILL[tone],
                 )}
                 aria-expanded={detail}
                 aria-label={t`View difficulty details`}
               >
-                {meta.label}
+                {tDifficulty(config.difficulty)}
               </button>
               {detail ? (
                 <div
                   className="absolute right-0 top-full z-30 mt-2 w-[min(100vw-2rem,20rem)] rounded-xl border border-border/60 bg-card/95 p-3 text-left shadow-lg backdrop-blur"
                   role="region"
                 >
-                  <p className="text-sm text-muted-foreground">{meta.description}</p>
-                  <p className="mt-2 text-xs text-muted-foreground/90">{meta.repHint}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {tDifficultyDescription(config.difficulty)}
+                  </p>
+                  <p className="mt-2 text-xs text-muted-foreground/90">
+                    {tDifficultyRepHint(config.difficulty)}
+                  </p>
                   <Button
                     type="button"
                     variant="secondary"
