@@ -4,7 +4,7 @@ import { Trans } from '@lingui/react/macro';
 import { useGameStore } from '@/store/gameStore';
 import { Button } from '@/components/ui/button';
 import { DURATION, EASE_OUT } from '@/lib/motion';
-import { MAIN_PAD } from '@/lib/layout';
+import { MAIN_PAD, SHELL_SUMMARY } from '@/lib/layout';
 import { tSummaryKudoFor } from '@/lib/summaryKudos';
 import { DIFFICULTY_TONE, DIFFICULTY_TONE_PILL } from '@/domain/difficultyMeta';
 import { tDifficulty, tDifficultyDescription } from '@/i18n/labels';
@@ -36,10 +36,10 @@ export default function Summary() {
   return (
     <main
       id="main-content"
-      className={`flex min-h-dvh flex-col items-center justify-center gap-8 bg-gradient-to-b from-background via-background to-card/40 ${MAIN_PAD}`}
+      className={`flex min-h-dvh flex-col items-center justify-center gap-8 ${SHELL_SUMMARY} ${MAIN_PAD}`}
     >
       <motion.div
-        className="flex max-w-md flex-col items-center gap-2 text-center"
+        className="flex max-w-md flex-col items-center gap-2.5 text-center sm:gap-3"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: tMotion, ease: EASE_OUT, delay: reduceMotion ? 0 : 0.04 }}
@@ -64,7 +64,7 @@ export default function Summary() {
       </p>
       <dl className="grid w-full max-w-sm grid-cols-2 gap-x-6 gap-y-4 text-center">
         <motion.div
-          className="rounded-lg border border-border/50 bg-card/80 px-4 py-3"
+          className="rounded-lg border border-border/55 bg-card/85 px-4 py-3.5"
           initial={{ opacity: 0, y: statY, scale: reduceMotion ? 1 : 0.99 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: tMotion, delay: reduceMotion ? 0 : 0.08, ease: EASE_OUT }}
@@ -77,7 +77,7 @@ export default function Summary() {
           </dd>
         </motion.div>
         <motion.div
-          className="rounded-lg border border-border/50 bg-card/80 px-4 py-3"
+          className="rounded-lg border border-border/55 bg-card/85 px-4 py-3.5"
           initial={{ opacity: 0, y: statY, scale: reduceMotion ? 1 : 0.99 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: tMotion, delay: reduceMotion ? 0 : 0.14, ease: EASE_OUT }}

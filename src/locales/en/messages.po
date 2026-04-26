@@ -78,6 +78,14 @@ msgstr "Advanced"
 #~ msgid "Affects face cards"
 #~ msgstr "Affects face cards"
 
+#: src/routes/Onboarding.tsx
+msgid "All rules (full list)"
+msgstr "All rules (full list)"
+
+#: src/routes/Setup.tsx
+msgid "Applies to the whole app—screens, cards, and prompts."
+msgstr "Applies to the whole app—screens, cards, and prompts."
+
 #: src/components/SetupWizard.tsx
 msgid "Back"
 msgstr "Back"
@@ -111,8 +119,8 @@ msgid "Bodyweight Rows"
 msgstr "Bodyweight Rows"
 
 #: src/components/Timer.tsx
-msgid "Bonus round — past the timer"
-msgstr "Bonus round — past the timer"
+#~ msgid "Bonus round — past the timer"
+#~ msgstr "Bonus round — past the timer"
 
 #: src/i18n/exercises.ts
 msgid "Broad Jumps"
@@ -139,8 +147,16 @@ msgid "Cards drawn"
 msgstr "Cards drawn"
 
 #: src/routes/Play.tsx
-msgid "Close"
-msgstr "Close"
+msgid "Clock stopped—resume or finish the session."
+msgstr "Clock stopped—resume or finish the session."
+
+#: src/routes/Play.tsx
+#~ msgid "Close"
+#~ msgstr "Close"
+
+#: src/routes/Play.tsx
+msgid "Close difficulty details"
+msgstr "Close difficulty details"
 
 #: src/i18n/labels.ts
 msgid "Clubs"
@@ -175,12 +191,16 @@ msgid "Deal the workout"
 msgstr "Deal the workout"
 
 #: src/routes/Setup.tsx
-msgid "Defaults are tuned for a quick start—change anything in a tap."
-msgstr "Defaults are tuned for a quick start—change anything in a tap."
+#~ msgid "Defaults are tuned for a quick start—change anything in a tap."
+#~ msgstr "Defaults are tuned for a quick start—change anything in a tap."
 
 #: src/i18n/labels.ts
 msgid "Diamonds"
 msgstr "Diamonds"
+
+#: src/routes/Play.tsx
+msgid "Difficulty details"
+msgstr "Difficulty details"
 
 #: src/components/ExercisePanel.tsx
 #~ msgid "Do this"
@@ -191,8 +211,8 @@ msgid "Done"
 msgstr "Done"
 
 #: src/routes/Play.tsx
-msgid "draw · move · repeat"
-msgstr "draw · move · repeat"
+#~ msgid "draw · move · repeat"
+#~ msgstr "draw · move · repeat"
 
 #: src/components/Deck.tsx
 msgid "Draw a card from the stack"
@@ -230,6 +250,10 @@ msgstr "Elapsed"
 msgid "Face cards are fixed high-intensity challenges."
 msgstr "Face cards are fixed high-intensity challenges."
 
+#: src/routes/Onboarding.tsx
+msgid "Face cards are high-intensity. Aces are a one-minute rest break."
+msgstr "Face cards are high-intensity. Aces are a one-minute rest break."
+
 #: src/components/setup/CardioStep.tsx
 msgid "Face cards can use your cardio pick"
 msgstr "Face cards can use your cardio pick"
@@ -242,9 +266,21 @@ msgstr "Finding your last setup in the stack…"
 msgid "Finish"
 msgstr "Finish"
 
+#: src/routes/Play.tsx
+msgid "Finish session"
+msgstr "Finish session"
+
+#: src/routes/Onboarding.tsx
+msgid "For deep dives, replays, or if you are teaching a friend."
+msgstr "For deep dives, replays, or if you are teaching a friend."
+
 #: src/i18n/labels.ts
 msgid "Full Body"
 msgstr "Full Body"
+
+#: src/routes/Onboarding.tsx
+msgid "Full deck, 54 cards—each suit is a movement pattern; the number is your rep count."
+msgstr "Full deck, 54 cards—each suit is a movement pattern; the number is your rep count."
 
 #: src/i18n/labels.ts
 msgid "Full Gym"
@@ -310,6 +346,10 @@ msgstr "If you're new here, we'll start from friendly defaults."
 msgid "Interface language"
 msgstr "Interface language"
 
+#: src/components/LocaleToggle.tsx
+msgid "Interface language — choose a language"
+msgstr "Interface language — choose a language"
+
 #: src/i18n/labels.ts
 msgid "Intermediate"
 msgstr "Intermediate"
@@ -317,6 +357,10 @@ msgstr "Intermediate"
 #: src/routes/Onboarding.tsx
 msgid "Jokers are chaos—wildcard rounds that react to cards you already drew."
 msgstr "Jokers are chaos—wildcard rounds that react to cards you already drew."
+
+#: src/routes/Onboarding.tsx
+msgid "Jokers are wild rounds that react to what you have already drawn."
+msgstr "Jokers are wild rounds that react to what you have already drawn."
 
 #: src/routes/Onboarding.tsx
 msgid "Jokers watch what you already pulled—same deck, different curveball."
@@ -407,8 +451,8 @@ msgid "No limit"
 msgstr "No limit"
 
 #: src/routes/Setup.tsx
-msgid "No program builder. Just five choices, then the cards."
-msgstr "No program builder. Just five choices, then the cards."
+#~ msgid "No program builder. Just five choices, then the cards."
+#~ msgstr "No program builder. Just five choices, then the cards."
 
 #: src/routes/Onboarding.tsx
 msgid "Number cards use the face value as your rep count."
@@ -426,6 +470,10 @@ msgstr "On"
 msgid "Overhead Press"
 msgstr "Overhead Press"
 
+#: src/components/Timer.tsx
+msgid "Overtime"
+msgstr "Overtime"
+
 #: src/routes/History.tsx
 msgid "Past sessions will land here."
 msgstr "Past sessions will land here."
@@ -438,7 +486,7 @@ msgstr "Pause"
 msgid "Paused"
 msgstr "Paused"
 
-#: src/components/setup/TrainingIntroStep.tsx
+#: src/routes/Setup.tsx
 msgid "Pick your level, gear, and focus—then you'll shuffle in and draw the deck."
 msgstr "Pick your level, gear, and focus—then you'll shuffle in and draw the deck."
 
@@ -467,8 +515,8 @@ msgid "Quick refresher"
 msgstr "Quick refresher"
 
 #: src/routes/Setup.tsx
-msgid "Quick setup"
-msgstr "Quick setup"
+#~ msgid "Quick setup"
+#~ msgstr "Quick setup"
 
 #: src/i18n/exercises.ts
 msgid "Renegade Rows"
@@ -499,8 +547,12 @@ msgid "Row"
 msgstr "Row"
 
 #: src/routes/Onboarding.tsx
-msgid "Rules haven't changed—here's the quick refresher."
-msgstr "Rules haven't changed—here's the quick refresher."
+msgid "Rules are the same—expand below if you want the full list."
+msgstr "Rules are the same—expand below if you want the full list."
+
+#: src/routes/Onboarding.tsx
+#~ msgid "Rules haven't changed—here's the quick refresher."
+#~ msgstr "Rules haven't changed—here's the quick refresher."
 
 #: src/components/SetupWizard.tsx
 #: src/routes/Onboarding.tsx
@@ -508,8 +560,12 @@ msgid "Saving…"
 msgstr "Saving…"
 
 #: src/components/Timer.tsx
-msgid "Session elapsed"
-msgstr "Session elapsed"
+msgid "Session"
+msgstr "Session"
+
+#: src/components/Timer.tsx
+#~ msgid "Session elapsed"
+#~ msgstr "Session elapsed"
 
 #: src/routes/Summary.tsx
 #~ msgid "Session in the books"
@@ -520,8 +576,8 @@ msgid "Session in the books—on your own terms."
 msgstr "Session in the books—on your own terms."
 
 #: src/components/Timer.tsx
-msgid "Session time"
-msgstr "Session time"
+#~ msgid "Session time"
+#~ msgstr "Session time"
 
 #: src/i18n/exercises.ts
 msgid "Shoulder Press"
@@ -574,16 +630,24 @@ msgid "Step {0} of {1}: {title}"
 msgstr "Step {0} of {1}: {title}"
 
 #: src/routes/Play.tsx
-msgid "Sweat Deck"
-msgstr "Sweat Deck"
+#~ msgid "Sweat Deck"
+#~ msgstr "Sweat Deck"
 
 #: src/i18n/LocaleEffect.tsx
 msgid "Sweat Deck — Card-driven workouts"
 msgstr "Sweat Deck — Card-driven workouts"
 
+#: src/components/LocaleToggle.tsx
+msgid "Switch to English"
+msgstr "Switch to English"
+
+#: src/components/LocaleToggle.tsx
+msgid "Switch to French"
+msgstr "Switch to French"
+
 #: src/routes/Play.tsx
-msgid "Take a breath. Your clock is on hold—resume when you are ready."
-msgstr "Take a breath. Your clock is on hold—resume when you are ready."
+#~ msgid "Take a breath. Your clock is on hold—resume when you are ready."
+#~ msgstr "Take a breath. Your clock is on hold—resume when you are ready."
 
 #: src/components/ExercisePanel.tsx
 msgid "Tap the stack to draw your first card."
@@ -610,8 +674,12 @@ msgid "Theme nudges upper, lower, or full-body patterns into the mix."
 msgstr "Theme nudges upper, lower, or full-body patterns into the mix."
 
 #: src/components/ExercisePanel.tsx
-msgid "This move"
-msgstr "This move"
+#~ msgid "This move"
+#~ msgstr "This move"
+
+#: src/routes/Onboarding.tsx
+msgid "Three ideas to get you to your first card—everything else is optional."
+msgstr "Three ideas to get you to your first card—everything else is optional."
 
 #: src/i18n/exercises.ts
 msgid "Thrusters"
@@ -621,17 +689,21 @@ msgstr "Thrusters"
 #~ msgid "Time"
 #~ msgstr "Time"
 
+#: src/components/Timer.tsx
+msgid "Time left"
+msgstr "Time left"
+
 #: src/components/SetupWizard.tsx
 msgid "Time limit?"
 msgstr "Time limit?"
 
 #: src/components/Timer.tsx
-msgid "Time remaining"
-msgstr "Time remaining"
+#~ msgid "Time remaining"
+#~ msgstr "Time remaining"
 
 #: src/components/Timer.tsx
-msgid "Time remaining in session"
-msgstr "Time remaining in session"
+#~ msgid "Time remaining in session"
+#~ msgstr "Time remaining in session"
 
 #: src/routes/Onboarding.tsx
 msgid "Try again"
@@ -693,6 +765,10 @@ msgstr "When you tap draw, the deck does the programming."
 msgid "Which focus?"
 msgstr "Which focus?"
 
+#: src/routes/Play.tsx
+msgid "Workout"
+msgstr "Workout"
+
 #: src/routes/Summary.tsx
 msgid "Workout complete"
 msgstr "Workout complete"
@@ -718,5 +794,5 @@ msgid "You went past the bell—bonus round for real."
 msgstr "You went past the bell—bonus round for real."
 
 #: src/routes/Setup.tsx
-msgid "Your last session's picks load automatically when you've played before."
-msgstr "Your last session's picks load automatically when you've played before."
+#~ msgid "Your last session's picks load automatically when you've played before."
+#~ msgstr "Your last session's picks load automatically when you've played before."

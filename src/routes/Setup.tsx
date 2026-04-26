@@ -5,64 +5,70 @@ import { t } from '@lingui/core/macro';
 import { Trans } from '@lingui/react/macro';
 import { HelpCircle } from 'lucide-react';
 import SetupWizard from '@/components/SetupWizard';
-import { TrainingIntroStep } from '@/components/setup/TrainingIntroStep';
 import { Button } from '@/components/ui/button';
 import { DeckGlyphPulse } from '@/components/DeckGlyphPulse';
+import { LocaleToggle } from '@/components/LocaleToggle';
 import { DURATION, EASE_OUT } from '@/lib/motion';
-import { MAIN_PAD } from '@/lib/layout';
+import { MAIN_PAD, SHELL_SETUP } from '@/lib/layout';
 
-const LANDING_WHISPER_COUNT = 3;
+const helpButtonClassName =
+  'inline-flex size-11 shrink-0 touch-manipulation items-center justify-center rounded-lg border border-border/50 bg-card/60 text-muted-foreground transition-colors hover:bg-card hover:text-foreground active:bg-card/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
 
 export default function Setup() {
   const [phase, setPhase] = useState<'landing' | 'wizard'>('landing');
-  const [landingWhisperIdx] = useState(() => Math.floor(Math.random() * LANDING_WHISPER_COUNT));
-  const landingWhispers = [
-    t`Defaults are tuned for a quick start—change anything in a tap.`,
-    t`Your last session's picks load automatically when you've played before.`,
-    t`No program builder. Just five choices, then the cards.`,
-  ] as const;
-  const landingWhisper = landingWhispers[landingWhisperIdx]!;
   const reduceMotion = useReducedMotion();
   const pageT = reduceMotion ? 0.1 : DURATION.pageIn;
+
+  const isLanding = phase === 'landing';
 
   return (
     <main
       id="main-content"
-      className={`relative flex min-h-dvh flex-col bg-gradient-to-b from-background via-background to-card/40 ${MAIN_PAD} pb-6 pt-2 sm:pt-4`}
+      className={[
+        'relative flex flex-col',
+        SHELL_SETUP,
+        MAIN_PAD,
+        isLanding
+          ? 'h-dvh min-h-0 overflow-y-auto pb-8 sm:pb-10'
+          : 'min-h-dvh pt-2 pb-6 sm:pt-4',
+      ].join(' ')}
     >
-      <div className="flex shrink-0 justify-end">
-        <Link
-          to="/onboarding?replay=1"
-          className="inline-flex size-11 touch-manipulation items-center justify-center rounded-lg border border-border/50 bg-card/60 text-muted-foreground transition-colors hover:bg-card hover:text-foreground active:bg-card/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-          aria-label={t`Replay tutorial`}
-        >
-          <HelpCircle className="size-5" aria-hidden />
-        </Link>
-      </div>
-
-      {phase === 'landing' ? (
+      {isLanding ? (
         <motion.div
-          className="flex flex-1 flex-col justify-center gap-10 pt-4 pb-8"
+          className="mx-auto flex w-full min-h-0 min-w-0 max-w-lg flex-1 flex-col"
           initial={{ opacity: 0, y: reduceMotion ? 0 : 6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: pageT, ease: EASE_OUT }}
         >
-          <div className="mx-auto min-w-0 w-full max-w-lg text-left">
-            <DeckGlyphPulse className="mb-6" />
-            <p className="ui-kicker tracking-[0.18em]">
-              <Trans>Quick setup</Trans>
-            </p>
-            <h1 className="mt-3 text-balance break-words">
-              <Trans>Start a new training</Trans>
-            </h1>
-            <div className="mt-6 max-w-[65ch] break-words">
-              <TrainingIntroStep />
+          <div className="flex w-full min-w-0 shrink-0 items-center justify-between gap-2 sm:pt-0.5">
+            <div className="flex min-w-0 items-center gap-2">
+              <span className="sr-only" id="setup-landing-i18n-hint">
+                <Trans>Applies to the whole app—screens, cards, and prompts.</Trans>
+              </span>
+              <LocaleToggle descriptionId="setup-landing-i18n-hint" />
             </div>
-            <p className="mt-6 max-w-[65ch] text-pretty break-words text-sm font-medium leading-relaxed text-deck-reward">
-              {landingWhisper}
-            </p>
+            <Link
+              to="/onboarding?replay=1"
+              className={helpButtonClassName}
+              aria-label={t`Replay tutorial`}
+            >
+              <HelpCircle className="size-5" aria-hidden />
+            </Link>
           </div>
-          <div className="mx-auto min-w-0 w-full max-w-lg">
+
+          <div className="flex min-h-0 flex-1 flex-col justify-center py-6 sm:py-10 md:py-12">
+            <div className="min-w-0 text-left">
+              <DeckGlyphPulse className="mb-6 md:mb-8" />
+              <h1 className="[overflow-wrap:anywhere] text-balance break-words md:tracking-tight">
+                <Trans>Start a new training</Trans>
+              </h1>
+              <p className="mt-5 max-w-[min(100%,65ch)] text-pretty break-words text-base leading-[1.75] text-muted-foreground [overflow-wrap:anywhere] sm:mt-6 sm:text-lg sm:leading-[1.7]">
+                <Trans>Pick your level, gear, and focus—then you&apos;ll shuffle in and draw the deck.</Trans>
+              </p>
+            </div>
+          </div>
+
+          <div className="w-full shrink-0 pt-2 sm:pt-4">
             <motion.div
               whileHover={{ scale: reduceMotion ? 1 : 1.02 }}
               whileTap={{ scale: reduceMotion ? 1 : 0.98 }}

@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { Trans } from '@lingui/react/macro';
 import { EASE_OUT } from '@/lib/motion';
-import { MAIN_PAD } from '@/lib/layout';
+import { MAIN_PAD, SHELL_HISTORY } from '@/lib/layout';
 
 export default function History() {
   const reduce = useReducedMotion();
@@ -9,7 +9,7 @@ export default function History() {
   return (
     <main
       id="main-content"
-      className={`flex min-h-dvh flex-col items-center justify-center gap-4 ${MAIN_PAD}`}
+      className={`flex min-h-dvh flex-col items-center justify-center gap-4 ${SHELL_HISTORY} ${MAIN_PAD}`}
     >
       <motion.h1
         className="text-center text-balance"

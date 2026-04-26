@@ -23,9 +23,6 @@ export const ExercisePanel = ({ exercise }: Props) => {
 
   return (
     <div className="max-w-[min(100%,36rem)] text-center">
-      <p className="ui-label-caps mb-2">
-        <Trans>This move</Trans>
-      </p>
       <AnimatePresence mode="wait">
         <motion.div
           key={motionKey}

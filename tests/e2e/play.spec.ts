@@ -54,7 +54,7 @@ test.describe('onboarding and play', () => {
       await drawBtn.click();
     }
 
-    await expect(page.getByText('This move')).toBeVisible();
+    await expect(page.getByRole('heading', { level: 2 })).toBeVisible();
 
     await page.getByRole('button', { name: 'Finish' }).click();
     await expect(page).toHaveURL(/\/summary$/);
