@@ -1,13 +1,10 @@
 import { motion } from 'framer-motion';
 import type { Equipment } from '@/domain/config';
+import { tEquipment } from '@/i18n/labels';
 import { SetupOptionButton } from '@/components/setup/SetupOptionButton';
 import { useSetupOptionsMotion } from '@/lib/setupMotion';
 
-const OPTIONS: { value: Equipment; label: string }[] = [
-  { value: 'bodyweight', label: 'Bodyweight' },
-  { value: 'weights', label: 'Weights' },
-  { value: 'gym', label: 'Full Gym' },
-];
+const VALUES: readonly Equipment[] = ['bodyweight', 'weights', 'gym'];
 
 type Props = { value: Equipment; onChange: (v: Equipment) => void };
 
@@ -21,16 +18,16 @@ export function EquipmentStep({ value, onChange }: Props) {
       initial="hidden"
       animate="show"
     >
-      {OPTIONS.map((opt) => {
-        const selected = opt.value === value;
+      {VALUES.map((v) => {
+        const selected = v === value;
         return (
-          <motion.div key={opt.value} variants={item} className="min-w-0 w-full">
+          <motion.div key={v} variants={item} className="min-w-0 w-full">
             <SetupOptionButton
               selected={selected}
               aria-pressed={selected}
-              onClick={() => onChange(opt.value)}
+              onClick={() => onChange(v)}
             >
-              {opt.label}
+              {tEquipment(v)}
             </SetupOptionButton>
           </motion.div>
         );

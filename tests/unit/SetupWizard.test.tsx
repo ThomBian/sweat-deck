@@ -1,7 +1,10 @@
+import type { ReactElement } from 'react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { I18nProvider } from '@lingui/react';
 import { MemoryRouter } from 'react-router-dom';
+import { i18n } from '@/i18n';
 import SetupWizard from '@/components/SetupWizard';
 import * as persisted from '@/hooks/usePersistedConfig';
 import { useGameStore } from '@/store/gameStore';
@@ -20,8 +23,15 @@ vi.mock('react-router-dom', async (importOriginal) => {
 
 vi.mock('@/hooks/usePersistedConfig');
 
+const wrap = (ui: ReactElement) => (
+  <I18nProvider i18n={i18n}>
+    <MemoryRouter>{ui}</MemoryRouter>
+  </I18nProvider>
+);
+
 describe('SetupWizard', () => {
   beforeEach(() => {
+    i18n.activate('en');
     vi.clearAllMocks();
     vi.mocked(persisted.usePersistedConfig).mockReturnValue({
       config: DEFAULT_CONFIG,
@@ -33,11 +43,7 @@ describe('SetupWizard', () => {
 
   it('steps forward and back', async () => {
     const user = userEvent.setup();
-    render(
-      <MemoryRouter>
-        <SetupWizard />
-      </MemoryRouter>
-    );
+    render(wrap(<SetupWizard />));
 
     expect(screen.getByRole('heading', { name: 'How hard?' })).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -61,11 +67,7 @@ describe('SetupWizard', () => {
       loadFailed: false,
     });
 
-    render(
-      <MemoryRouter>
-        <SetupWizard />
-      </MemoryRouter>
-    );
+    render(wrap(<SetupWizard />));
 
     expect(screen.getByRole('button', { name: 'Hell' })).toHaveAttribute('aria-pressed', 'true');
     await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -75,11 +77,7 @@ describe('SetupWizard', () => {
   it('Start saves config and starts the game', async () => {
     const saveSpy = vi.spyOn(dbMod, 'saveLastConfig').mockResolvedValue(undefined);
     const user = userEvent.setup();
-    render(
-      <MemoryRouter>
-        <SetupWizard />
-      </MemoryRouter>
-    );
+    render(wrap(<SetupWizard />));
 
     for (let i = 0; i < 4; i++) {
       await user.click(screen.getByRole('button', { name: 'Next' }));

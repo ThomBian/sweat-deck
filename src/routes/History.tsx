@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion';
+import { Trans } from '@lingui/react/macro';
 import { EASE_OUT } from '@/lib/motion';
 import { MAIN_PAD } from '@/lib/layout';
 
@@ -16,7 +17,7 @@ export default function History() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: reduce ? 0.1 : 0.28, ease: EASE_OUT }}
       >
-        History — coming soon
+        <Trans>History — coming soon</Trans>
       </motion.h1>
       <motion.p
         className="max-w-prose text-center text-sm leading-relaxed text-muted-foreground"
@@ -24,7 +25,7 @@ export default function History() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.24, delay: reduce ? 0 : 0.06, ease: EASE_OUT }}
       >
-        Past sessions will land here.
+        <Trans>Past sessions will land here.</Trans>
       </motion.p>
     </main>
   );

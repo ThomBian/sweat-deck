@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { Trans } from '@lingui/react/macro';
 import { useGameStore } from '@/store/gameStore';
 import { Deck } from '@/components/Deck';
 import { ExercisePanel } from '@/components/ExercisePanel';
@@ -46,10 +47,10 @@ export default function Play() {
       >
         <div className="flex items-baseline gap-2">
           <h1 className="text-2xl font-bold leading-tight tracking-tight text-foreground sm:text-3xl">
-            Sweat Deck
+            <Trans>Sweat Deck</Trans>
           </h1>
           <span className="hidden text-sm leading-snug text-muted-foreground sm:inline" aria-hidden>
-            draw · move · repeat
+            <Trans>draw · move · repeat</Trans>
           </span>
         </div>
         <Timer />
@@ -69,7 +70,7 @@ export default function Play() {
           className="w-full sm:w-auto"
         >
           <Button variant="secondary" onClick={handleFinish} className="w-full min-h-11 sm:w-auto">
-            Finish
+            <Trans>Finish</Trans>
           </Button>
         </motion.div>
       </motion.div>

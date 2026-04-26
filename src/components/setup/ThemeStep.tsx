@@ -1,13 +1,10 @@
 import { motion } from 'framer-motion';
 import type { Theme } from '@/domain/config';
+import { tThemeWizard } from '@/i18n/labels';
 import { SetupOptionButton } from '@/components/setup/SetupOptionButton';
 import { useSetupOptionsMotion } from '@/lib/setupMotion';
 
-const OPTIONS: { value: Theme; label: string }[] = [
-  { value: 'upper', label: 'Upper' },
-  { value: 'lower', label: 'Lower' },
-  { value: 'full', label: 'Full Body' },
-];
+const VALUES: readonly Theme[] = ['upper', 'lower', 'full'];
 
 type Props = { value: Theme; onChange: (v: Theme) => void };
 
@@ -21,16 +18,16 @@ export function ThemeStep({ value, onChange }: Props) {
       initial="hidden"
       animate="show"
     >
-      {OPTIONS.map((opt) => {
-        const selected = opt.value === value;
+      {VALUES.map((v) => {
+        const selected = v === value;
         return (
-          <motion.div key={opt.value} variants={item} className="min-w-0 w-full">
+          <motion.div key={v} variants={item} className="min-w-0 w-full">
             <SetupOptionButton
               selected={selected}
               aria-pressed={selected}
-              onClick={() => onChange(opt.value)}
+              onClick={() => onChange(v)}
             >
-              {opt.label}
+              {tThemeWizard(v)}
             </SetupOptionButton>
           </motion.div>
         );

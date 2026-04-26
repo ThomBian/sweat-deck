@@ -1,21 +1,13 @@
 import { useMemo, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
+import { t } from '@lingui/core/macro';
+import { Trans } from '@lingui/react/macro';
 import { useHasOnboarded } from '@/hooks/useHasOnboarded';
 import { Button } from '@/components/ui/button';
 import { DeckGlyphPulse } from '@/components/DeckGlyphPulse';
 import { DURATION, EASE_OUT } from '@/lib/motion';
 import { MAIN_PAD } from '@/lib/layout';
-import { ONBOARDING_WHISPERS, pickRandom } from '@/lib/delightCopy';
-
-const RULES = [
-  'You play with a full 54-card deck (jokers included).',
-  'Each suit maps to a movement pattern.',
-  'Number cards use the face value as your rep count.',
-  'Face cards are fixed high-intensity challenges.',
-  'Aces are a one-minute rest break.',
-  'Jokers are chaos—wildcard rounds that react to cards you already drew.',
-] as const;
 
 export default function Onboarding() {
   const [searchParams] = useSearchParams();
@@ -23,11 +15,22 @@ export default function Onboarding() {
   const navigate = useNavigate();
   const { markOnboarded } = useHasOnboarded();
   const reduceMotion = useReducedMotion();
-  const [whisper] = useState(() =>
-    replay
-      ? "Rules haven't changed—here's the quick refresher."
-      : pickRandom(ONBOARDING_WHISPERS)
-  );
+  const rules = [
+    t`You play with a full 54-card deck (jokers included).`,
+    t`Each suit maps to a movement pattern.`,
+    t`Number cards use the face value as your rep count.`,
+    t`Face cards are fixed high-intensity challenges.`,
+    t`Aces are a one-minute rest break.`,
+    t`Jokers are chaos—wildcard rounds that react to cards you already drew.`,
+  ] as const;
+  const [whisperIdx] = useState(() => (replay ? -1 : Math.floor(Math.random() * 4)));
+  const whisperLines = [
+    t`That's the gist—short enough to remember between sets.`,
+    t`When you tap draw, the deck does the programming.`,
+    t`Aces are built-in permission to catch your breath.`,
+    t`Jokers watch what you already pulled—same deck, different curveball.`,
+  ] as const;
+  const whisper = whisperIdx < 0 ? null : whisperLines[whisperIdx]!;
   const [submitting, setSubmitting] = useState(false);
   const [saveError, setSaveError] = useState(false);
 
@@ -101,18 +104,18 @@ export default function Onboarding() {
         </motion.div>
 
         <motion.p variants={block} className="ui-kicker tracking-[0.18em]">
-          {replay ? 'Quick refresher' : 'How it works'}
+          {replay ? <Trans>Quick refresher</Trans> : <Trans>How it works</Trans>}
         </motion.p>
 
         <motion.h1 variants={block} className="mt-3 text-balance break-words">
-          Welcome to Sweat Deck
+          <Trans>Welcome to Sweat Deck</Trans>
         </motion.h1>
 
         <motion.ol
           variants={list}
           className="mt-8 list-decimal space-y-4 pl-6 text-base leading-relaxed text-muted-foreground marker:font-display marker:font-semibold marker:text-deck-reward"
         >
-          {RULES.map((line) => (
+          {rules.map((line) => (
             <motion.li key={line} variants={block} className="text-pretty break-words">
               {line}
             </motion.li>
@@ -123,7 +126,11 @@ export default function Onboarding() {
           variants={block}
           className="mt-8 max-w-[65ch] text-pretty break-words text-sm font-medium leading-relaxed text-deck-reward"
         >
-          {whisper}
+          {replay ? (
+            <Trans>Rules haven&apos;t changed—here&apos;s the quick refresher.</Trans>
+          ) : (
+            whisper
+          )}
         </motion.p>
 
         {saveError ? (
@@ -133,7 +140,7 @@ export default function Onboarding() {
             className="mt-8 rounded-xl border border-destructive/40 bg-destructive/10 px-4 py-3 text-sm text-foreground"
           >
             <p className="break-words leading-relaxed">
-              Couldn&apos;t save your progress to this device. Check storage permissions or try again.
+              <Trans>Couldn&apos;t save your progress to this device. Check storage permissions or try again.</Trans>
             </p>
             <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
               <Button
@@ -144,7 +151,7 @@ export default function Onboarding() {
                 aria-busy={submitting}
                 onClick={() => void handleGotIt()}
               >
-                {submitting ? 'Saving…' : 'Try again'}
+                {submitting ? <Trans>Saving…</Trans> : <Trans>Try again</Trans>}
               </Button>
               <Button
                 type="button"
@@ -153,7 +160,7 @@ export default function Onboarding() {
                 disabled={submitting}
                 onClick={handleContinueWithoutSaving}
               >
-                Continue without saving
+                <Trans>Continue without saving</Trans>
               </Button>
             </div>
           </motion.div>
@@ -172,7 +179,7 @@ export default function Onboarding() {
                 aria-busy={submitting}
                 onClick={() => void handleGotIt()}
               >
-                {submitting ? 'Saving…' : 'Got it'}
+                {submitting ? <Trans>Saving…</Trans> : <Trans>Got it</Trans>}
               </Button>
             </motion.div>
           </motion.div>

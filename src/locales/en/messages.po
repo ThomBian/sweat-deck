@@ -2,3 +2,613 @@ msgid ""
 msgstr ""
 "Language: en\n"
 "Content-Type: text/plain; charset=utf-8\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. placeholder {0}: ex.reps
+#: src/components/ExercisePanel.tsx
+msgid "{0, plural, one {# rep} other {# reps}}"
+msgstr "{0, plural, one {# rep} other {# reps}}"
+
+#. placeholder {0}: ex.distanceM
+#: src/components/ExercisePanel.tsx
+msgid "{0}m"
+msgstr "{0}m"
+
+#. placeholder {0}: ex.durationSec
+#: src/components/ExercisePanel.tsx
+msgid "{0}s"
+msgstr "{0}s"
+
+#: src/i18n/exercises.ts
+msgid "100m Sprint"
+msgstr "100m Sprint"
+
+#: src/components/setup/TimeStep.tsx
+msgid "15 min"
+msgstr "15 min"
+
+#: src/components/setup/TimeStep.tsx
+msgid "30 min"
+msgstr "30 min"
+
+#: src/components/setup/TimeStep.tsx
+msgid "45 min"
+msgstr "45 min"
+
+#: src/i18n/exercises.ts
+msgid "50 Burpees"
+msgstr "50 Burpees"
+
+#: src/i18n/exercises.ts
+msgid "500m SkiErg Sprint"
+msgstr "500m SkiErg Sprint"
+
+#: src/components/SetupWizard.tsx
+msgid "A cap ends the run at time; no limit means you play the stack."
+msgstr "A cap ends the run at time; no limit means you play the stack."
+
+#: src/i18n/LocaleEffect.tsx
+msgid "A gamified card-driven workout. Draw, move, repeat—one deck, no program builder."
+msgstr "A gamified card-driven workout. Draw, move, repeat—one deck, no program builder."
+
+#: src/routes/Onboarding.tsx
+msgid "Aces are a one-minute rest break."
+msgstr "Aces are a one-minute rest break."
+
+#: src/routes/Onboarding.tsx
+msgid "Aces are built-in permission to catch your breath."
+msgstr "Aces are built-in permission to catch your breath."
+
+#: src/i18n/labels.ts
+msgid "Advanced"
+msgstr "Advanced"
+
+#: src/components/setup/CardioStep.tsx
+#~ msgid "Affects face cards"
+#~ msgstr "Affects face cards"
+
+#: src/components/SetupWizard.tsx
+msgid "Back"
+msgstr "Back"
+
+#: src/i18n/exercises.ts
+msgid "Back Squats"
+msgstr "Back Squats"
+
+#: src/i18n/exercises.ts
+msgid "Barbell Hip Thrusts"
+msgstr "Barbell Hip Thrusts"
+
+#: src/i18n/exercises.ts
+msgid "Battle Ropes"
+msgstr "Battle Ropes"
+
+#: src/i18n/labels.ts
+msgid "Beginner"
+msgstr "Beginner"
+
+#: src/i18n/exercises.ts
+msgid "Bench Press"
+msgstr "Bench Press"
+
+#: src/i18n/labels.ts
+msgid "Bodyweight"
+msgstr "Bodyweight"
+
+#: src/i18n/exercises.ts
+msgid "Bodyweight Rows"
+msgstr "Bodyweight Rows"
+
+#: src/i18n/exercises.ts
+msgid "Broad Jumps"
+msgstr "Broad Jumps"
+
+#: src/i18n/exercises.ts
+msgid "Bulgarian Split Squats"
+msgstr "Bulgarian Split Squats"
+
+#: src/i18n/exercises.ts
+msgid "Burpees"
+msgstr "Burpees"
+
+#: src/i18n/exercises.ts
+msgid "Cable Rows"
+msgstr "Cable Rows"
+
+#: src/i18n/exercises.ts
+msgid "Calf Raises"
+msgstr "Calf Raises"
+
+#: src/routes/Summary.tsx
+msgid "Cards drawn"
+msgstr "Cards drawn"
+
+#: src/i18n/labels.ts
+msgid "Clubs"
+msgstr "Clubs"
+
+#: src/i18n/exercises.ts
+msgid "Combine the last 2 exercises — 10 reps each"
+msgstr "Combine the last 2 exercises — 10 reps each"
+
+#: src/routes/Setup.tsx
+msgid "Continue"
+msgstr "Continue"
+
+#: src/routes/Onboarding.tsx
+msgid "Continue without saving"
+msgstr "Continue without saving"
+
+#: src/components/SetupWizard.tsx
+msgid "Couldn't read your last setup. Showing defaults—you can change anything below."
+msgstr "Couldn't read your last setup. Showing defaults—you can change anything below."
+
+#: src/components/SetupWizard.tsx
+msgid "Couldn't save setup. Check device storage, then try again."
+msgstr "Couldn't save setup. Check device storage, then try again."
+
+#: src/routes/Onboarding.tsx
+msgid "Couldn't save your progress to this device. Check storage permissions or try again."
+msgstr "Couldn't save your progress to this device. Check storage permissions or try again."
+
+#: src/components/SetupWizard.tsx
+msgid "Deal the workout"
+msgstr "Deal the workout"
+
+#: src/routes/Setup.tsx
+msgid "Defaults are tuned for a quick start—change anything in a tap."
+msgstr "Defaults are tuned for a quick start—change anything in a tap."
+
+#: src/i18n/labels.ts
+msgid "Diamonds"
+msgstr "Diamonds"
+
+#: src/components/ExercisePanel.tsx
+#~ msgid "Do this"
+#~ msgstr "Do this"
+
+#: src/routes/Summary.tsx
+msgid "Done"
+msgstr "Done"
+
+#: src/routes/Play.tsx
+msgid "draw · move · repeat"
+msgstr "draw · move · repeat"
+
+#: src/components/Deck.tsx
+msgid "Draw a card from the stack"
+msgstr "Draw a card from the stack"
+
+#: src/components/SetupWizard.tsx
+msgid "Draws skew heavier as difficulty rises—still a card game, not a spreadsheet."
+msgstr "Draws skew heavier as difficulty rises—still a card game, not a spreadsheet."
+
+#: src/i18n/exercises.ts
+msgid "Dumbbell Floor Press"
+msgstr "Dumbbell Floor Press"
+
+#: src/i18n/exercises.ts
+msgid "Dumbbell Press"
+msgstr "Dumbbell Press"
+
+#: src/i18n/exercises.ts
+msgid "Dumbbell Rows"
+msgstr "Dumbbell Rows"
+
+#: src/routes/Onboarding.tsx
+msgid "Each suit maps to a movement pattern."
+msgstr "Each suit maps to a movement pattern."
+
+#: src/routes/Summary.tsx
+msgid "Elapsed"
+msgstr "Elapsed"
+
+#: src/components/Timer.tsx
+msgid "Elapsed session time"
+msgstr "Elapsed session time"
+
+#: src/routes/Onboarding.tsx
+msgid "Face cards are fixed high-intensity challenges."
+msgstr "Face cards are fixed high-intensity challenges."
+
+#: src/components/setup/CardioStep.tsx
+msgid "Face cards can use your cardio pick"
+msgstr "Face cards can use your cardio pick"
+
+#: src/components/SetupWizard.tsx
+msgid "Finding your last setup in the stack…"
+msgstr "Finding your last setup in the stack…"
+
+#: src/routes/Play.tsx
+msgid "Finish"
+msgstr "Finish"
+
+#: src/i18n/labels.ts
+msgid "Full Body"
+msgstr "Full Body"
+
+#: src/i18n/labels.ts
+msgid "Full Gym"
+msgstr "Full Gym"
+
+#: src/components/SetupWizard.tsx
+msgid "Gear changes which moves you see for each suit."
+msgstr "Gear changes which moves you see for each suit."
+
+#: src/i18n/exercises.ts
+msgid "Glute Bridges"
+msgstr "Glute Bridges"
+
+#: src/i18n/exercises.ts
+msgid "Goblet Squats"
+msgstr "Goblet Squats"
+
+#: src/routes/Onboarding.tsx
+msgid "Got it"
+msgstr "Got it"
+
+#: src/i18n/labels.ts
+msgid "Hard"
+msgstr "Hard"
+
+#: src/i18n/labels.ts
+msgid "Hearts"
+msgstr "Hearts"
+
+#: src/i18n/exercises.ts
+msgid "Heavy Sled Push"
+msgstr "Heavy Sled Push"
+
+#: src/i18n/labels.ts
+msgid "Hell"
+msgstr "Hell"
+
+#: src/i18n/exercises.ts
+msgid "Hip Thrusts"
+msgstr "Hip Thrusts"
+
+#: src/routes/History.tsx
+msgid "History — coming soon"
+msgstr "History — coming soon"
+
+#: src/i18n/exercises.ts
+msgid "Hollow Body Hold"
+msgstr "Hollow Body Hold"
+
+#: src/components/SetupWizard.tsx
+msgid "How hard?"
+msgstr "How hard?"
+
+#: src/routes/Onboarding.tsx
+msgid "How it works"
+msgstr "How it works"
+
+#: src/components/SetupWizard.tsx
+msgid "If you're new here, we'll start from friendly defaults."
+msgstr "If you're new here, we'll start from friendly defaults."
+
+#: src/components/LocaleToggle.tsx
+msgid "Interface language"
+msgstr "Interface language"
+
+#: src/i18n/labels.ts
+msgid "Intermediate"
+msgstr "Intermediate"
+
+#: src/routes/Onboarding.tsx
+msgid "Jokers are chaos—wildcard rounds that react to cards you already drew."
+msgstr "Jokers are chaos—wildcard rounds that react to cards you already drew."
+
+#: src/routes/Onboarding.tsx
+msgid "Jokers watch what you already pulled—same deck, different curveball."
+msgstr "Jokers watch what you already pulled—same deck, different curveball."
+
+#: src/i18n/exercises.ts
+msgid "Jump Squats"
+msgstr "Jump Squats"
+
+#: src/i18n/exercises.ts
+msgid "Kettlebell Swings"
+msgstr "Kettlebell Swings"
+
+#: src/i18n/exercises.ts
+msgid "Lat Pulldown"
+msgstr "Lat Pulldown"
+
+#: src/routes/Index.tsx
+msgid "Loading"
+msgstr "Loading"
+
+#: src/components/SetupWizard.tsx
+msgid "Loading your last setup"
+msgstr "Loading your last setup"
+
+#: src/i18n/labels.ts
+msgid "Lower"
+msgstr "Lower"
+
+#: src/i18n/labels.ts
+msgid "Lower Body"
+msgstr "Lower Body"
+
+#: src/i18n/exercises.ts
+msgid "Lunges"
+msgstr "Lunges"
+
+#: src/i18n/exercises.ts
+msgid "Man-Makers"
+msgstr "Man-Makers"
+
+#: src/i18n/exercises.ts
+msgid "Max-Effort Leg Burnout"
+msgstr "Max-Effort Leg Burnout"
+
+#: src/components/SetupWizard.tsx
+msgid "Next"
+msgstr "Next"
+
+#: src/routes/Summary.tsx
+msgid "Nice work"
+msgstr "Nice work"
+
+#: src/components/Deck.tsx
+msgid "No cards left in the deck"
+msgstr "No cards left in the deck"
+
+#: src/components/setup/TimeStep.tsx
+msgid "No limit"
+msgstr "No limit"
+
+#: src/routes/Setup.tsx
+msgid "No program builder. Just five choices, then the cards."
+msgstr "No program builder. Just five choices, then the cards."
+
+#: src/routes/Onboarding.tsx
+msgid "Number cards use the face value as your rep count."
+msgstr "Number cards use the face value as your rep count."
+
+#: src/components/setup/CardioStep.tsx
+msgid "Off"
+msgstr "Off"
+
+#: src/components/setup/CardioStep.tsx
+msgid "On"
+msgstr "On"
+
+#: src/i18n/exercises.ts
+msgid "Overhead Press"
+msgstr "Overhead Press"
+
+#: src/routes/History.tsx
+msgid "Past sessions will land here."
+msgstr "Past sessions will land here."
+
+#: src/components/setup/TrainingIntroStep.tsx
+msgid "Pick your level, gear, and focus—then you'll shuffle in and draw the deck."
+msgstr "Pick your level, gear, and focus—then you'll shuffle in and draw the deck."
+
+#: src/i18n/exercises.ts
+msgid "Pike Push-ups"
+msgstr "Pike Push-ups"
+
+#: src/i18n/exercises.ts
+msgid "Plank Hold"
+msgstr "Plank Hold"
+
+#: src/i18n/exercises.ts
+msgid "Plank to Push-up"
+msgstr "Plank to Push-up"
+
+#: src/i18n/exercises.ts
+msgid "Pull-ups"
+msgstr "Pull-ups"
+
+#: src/i18n/exercises.ts
+msgid "Push-ups"
+msgstr "Push-ups"
+
+#: src/routes/Onboarding.tsx
+msgid "Quick refresher"
+msgstr "Quick refresher"
+
+#: src/routes/Setup.tsx
+msgid "Quick setup"
+msgstr "Quick setup"
+
+#: src/i18n/exercises.ts
+msgid "Renegade Rows"
+msgstr "Renegade Rows"
+
+#: src/routes/Setup.tsx
+msgid "Replay tutorial"
+msgstr "Replay tutorial"
+
+#: src/routes/Summary.tsx
+msgid "Respect—deck served"
+msgstr "Respect—deck served"
+
+#: src/i18n/exercises.ts
+msgid "Romanian Deadlifts"
+msgstr "Romanian Deadlifts"
+
+#: src/i18n/exercises.ts
+msgid "Row"
+msgstr "Row"
+
+#: src/routes/Onboarding.tsx
+msgid "Rules haven't changed—here's the quick refresher."
+msgstr "Rules haven't changed—here's the quick refresher."
+
+#: src/components/SetupWizard.tsx
+#: src/routes/Onboarding.tsx
+msgid "Saving…"
+msgstr "Saving…"
+
+#: src/routes/Summary.tsx
+msgid "Session in the books"
+msgstr "Session in the books"
+
+#: src/i18n/exercises.ts
+msgid "Shoulder Press"
+msgstr "Shoulder Press"
+
+#: src/components/ShuffleTransition.tsx
+msgid "Shuffling deck"
+msgstr "Shuffling deck"
+
+#: src/components/ShuffleTransition.tsx
+msgid "Shuffling the deck…"
+msgstr "Shuffling the deck…"
+
+#: src/i18n/exercises.ts
+msgid "SkiErg"
+msgstr "SkiErg"
+
+#: src/App.tsx
+msgid "Skip to main content"
+msgstr "Skip to main content"
+
+#: src/i18n/labels.ts
+msgid "Spades"
+msgstr "Spades"
+
+#: src/components/SetupWizard.tsx
+msgid "Specialty cardio?"
+msgstr "Specialty cardio?"
+
+#: src/i18n/exercises.ts
+msgid "Squats"
+msgstr "Squats"
+
+#: src/i18n/exercises.ts
+msgid "Standing Calf Raises"
+msgstr "Standing Calf Raises"
+
+#: src/routes/Setup.tsx
+msgid "Start a new training"
+msgstr "Start a new training"
+
+#. placeholder {0}: step + 1
+#. placeholder {1}: steps.length
+#: src/components/SetupWizard.tsx
+msgid "Step {0} of {1}: {title}"
+msgstr "Step {0} of {1}: {title}"
+
+#: src/routes/Play.tsx
+msgid "Sweat Deck"
+msgstr "Sweat Deck"
+
+#: src/i18n/LocaleEffect.tsx
+msgid "Sweat Deck — Card-driven workouts"
+msgstr "Sweat Deck — Card-driven workouts"
+
+#: src/components/ExercisePanel.tsx
+msgid "Tap the stack to draw your first card."
+msgstr "Tap the stack to draw your first card."
+
+#: src/routes/Onboarding.tsx
+msgid "That's the gist—short enough to remember between sets."
+msgstr "That's the gist—short enough to remember between sets."
+
+#: src/components/ExercisePanel.tsx
+#~ msgid "The deck's ready—tap the stack to turn the first card."
+#~ msgstr "The deck's ready—tap the stack to turn the first card."
+
+#: src/components/SetupWizard.tsx
+msgid "Theme nudges upper, lower, or full-body patterns into the mix."
+msgstr "Theme nudges upper, lower, or full-body patterns into the mix."
+
+#: src/components/ExercisePanel.tsx
+msgid "This move"
+msgstr "This move"
+
+#: src/i18n/exercises.ts
+msgid "Thrusters"
+msgstr "Thrusters"
+
+#: src/routes/Summary.tsx
+#~ msgid "Time"
+#~ msgstr "Time"
+
+#: src/components/SetupWizard.tsx
+msgid "Time limit?"
+msgstr "Time limit?"
+
+#: src/routes/Onboarding.tsx
+msgid "Try again"
+msgstr "Try again"
+
+#: src/i18n/labels.ts
+msgid "Upper"
+msgstr "Upper"
+
+#: src/i18n/labels.ts
+msgid "Upper Body"
+msgstr "Upper Body"
+
+#: src/i18n/exercises.ts
+msgid "Walking Lunges"
+msgstr "Walking Lunges"
+
+#: src/i18n/exercises.ts
+msgid "Wall Balls"
+msgstr "Wall Balls"
+
+#: src/i18n/exercises.ts
+msgid "Water Break"
+msgstr "Water Break"
+
+#: src/i18n/exercises.ts
+msgid "Weighted Calf Raises"
+msgstr "Weighted Calf Raises"
+
+#: src/i18n/exercises.ts
+msgid "Weighted Plank"
+msgstr "Weighted Plank"
+
+#: src/i18n/labels.ts
+msgid "Weights"
+msgstr "Weights"
+
+#: src/routes/Onboarding.tsx
+msgid "Welcome to Sweat Deck"
+msgstr "Welcome to Sweat Deck"
+
+#: src/components/SetupWizard.tsx
+msgid "What equipment?"
+msgstr "What equipment?"
+
+#: src/components/SetupWizard.tsx
+msgid "When this is on, face cards can pull from your cardio pick."
+msgstr "When this is on, face cards can pull from your cardio pick."
+
+#: src/routes/Onboarding.tsx
+msgid "When you tap draw, the deck does the programming."
+msgstr "When you tap draw, the deck does the programming."
+
+#: src/components/SetupWizard.tsx
+msgid "Which focus?"
+msgstr "Which focus?"
+
+#: src/routes/Summary.tsx
+msgid "Workout complete"
+msgstr "Workout complete"
+
+#: src/routes/Onboarding.tsx
+msgid "You play with a full 54-card deck (jokers included)."
+msgstr "You play with a full 54-card deck (jokers included)."
+
+#: src/routes/Summary.tsx
+msgid "You ran the table"
+msgstr "You ran the table"
+
+#: src/routes/Setup.tsx
+msgid "Your last session's picks load automatically when you've played before."
+msgstr "Your last session's picks load automatically when you've played before."

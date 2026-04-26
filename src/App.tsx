@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Trans } from '@lingui/react/macro';
 import { AnimatedLayout } from '@/components/AnimatedLayout';
 import Index from './routes/Index';
 import Onboarding from './routes/Onboarding';
@@ -11,7 +12,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <a href="#main-content" className="skip-to-content">
-        Skip to main content
+        <Trans>Skip to main content</Trans>
       </a>
       <Routes>
         <Route element={<AnimatedLayout />}>

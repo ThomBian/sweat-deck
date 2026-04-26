@@ -1,3 +1,4 @@
+import { t } from '@lingui/core/macro';
 import { useGameStore } from '@/store/gameStore';
 import { useTimer } from '@/hooks/useTimer';
 
@@ -10,7 +11,7 @@ export const Timer = () => {
     <time
       className="text-deck-reward text-lg font-semibold tabular-nums tracking-tight"
       dateTime={`PT${minutes}M${seconds}S`}
-      aria-label="Elapsed session time"
+      aria-label={t`Elapsed session time`}
     >
       {minutes}:{String(seconds).padStart(2, '0')}
     </time>

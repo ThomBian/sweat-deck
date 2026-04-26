@@ -1,15 +1,10 @@
 import { motion } from 'framer-motion';
 import type { Difficulty } from '@/domain/difficulty';
+import { tDifficulty } from '@/i18n/labels';
 import { SetupOptionButton } from '@/components/setup/SetupOptionButton';
 import { useSetupOptionsMotion } from '@/lib/setupMotion';
 
-const OPTIONS: { value: Difficulty; label: string }[] = [
-  { value: 'beginner', label: 'Beginner' },
-  { value: 'intermediate', label: 'Intermediate' },
-  { value: 'hard', label: 'Hard' },
-  { value: 'advanced', label: 'Advanced' },
-  { value: 'hell', label: 'Hell' },
-];
+const VALUES: readonly Difficulty[] = ['beginner', 'intermediate', 'hard', 'advanced', 'hell'];
 
 type Props = { value: Difficulty; onChange: (v: Difficulty) => void };
 
@@ -23,16 +18,16 @@ export function DifficultyStep({ value, onChange }: Props) {
       initial="hidden"
       animate="show"
     >
-      {OPTIONS.map((opt) => {
-        const selected = opt.value === value;
+      {VALUES.map((v) => {
+        const selected = v === value;
         return (
-          <motion.div key={opt.value} variants={item} className="min-w-0 w-full">
+          <motion.div key={v} variants={item} className="min-w-0 w-full">
             <SetupOptionButton
               selected={selected}
               aria-pressed={selected}
-              onClick={() => onChange(opt.value)}
+              onClick={() => onChange(v)}
             >
-              {opt.label}
+              {tDifficulty(v)}
             </SetupOptionButton>
           </motion.div>
         );

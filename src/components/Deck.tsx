@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion';
+import { t } from '@lingui/core/macro';
 import { useGameStore } from '@/store/gameStore';
 import { CardFace } from './CardFace';
 import { DURATION, EASE_OUT } from '@/lib/motion';
@@ -14,7 +15,7 @@ export const Deck = ({ remaining, onDraw }: Props) => {
     <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8">
       <motion.button
         type="button"
-        aria-label={remaining === 0 ? 'No cards left in the deck' : 'Draw a card from the stack'}
+        aria-label={remaining === 0 ? t`No cards left in the deck` : t`Draw a card from the stack`}
         onClick={onDraw}
         disabled={remaining === 0}
         className="relative cursor-pointer rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-ring/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50"

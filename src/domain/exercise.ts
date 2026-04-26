@@ -1,9 +1,19 @@
 import type { Card } from './card';
 import type { SetupConfig } from './config';
 import { NUMBER_MOVEMENTS, FACE_CHALLENGES, FACE_CHALLENGES_CARDIO } from './mappings';
+import type { MovementId, FaceChallengeId } from './mappings';
+
+export type ExerciseId = MovementId | FaceChallengeId | 'water-break' | JokerExerciseId;
+
+export type JokerExerciseId =
+  | 'max-effort-leg-burnout'
+  | 'sudden-death-50-burpees'
+  | 'sudden-death-100m-sprint'
+  | 'sudden-death-500m-skierg'
+  | 'double-up';
 
 export type Exercise = {
-  name: string;
+  id: ExerciseId;
   reps?: number;
   durationSec?: number;
   distanceM?: number;
@@ -12,17 +22,19 @@ export type Exercise = {
 type ResolveArgs = { card: Card; config: SetupConfig };
 
 export const resolve = ({ card, config }: ResolveArgs): Exercise => {
-  if (card.type === 'ace') return { name: 'Water Break', durationSec: 60 };
+  if (card.type === 'ace') return { id: 'water-break', durationSec: 60 };
 
   if (card.type === 'number') {
     const movement = NUMBER_MOVEMENTS[config.theme][card.suit][config.equipment];
-    return { name: movement.name, reps: card.value };
+    return { id: movement.id, reps: card.value };
   }
 
   if (card.type === 'face') {
-    if (config.cardio) return { ...FACE_CHALLENGES_CARDIO[card.rank] };
-    return { ...FACE_CHALLENGES[card.rank][config.equipment] };
+    const src = config.cardio
+      ? FACE_CHALLENGES_CARDIO[card.rank]
+      : FACE_CHALLENGES[card.rank][config.equipment];
+    return { ...src };
   }
 
-  return { name: 'Joker (resolved by joker module)' };
+  return { id: 'max-effort-leg-burnout' };
 };

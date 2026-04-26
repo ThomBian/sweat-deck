@@ -10,7 +10,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "i18n:extract": "lingui extract",
+    "i18n:extract": "node scripts/lingui-extract.mjs",
     "i18n:compile": "node scripts/lingui-compile.mjs",
     "prebuild": "node scripts/lingui-compile.mjs",
     "lint": "eslint .",

@@ -1,5 +1,6 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { LocaleToggle } from '@/components/LocaleToggle';
 import { DURATION, EASE_OUT } from '@/lib/motion';
 
 /**
@@ -12,6 +13,7 @@ export function AnimatedLayout() {
 
   return (
     <div className="min-h-dvh w-full">
+      <LocaleToggle />
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={location.pathname}

@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { t } from '@lingui/core/macro';
 import { SetupOptionButton } from '@/components/setup/SetupOptionButton';
 import { useSetupOptionsMotion } from '@/lib/setupMotion';
 
@@ -7,15 +8,15 @@ type Props = {
   onChange: (v: number | undefined) => void;
 };
 
-const OPTIONS: { value: number | undefined; label: string }[] = [
-  { value: 15, label: '15 min' },
-  { value: 30, label: '30 min' },
-  { value: 45, label: '45 min' },
-  { value: undefined, label: 'No limit' },
-];
-
 export function TimeStep({ value, onChange }: Props) {
   const { list, item } = useSetupOptionsMotion();
+
+  const options = [
+    { value: 15 as const, label: t`15 min` },
+    { value: 30 as const, label: t`30 min` },
+    { value: 45 as const, label: t`45 min` },
+    { value: undefined, label: t`No limit` },
+  ] as const;
 
   return (
     <motion.div
@@ -24,10 +25,10 @@ export function TimeStep({ value, onChange }: Props) {
       initial="hidden"
       animate="show"
     >
-      {OPTIONS.map((opt) => {
+      {options.map((opt) => {
         const selected = opt.value === value;
         return (
-          <motion.div key={opt.label} variants={item} className="min-w-0 w-full">
+          <motion.div key={String(opt.value)} variants={item} className="min-w-0 w-full">
             <SetupOptionButton
               selected={selected}
               aria-pressed={selected}

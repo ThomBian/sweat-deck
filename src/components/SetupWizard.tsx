@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { t } from '@lingui/core/macro';
+import { Trans } from '@lingui/react/macro';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useGameStore } from '@/store/gameStore';
 import { usePersistedConfig } from '@/hooks/usePersistedConfig';
@@ -13,16 +15,7 @@ import { EquipmentStep } from '@/components/setup/EquipmentStep';
 import { ThemeStep } from '@/components/setup/ThemeStep';
 import { CardioStep } from '@/components/setup/CardioStep';
 import { TimeStep } from '@/components/setup/TimeStep';
-import { WIZARD_LOADING_LINES, WIZARD_STEP_NUDGES, pickRandom } from '@/lib/delightCopy';
 import { DURATION, EASE_OUT } from '@/lib/motion';
-
-const STEPS = [
-  { title: 'How hard?', key: 'difficulty' as const },
-  { title: 'What equipment?', key: 'equipment' as const },
-  { title: 'Which focus?', key: 'theme' as const },
-  { title: 'Specialty cardio?', key: 'cardio' as const },
-  { title: 'Time limit?', key: 'time' as const },
-] as const;
 
 type Props = { onLeaveToLanding?: () => void };
 
@@ -36,7 +29,29 @@ export default function SetupWizard({ onLeaveToLanding }: Props) {
   const [starting, setStarting] = useState(false);
   const [startError, setStartError] = useState(false);
   const seededRef = useRef(false);
-  const [loadingLine] = useState(() => pickRandom(WIZARD_LOADING_LINES));
+  const [loadingLineIdx] = useState(() => Math.floor(Math.random() * 2));
+
+  const steps = [
+    { title: t`How hard?`, key: 'difficulty' as const },
+    { title: t`What equipment?`, key: 'equipment' as const },
+    { title: t`Which focus?`, key: 'theme' as const },
+    { title: t`Specialty cardio?`, key: 'cardio' as const },
+    { title: t`Time limit?`, key: 'time' as const },
+  ] as const;
+
+  const stepNudges = [
+    t`Draws skew heavier as difficulty rises—still a card game, not a spreadsheet.`,
+    t`Gear changes which moves you see for each suit.`,
+    t`Theme nudges upper, lower, or full-body patterns into the mix.`,
+    t`When this is on, face cards can pull from your cardio pick.`,
+    t`A cap ends the run at time; no limit means you play the stack.`,
+  ] as const;
+
+  const loadingLines = [
+    t`Finding your last setup in the stack…`,
+    t`If you're new here, we'll start from friendly defaults.`,
+  ] as const;
+  const loadingLine = loadingLines[loadingLineIdx]!;
 
   useEffect(() => {
     if (!loaded || seededRef.current) return;
@@ -62,7 +77,7 @@ export default function SetupWizard({ onLeaveToLanding }: Props) {
   const selectAndMaybeAdvance = (patch: (prev: SetupConfig) => SetupConfig) => {
     setStartError(false);
     setDraft(patch);
-    setStep((s) => (s < STEPS.length - 1 ? s + 1 : s));
+    setStep((s) => (s < steps.length - 1 ? s + 1 : s));
   };
 
   if (!loaded) {
@@ -72,13 +87,15 @@ export default function SetupWizard({ onLeaveToLanding }: Props) {
         <p className="max-w-md text-center text-sm leading-relaxed break-words text-muted-foreground">
           {loadingLine}
         </p>
-        <p className="sr-only">Loading your last setup</p>
+        <p className="sr-only">
+          <Trans>Loading your last setup</Trans>
+        </p>
       </div>
     );
   }
 
-  const { title } = STEPS[step]!;
-  const nudge = WIZARD_STEP_NUDGES[step]!;
+  const { title } = steps[step]!;
+  const nudge = stepNudges[step]!;
   const nudgeTransition = reduceMotion
     ? { duration: 0.05, ease: EASE_OUT }
     : { duration: DURATION.pageOut, ease: EASE_OUT };
@@ -87,17 +104,19 @@ export default function SetupWizard({ onLeaveToLanding }: Props) {
     <>
       <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-6 pb-28">
         <p className="sr-only" aria-live="polite">
-          Step {step + 1} of {STEPS.length}: {title}
+          <Trans>
+            Step {step + 1} of {steps.length}: {title}
+          </Trans>
         </p>
 
         {loadFailed ? (
           <p className="text-xs leading-relaxed break-words text-muted-foreground" role="status">
-            Couldn&apos;t read your last setup. Showing defaults—you can change anything below.
+            <Trans>Couldn&apos;t read your last setup. Showing defaults—you can change anything below.</Trans>
           </p>
         ) : null}
 
         <div className="flex min-w-0 gap-1.5" aria-hidden>
-          {STEPS.map((_, i) => {
+          {steps.map((_, i) => {
             const filled = i <= step;
             const active = i === step;
             return (
@@ -185,7 +204,7 @@ export default function SetupWizard({ onLeaveToLanding }: Props) {
                   setStep((s) => s - 1);
                 }}
               >
-                Back
+                <Trans>Back</Trans>
               </Button>
             </motion.div>
           ) : onLeaveToLanding ? (
@@ -203,13 +222,13 @@ export default function SetupWizard({ onLeaveToLanding }: Props) {
                   onLeaveToLanding();
                 }}
               >
-                Back
+                <Trans>Back</Trans>
               </Button>
             </motion.div>
           ) : (
             <span className="min-w-0 shrink-0" />
           )}
-          {step < STEPS.length - 1 ? (
+          {step < steps.length - 1 ? (
             <motion.div
               className="min-w-0 shrink"
               whileHover={{ scale: reduceMotion ? 1 : 1.02 }}
@@ -224,14 +243,17 @@ export default function SetupWizard({ onLeaveToLanding }: Props) {
                   setStep((s) => s + 1);
                 }}
               >
-                Next
+                <Trans>Next</Trans>
               </Button>
             </motion.div>
           ) : (
             <div className="flex min-w-0 flex-col items-end gap-2">
               {startError ? (
-                <p className="max-w-[min(100%,18rem)] text-right text-xs leading-relaxed break-words text-destructive" role="alert">
-                  Couldn&apos;t save setup. Check device storage, then try again.
+                <p
+                  className="max-w-[min(100%,18rem)] text-right text-xs leading-relaxed break-words text-destructive"
+                  role="alert"
+                >
+                  <Trans>Couldn&apos;t save setup. Check device storage, then try again.</Trans>
                 </p>
               ) : null}
               <motion.div
@@ -247,7 +269,7 @@ export default function SetupWizard({ onLeaveToLanding }: Props) {
                   aria-busy={starting}
                   onClick={() => void handleStart()}
                 >
-                  {starting ? 'Saving…' : 'Deal the workout'}
+                  {starting ? <Trans>Saving…</Trans> : <Trans>Deal the workout</Trans>}
                 </Button>
               </motion.div>
             </div>

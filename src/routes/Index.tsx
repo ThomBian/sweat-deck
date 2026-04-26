@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { t } from '@lingui/core/macro';
 import { useHasOnboarded } from '@/hooks/useHasOnboarded';
 import { DeckGlyphPulse } from '@/components/DeckGlyphPulse';
 import { MAIN_PAD } from '@/lib/layout';
@@ -22,7 +23,7 @@ export default function Index() {
         aria-live="polite"
       >
         <DeckGlyphPulse />
-        <span className="sr-only">Loading</span>
+        <span className="sr-only">{t`Loading`}</span>
       </main>
     );
   }

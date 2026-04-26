@@ -10,15 +10,17 @@ export type JokerEffect = {
 };
 
 export const COMBO_BREAKER_EXERCISE: Exercise = {
-  name: 'Max-Effort Leg Burnout',
+  id: 'max-effort-leg-burnout',
   durationSec: 120,
 };
 
 const SUDDEN_DEATH_OPTIONS: Exercise[] = [
-  { name: '50 Burpees', reps: 50 },
-  { name: '100m Sprint', distanceM: 100 },
-  { name: '500m SkiErg Sprint', distanceM: 500 },
+  { id: 'sudden-death-50-burpees', reps: 50 },
+  { id: 'sudden-death-100m-sprint', distanceM: 100 },
+  { id: 'sudden-death-500m-skierg', distanceM: 500 },
 ];
+
+const DOUBLE_UP_EXERCISE: Exercise = { id: 'double-up' };
 
 const UPPER_SUITS: ReadonlySet<Suit> = new Set(['hearts', 'diamonds']);
 
@@ -36,9 +38,7 @@ export const pickJokerEffect = ({ history, rng }: PickArgs): JokerEffect => {
     const ex = SUDDEN_DEATH_OPTIONS[sampleInt({ rng, min: 0, max: SUDDEN_DEATH_OPTIONS.length - 1 })]!;
     return { kind, exercise: ex };
   }
-  if (kind === 'double-up') {
-    return { kind, exercise: { name: 'Combine the last 2 exercises — 10 reps each' } };
-  }
+  if (kind === 'double-up') return { kind, exercise: DOUBLE_UP_EXERCISE };
   return { kind, exercise: COMBO_BREAKER_EXERCISE };
 };
 

@@ -1,99 +1,149 @@
 import type { Suit, FaceRank } from './card';
 import type { Equipment, Theme } from './config';
 
-type SuitMovement = { name: string };
+export type MovementId =
+  | 'pushups'
+  | 'dumbbell-floor-press'
+  | 'bench-press'
+  | 'bodyweight-rows'
+  | 'dumbbell-rows'
+  | 'pullups'
+  | 'jump-squats'
+  | 'goblet-squats'
+  | 'back-squats'
+  | 'glute-bridges'
+  | 'kettlebell-swings'
+  | 'romanian-deadlifts'
+  | 'dumbbell-press'
+  | 'lat-pulldown'
+  | 'pike-pushups'
+  | 'shoulder-press'
+  | 'overhead-press'
+  | 'plank-to-pushup'
+  | 'renegade-rows'
+  | 'cable-rows'
+  | 'lunges'
+  | 'walking-lunges'
+  | 'bulgarian-split-squats'
+  | 'squats'
+  | 'hip-thrusts'
+  | 'barbell-hip-thrusts'
+  | 'calf-raises'
+  | 'weighted-calf-raises'
+  | 'standing-calf-raises';
+
+export type FaceChallengeId =
+  | 'burpees'
+  | 'thrusters'
+  | 'wall-balls'
+  | 'hollow-body-hold'
+  | 'weighted-plank'
+  | 'plank-hold'
+  | 'broad-jumps'
+  | 'man-makers'
+  | 'heavy-sled-push'
+  | 'skierg'
+  | 'battle-ropes'
+  | 'row';
+
+type SuitMovement = { id: MovementId };
 
 export const NUMBER_MOVEMENTS: Record<Theme, Record<Suit, Record<Equipment, SuitMovement>>> = {
   full: {
     hearts: {
-      bodyweight: { name: 'Push-ups' },
-      weights: { name: 'Dumbbell Floor Press' },
-      gym: { name: 'Bench Press' },
+      bodyweight: { id: 'pushups' },
+      weights: { id: 'dumbbell-floor-press' },
+      gym: { id: 'bench-press' },
     },
     diamonds: {
-      bodyweight: { name: 'Bodyweight Rows' },
-      weights: { name: 'Dumbbell Rows' },
-      gym: { name: 'Pull-ups' },
+      bodyweight: { id: 'bodyweight-rows' },
+      weights: { id: 'dumbbell-rows' },
+      gym: { id: 'pullups' },
     },
     clubs: {
-      bodyweight: { name: 'Jump Squats' },
-      weights: { name: 'Goblet Squats' },
-      gym: { name: 'Back Squats' },
+      bodyweight: { id: 'jump-squats' },
+      weights: { id: 'goblet-squats' },
+      gym: { id: 'back-squats' },
     },
     spades: {
-      bodyweight: { name: 'Glute Bridges' },
-      weights: { name: 'Kettlebell Swings' },
-      gym: { name: 'Romanian Deadlifts' },
+      bodyweight: { id: 'glute-bridges' },
+      weights: { id: 'kettlebell-swings' },
+      gym: { id: 'romanian-deadlifts' },
     },
   },
   upper: {
     hearts: {
-      bodyweight: { name: 'Push-ups' },
-      weights: { name: 'Dumbbell Press' },
-      gym: { name: 'Bench Press' },
+      bodyweight: { id: 'pushups' },
+      weights: { id: 'dumbbell-press' },
+      gym: { id: 'bench-press' },
     },
     diamonds: {
-      bodyweight: { name: 'Pull-ups' },
-      weights: { name: 'Dumbbell Rows' },
-      gym: { name: 'Lat Pulldown' },
+      bodyweight: { id: 'pullups' },
+      weights: { id: 'dumbbell-rows' },
+      gym: { id: 'lat-pulldown' },
     },
     clubs: {
-      bodyweight: { name: 'Pike Push-ups' },
-      weights: { name: 'Shoulder Press' },
-      gym: { name: 'Overhead Press' },
+      bodyweight: { id: 'pike-pushups' },
+      weights: { id: 'shoulder-press' },
+      gym: { id: 'overhead-press' },
     },
     spades: {
-      bodyweight: { name: 'Plank to Push-up' },
-      weights: { name: 'Renegade Rows' },
-      gym: { name: 'Cable Rows' },
+      bodyweight: { id: 'plank-to-pushup' },
+      weights: { id: 'renegade-rows' },
+      gym: { id: 'cable-rows' },
     },
   },
   lower: {
     hearts: {
-      bodyweight: { name: 'Lunges' },
-      weights: { name: 'Walking Lunges' },
-      gym: { name: 'Bulgarian Split Squats' },
+      bodyweight: { id: 'lunges' },
+      weights: { id: 'walking-lunges' },
+      gym: { id: 'bulgarian-split-squats' },
     },
     diamonds: {
-      bodyweight: { name: 'Squats' },
-      weights: { name: 'Goblet Squats' },
-      gym: { name: 'Back Squats' },
+      bodyweight: { id: 'squats' },
+      weights: { id: 'goblet-squats' },
+      gym: { id: 'back-squats' },
     },
     clubs: {
-      bodyweight: { name: 'Glute Bridges' },
-      weights: { name: 'Hip Thrusts' },
-      gym: { name: 'Barbell Hip Thrusts' },
+      bodyweight: { id: 'glute-bridges' },
+      weights: { id: 'hip-thrusts' },
+      gym: { id: 'barbell-hip-thrusts' },
     },
     spades: {
-      bodyweight: { name: 'Calf Raises' },
-      weights: { name: 'Weighted Calf Raises' },
-      gym: { name: 'Standing Calf Raises' },
+      bodyweight: { id: 'calf-raises' },
+      weights: { id: 'weighted-calf-raises' },
+      gym: { id: 'standing-calf-raises' },
     },
   },
 };
 
-type FaceChallenge = { name: string; reps?: number; durationSec?: number; distanceM?: number };
+type FaceChallenge = {
+  id: FaceChallengeId;
+  reps?: number;
+  durationSec?: number;
+  distanceM?: number;
+};
 
 export const FACE_CHALLENGES: Record<FaceRank, Record<Equipment, FaceChallenge>> = {
   J: {
-    bodyweight: { name: 'Burpees', reps: 15 },
-    weights: { name: 'Thrusters', reps: 15 },
-    gym: { name: 'Wall Balls', reps: 15 },
+    bodyweight: { id: 'burpees', reps: 15 },
+    weights: { id: 'thrusters', reps: 15 },
+    gym: { id: 'wall-balls', reps: 15 },
   },
   Q: {
-    bodyweight: { name: 'Hollow Body Hold', durationSec: 60 },
-    weights: { name: 'Weighted Plank', durationSec: 60 },
-    gym: { name: 'Plank Hold', durationSec: 60 },
+    bodyweight: { id: 'hollow-body-hold', durationSec: 60 },
+    weights: { id: 'weighted-plank', durationSec: 60 },
+    gym: { id: 'plank-hold', durationSec: 60 },
   },
   K: {
-    bodyweight: { name: 'Broad Jumps', reps: 20 },
-    weights: { name: 'Man-Makers', reps: 20 },
-    gym: { name: 'Heavy Sled Push', distanceM: 20 },
+    bodyweight: { id: 'broad-jumps', reps: 20 },
+    weights: { id: 'man-makers', reps: 20 },
+    gym: { id: 'heavy-sled-push', distanceM: 20 },
   },
 };
 
 export const FACE_CHALLENGES_CARDIO: Record<FaceRank, FaceChallenge> = {
-  J: { name: 'SkiErg', distanceM: 0, reps: 15 },
-  Q: { name: 'Battle Ropes', durationSec: 60 },
-  K: { name: 'Row', distanceM: 500 },
+  J: { id: 'skierg', reps: 15 },
+  Q: { id: 'battle-ropes', durationSec: 60 },
+  K: { id: 'row', distanceM: 500 },
 };

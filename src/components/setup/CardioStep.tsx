@@ -1,4 +1,6 @@
 import { motion } from 'framer-motion';
+import { t } from '@lingui/core/macro';
+import { Trans } from '@lingui/react/macro';
 import { SetupOptionButton } from '@/components/setup/SetupOptionButton';
 import { useSetupOptionsMotion } from '@/lib/setupMotion';
 
@@ -6,10 +8,10 @@ type Props = { value: boolean; onChange: (v: boolean) => void };
 
 export function CardioStep({ value, onChange }: Props) {
   const { list, item } = useSetupOptionsMotion();
-  const options: { v: boolean; label: string }[] = [
-    { v: false, label: 'Off' },
-    { v: true, label: 'On' },
-  ];
+  const options = [
+    { v: false, label: t`Off` },
+    { v: true, label: t`On` },
+  ] as const;
 
   return (
     <motion.div
@@ -19,12 +21,12 @@ export function CardioStep({ value, onChange }: Props) {
       animate="show"
     >
       <motion.p variants={item} className="text-sm break-words text-muted-foreground">
-        Affects face cards
+        <Trans>Face cards can use your cardio pick</Trans>
       </motion.p>
       {options.map((opt) => {
         const selected = opt.v === value;
         return (
-          <motion.div key={opt.label} variants={item} className="min-w-0 w-full">
+          <motion.div key={String(opt.v)} variants={item} className="min-w-0 w-full">
             <SetupOptionButton
               selected={selected}
               aria-pressed={selected}

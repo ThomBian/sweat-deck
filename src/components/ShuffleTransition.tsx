@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
+import { t } from '@lingui/core/macro';
+import { Trans } from '@lingui/react/macro';
 
 const DURATION_MS = 1500;
 
@@ -23,7 +25,7 @@ export function ShuffleTransition({ onComplete }: Props) {
       transition={{ duration: reduce ? 0.01 : 0.2 }}
       role="status"
       aria-live="polite"
-      aria-label="Shuffling deck"
+      aria-label={t`Shuffling deck`}
     >
       <div className="relative h-28 w-40 sm:h-32 sm:w-44">
         {[0, 1, 2, 3].map((i) => (
@@ -56,7 +58,9 @@ export function ShuffleTransition({ onComplete }: Props) {
           />
         ))}
       </div>
-      <p className="text-center text-sm font-medium text-muted-foreground">Shuffling the deck…</p>
+      <p className="text-center text-sm font-medium text-muted-foreground">
+        <Trans>Shuffling the deck…</Trans>
+      </p>
     </motion.div>
   );
 }
