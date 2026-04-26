@@ -11,7 +11,7 @@ Wire the SetupWizard ("stepper") to the runtime game so that:
 - Clock-zero flips into a visible **overtime** state, not a hard end
 - Deck exhaustion is the canonical completion event
 - Aces (rest cards) are paced sensibly across effort time, never clumped or at the start
-- Difficulty is surfaced consistently across wizard, play, and summary
+- Difficulty drives the number-card draw distribution (per CONCEPT.md) and is surfaced consistently across wizard, play, and summary
 - Pause/resume works (manual + auto on visibility change)
 
 ## Context
@@ -219,7 +219,62 @@ This way a manual pause survives a tab-switch (won't auto-resume on focus).
 
 ---
 
-## 5. Difficulty surfacing
+## 5. Difficulty mechanics (per CONCEPT.md)
+
+The difficulty selected in the wizard is the single knob that shifts the **number-card draw distribution**. This is the core "weighted deck" mechanic from CONCEPT.md.
+
+### Levels and means
+
+Five levels (matches `Difficulty` type and `NUMBER_DIST`):
+
+| Level | Mean | Feel (per CONCEPT.md) |
+|---|---|---|
+| Beginner | 2 | High prob of 2/3/4. A 10 has ~5% chance. |
+| Intermediate | 5 | Balanced bell, favors 4/5/6. |
+| Hard | 7 | Volume up; 6/7/8 standard. |
+| Advanced | 9 | Heavy bias toward 8/9/10. Low cards feel rare. |
+| Hell | 10 | Almost entirely 9s and 10s. Drawing a 2 ~5%. |
+
+Sigma (spread) is shared across levels: `sigma = 2.5`. Sampling is normal-truncated to `[2, 10]` then rounded.
+
+### The 5% extreme cap rule
+
+Per CONCEPT.md: *"the extreme outliers are capped at a 5% probability."* Concretely:
+
+- For each difficulty, the rounded probability of the value **furthest from the mean** within `[2, 10]` must be **≤ 5%**, and ideally close to 5% (so the extreme is rare but not impossible — drawing a "merciful 2" on Hell is a possible event, just unlikely).
+
+### Implementation contract
+
+Existing `pickTargetValue` (in `src/domain/deck.ts`) uses rejection sampling on a truncated normal. We keep that approach, with an additional acceptance check to enforce the cap:
+
+1. Sample `raw` via `sampleNormal({ mean, sigma=2.5, min: 2, max: 10 })`
+2. Round to nearest integer in `[2, 10]`
+3. **Cap enforcement**: if the rounded value equals the far extreme for the current difficulty AND a precomputed `extremeP[difficulty]` exceeds 5%, reject and resample (bounded retries, fallback to nearest non-extreme).
+
+`extremeP` is precomputed once per difficulty as the integral of the truncated normal at the far-extreme bucket. If math shows current sigma already yields ≤ 5% at the extremes (likely for means 2 and 10), the cap is a no-op guard — but the rule is still expressed in code so future tuning can't silently violate the concept.
+
+### Tests
+
+- For each difficulty, run 10k seeded draws and assert:
+  - Empirical extreme-value frequency ≤ 6% (1% slack for sample noise)
+  - Mode is within ±1 of the configured mean
+- Snapshot the per-difficulty distribution histogram in a unit test for regression detection.
+
+### Coupling with `repHint`
+
+`DIFFICULTY_META.repHint` (Section 6) copy must reflect the actual distribution:
+
+- Beginner: "Most: 2–4 · Rare: 9–10"
+- Intermediate: "Most: 4–6 · Rare: 2 or 10"
+- Hard: "Most: 6–8 · Rare: 2–3"
+- Advanced: "Most: 8–10 · Rare: 2–3"
+- Hell: "Most: 9–10 · Rare: 2"
+
+Static copy (Lingui-friendly), but anchored to the histogram tests above so drift is caught.
+
+---
+
+## 6. Difficulty surfacing
 
 ### Shared module
 
@@ -246,7 +301,7 @@ No new domain logic. `draw()` already consumes difficulty. This section is pure 
 
 ---
 
-## 6. Wizard → game seam
+## 7. Wizard → game seam
 
 ### Contract: `useGameStore.start(config)`
 
@@ -282,6 +337,7 @@ If `startedAt == null`, redirect to `/setup`. Prevents deep-link into a broken s
 - **Unit**
   - Elapsed selector: pause/resume math, multiple pause cycles, overtime phase flip
   - Ace pacing: 15-card floor, soft floor rejection, force-ceiling injection, adaptive interval
+  - Difficulty distribution: per-level histogram (10k seeded draws), extreme ≤ 6%, mode within ±1 of mean
   - `start()` resets all fields
   - `finish()` records correct `endReason` / `completedDeck`
 - **Integration**
