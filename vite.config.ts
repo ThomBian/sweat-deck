@@ -18,9 +18,10 @@ export default defineConfig({
       manifest: {
         name: 'Sweat Deck',
         short_name: 'Sweat Deck',
-        description: 'Card-driven workout game',
-        theme_color: '#0b0d10',
-        background_color: '#0b0d10',
+        description:
+          'A gamified card-driven workout. Draw, move, repeat—one deck, no program builder.',
+        theme_color: '#14121c',
+        background_color: '#14121c',
         display: 'standalone',
         orientation: 'portrait',
         start_url: '/',

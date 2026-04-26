@@ -1,5 +1,5 @@
 import type { Card } from '@/domain/card';
-import { cn } from '@/lib/cn';
+import { cn } from '@/lib/utils';
 
 const SUIT_GLYPH: Record<string, string> = {
   hearts: '♥',
@@ -8,11 +8,11 @@ const SUIT_GLYPH: Record<string, string> = {
   spades: '♠',
 };
 
-const SUIT_COLOR: Record<string, string> = {
-  hearts: 'text-red-500',
-  diamonds: 'text-red-500',
-  clubs: 'text-deck-fg',
-  spades: 'text-deck-fg',
+const SUIT_TEXT: Record<string, string> = {
+  hearts: 'text-suit-hearts',
+  diamonds: 'text-suit-diamonds',
+  clubs: 'text-suit-clubs',
+  spades: 'text-suit-spades',
 };
 
 type Props = { card: Card | null; faceDown?: boolean };
@@ -20,21 +20,21 @@ type Props = { card: Card | null; faceDown?: boolean };
 export const CardFace = ({ card, faceDown = false }: Props) => {
   if (faceDown || !card) {
     return (
-      <div className="flex h-48 w-32 items-center justify-center rounded-2xl bg-deck-accent shadow-xl">
-        <div className="h-40 w-24 rounded-xl border-2 border-white/40" />
+      <div className="font-display flex h-48 w-32 items-center justify-center rounded-2xl bg-gradient-to-br from-deck-accent to-deck-accent-deep shadow-xl ring-1 ring-white/15">
+        <div className="h-40 w-24 rounded-xl border-2 border-white/35" />
       </div>
     );
   }
 
   const label = labelFor(card);
   const suit = card.type === 'joker' ? null : card.suit;
-  const color = suit ? SUIT_COLOR[suit] : 'text-deck-fg';
+  const colorClass = suit ? SUIT_TEXT[suit] : 'text-deck-wild';
 
   return (
     <div
       className={cn(
-        'text-deck-bg flex h-48 w-32 flex-col justify-between rounded-2xl bg-white p-3 shadow-xl',
-        color
+        'font-display flex h-48 w-32 flex-col justify-between rounded-2xl bg-deck-card p-3 shadow-xl ring-1 ring-border/50',
+        colorClass
       )}
     >
       <span className="text-2xl font-bold">{label}</span>

@@ -7,8 +7,12 @@ export const Timer = () => {
   const minutes = Math.floor(elapsed / 60);
   const seconds = elapsed % 60;
   return (
-    <span className="font-mono text-lg tabular-nums">
+    <time
+      className="text-deck-reward text-lg font-semibold tabular-nums tracking-tight"
+      dateTime={`PT${minutes}M${seconds}S`}
+      aria-label="Elapsed session time"
+    >
       {minutes}:{String(seconds).padStart(2, '0')}
-    </span>
+    </time>
   );
 };
