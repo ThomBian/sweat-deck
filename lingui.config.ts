@@ -1,4 +1,5 @@
 import { defineConfig } from '@lingui/cli';
+import { formatter } from '@lingui/format-po';
 
 export default defineConfig({
   sourceLocale: 'en',
@@ -9,6 +10,6 @@ export default defineConfig({
       include: ['src'],
     },
   ],
-  format: 'po',
+  format: formatter({ lineNumbers: false }),
   compileNamespace: 'ts',
 });
