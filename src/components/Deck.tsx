@@ -4,9 +4,9 @@ import { useGameStore } from '@/store/gameStore';
 import { CardFace } from './CardFace';
 import { DURATION, EASE_OUT } from '@/lib/motion';
 
-type Props = { remaining: number; onDraw: () => void };
+type Props = { remaining: number; onDraw: () => void; drawDisabled?: boolean };
 
-export const Deck = ({ remaining, onDraw }: Props) => {
+export const Deck = ({ remaining, onDraw, drawDisabled = false }: Props) => {
   const drawn = useGameStore((s) => s.drawn);
   const top = drawn[drawn.length - 1] ?? null;
   const reduceMotion = useReducedMotion();
@@ -17,7 +17,7 @@ export const Deck = ({ remaining, onDraw }: Props) => {
         type="button"
         aria-label={remaining === 0 ? t`No cards left in the deck` : t`Draw a card from the stack`}
         onClick={onDraw}
-        disabled={remaining === 0}
+        disabled={remaining === 0 || drawDisabled}
         className="relative cursor-pointer rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-ring/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50"
         whileTap={remaining > 0 ? { scale: 0.97 } : { scale: 1 }}
         transition={{ duration: DURATION.fast, ease: EASE_OUT }}

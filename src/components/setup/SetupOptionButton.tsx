@@ -11,6 +11,7 @@ type Props = {
   disabled?: boolean;
   onClick: () => void;
   'aria-pressed'?: boolean | 'true' | 'false' | 'mixed';
+  'aria-label'?: string;
 };
 
 export function SetupOptionButton({
@@ -21,6 +22,7 @@ export function SetupOptionButton({
   disabled,
   onClick,
   'aria-pressed': ariaPressed,
+  'aria-label': ariaLabel,
 }: Props) {
   const reduceMotion = useReducedMotion();
 
@@ -30,6 +32,7 @@ export function SetupOptionButton({
       disabled={disabled}
       aria-pressed={ariaPressed}
       onClick={onClick}
+      aria-label={ariaLabel}
       className={cn(
         'min-h-14 w-full min-w-0 touch-manipulation rounded-xl border px-4 py-3 text-left text-base font-medium break-words outline-none',
         'transition-[border-color,background-color,color,box-shadow,transform] duration-200 ease-out',

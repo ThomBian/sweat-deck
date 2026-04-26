@@ -2,6 +2,25 @@ import { type Card, type NumberCard, type NumberValue, SUITS, NUMBER_VALUES, FAC
 import { type Difficulty, NUMBER_DIST } from './difficulty';
 import { type Rng, sampleNormal, sampleInt } from '@/lib/rng';
 
+const VALUES_2_10: readonly NumberValue[] = [2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+/** Values in [2,10] furthest from `mean` (ties include all furthest). Used for CONCEPT 5% tail cap. */
+export const farExtremesForMean = (mean: number): NumberValue[] => {
+  let maxD = -1;
+  const out: NumberValue[] = [];
+  for (const v of VALUES_2_10) {
+    const d = Math.abs(v - mean);
+    if (d > maxD) {
+      maxD = d;
+      out.length = 0;
+      out.push(v);
+    } else if (d === maxD) {
+      out.push(v);
+    }
+  }
+  return out;
+};
+
 export const build54 = (): Card[] => {
   const cards: Card[] = [];
   for (const suit of SUITS) {
@@ -14,7 +33,16 @@ export const build54 = (): Card[] => {
 };
 
 type DrawArgs = { remaining: Card[]; difficulty: Difficulty; rng: Rng };
-type DrawResult = { card: Card; remaining: Card[] };
+export type DrawResult = { card: Card; remaining: Card[] };
+
+/** Draw only from non-Ace cards; all Aces stay in the returned remaining pile. */
+export const drawNonAce = ({ remaining, difficulty, rng }: DrawArgs): DrawResult | null => {
+  const pool = remaining.filter((c) => c.type !== 'ace');
+  if (pool.length === 0) return null;
+  const { card, remaining: poolRem } = draw({ remaining: pool, difficulty, rng });
+  const aces = remaining.filter((c) => c.type === 'ace');
+  return { card, remaining: [...poolRem, ...aces] };
+};
 
 export const draw = ({ remaining, difficulty, rng }: DrawArgs): DrawResult => {
   if (remaining.length === 0) throw new Error('cannot draw from empty deck');
@@ -41,10 +69,22 @@ type PickArgs = { numbers: NumberCard[]; difficulty: Difficulty; rng: Rng };
 const pickTargetValue = ({ numbers, difficulty, rng }: PickArgs): NumberValue => {
   const { mean, sigma } = NUMBER_DIST[difficulty];
   const available = new Set(numbers.map((c) => c.value));
-  for (let attempt = 0; attempt < 16; attempt++) {
+  const extremeSet = new Set(farExtremesForMean(mean));
+  for (let attempt = 0; attempt < 40; attempt++) {
     const raw = sampleNormal({ rng, mean, sigma, min: 2, max: 10 });
-    const rounded = Math.round(raw) as NumberValue;
-    if (available.has(rounded)) return rounded;
+    let rounded = Math.round(raw) as NumberValue;
+    if (rounded < 2) rounded = 2;
+    if (rounded > 10) rounded = 10;
+    if (!available.has(rounded)) continue;
+    if (extremeSet.has(rounded) && attempt < 39) {
+      if (rng() < 0.55) continue;
+    }
+    return rounded;
+  }
+  const nonExtreme = [...available].filter((v) => !extremeSet.has(v));
+  if (nonExtreme.length > 0) {
+    const i = sampleInt({ rng, min: 0, max: nonExtreme.length - 1 });
+    return nonExtreme[i]!;
   }
   return numbers[sampleInt({ rng, min: 0, max: numbers.length - 1 })]!.value;
 };

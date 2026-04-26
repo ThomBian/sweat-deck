@@ -5,12 +5,17 @@ export type ConfigRow = { id: 'last'; config: SetupConfig };
 
 export type MetaRow = { key: 'hasOnboarded'; value: boolean };
 
+export type SessionEndReason = 'deck' | 'manual';
+
 export type SessionRow = {
   id?: number;
   startedAt: number;
   durationSec: number;
   drawnCount: number;
   config: SetupConfig;
+  endReason?: SessionEndReason;
+  completedDeck?: boolean;
+  endedInOvertime?: boolean;
 };
 
 class SweatDeckDb extends Dexie {

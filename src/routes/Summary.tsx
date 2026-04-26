@@ -1,22 +1,33 @@
-import { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { t } from '@lingui/core/macro';
 import { Trans } from '@lingui/react/macro';
 import { useGameStore } from '@/store/gameStore';
 import { Button } from '@/components/ui/button';
 import { DURATION, EASE_OUT } from '@/lib/motion';
 import { MAIN_PAD } from '@/lib/layout';
+import { tSummaryKudoFor } from '@/lib/summaryKudos';
+import { DIFFICULTY_META, DIFFICULTY_TONE_PILL } from '@/domain/difficultyMeta';
+import { getLimitSecFromConfig } from '@/lib/sessionTimer';
+import { cn } from '@/lib/utils';
 
 export default function Summary() {
-  const [kudoIndex] = useState(() => Math.floor(Math.random() * 4));
   const navigate = useNavigate();
   const drawn = useGameStore((s) => s.drawn);
   const elapsedSec = useGameStore((s) => s.elapsedSec);
+  const config = useGameStore((s) => s.config);
+  const endReason = useGameStore((s) => s.endReason);
+  const completedDeck = useGameStore((s) => s.completedDeck);
   const reset = useGameStore((s) => s.reset);
   const reduceMotion = useReducedMotion();
-  const kudoLines = [t`Nice work`, t`You ran the table`, t`Session in the books`, t`Respect—deck served`] as const;
-  const kudo = kudoLines[kudoIndex]!;
+  const limit = getLimitSecFromConfig(config);
+  const endedInOvertime = limit != null && elapsedSec > limit;
+  const kudo = tSummaryKudoFor({
+    difficulty: config.difficulty,
+    endReason: endReason === 'deck' || endReason === 'manual' ? endReason : 'manual',
+    completedDeck,
+    endedInOvertime,
+  });
+  const dMeta = DIFFICULTY_META[config.difficulty];
 
   const tMotion = reduceMotion ? 0.1 : 0.28;
   const statY = reduceMotion ? 0 : 6;
@@ -32,11 +43,20 @@ export default function Summary() {
         animate={{ opacity: 1 }}
         transition={{ duration: tMotion, ease: EASE_OUT, delay: reduceMotion ? 0 : 0.04 }}
       >
-        <p className="ui-kicker tracking-[0.18em]">{kudo}</p>
+        <p className="ui-kicker text-pretty tracking-[0.18em]">{kudo}</p>
         <h1 className="text-balance">
           <Trans>Workout complete</Trans>
         </h1>
       </motion.div>
+      <p
+        className={cn(
+          'max-w-sm rounded-lg border px-3 py-2 text-center text-sm',
+          DIFFICULTY_TONE_PILL[dMeta.tone],
+        )}
+      >
+        <span className="font-display font-semibold text-foreground">{dMeta.label}</span>
+        <span className="mt-1 block text-muted-foreground">{dMeta.description}</span>
+      </p>
       <dl className="grid w-full max-w-sm grid-cols-2 gap-x-6 gap-y-4 text-center">
         <motion.div
           className="rounded-lg border border-border/50 bg-card/80 px-4 py-3"
