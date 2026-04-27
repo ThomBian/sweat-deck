@@ -44,11 +44,10 @@ describe('buildPlan', () => {
     expect(hearts.selected).toBe('pike-pushups');
   });
 
-  it('ignores an invalid override id not in options', () => {
-    // 'bench-press' is a gym movement, invalid for bodyweight hearts
+  it('applies an override id not in curated options', () => {
     const slots = buildPlan({ config: cfg, overrides: { 'suit:hearts': 'bench-press' } });
     const hearts = slots.find((s) => s.key === 'suit:hearts')!;
-    expect(hearts.selected).toBe('pushups');
+    expect(hearts.selected).toBe('bench-press');
   });
 
   it('number slots have reps: 0 placeholder', () => {

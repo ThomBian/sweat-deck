@@ -32,9 +32,8 @@ export const buildPlan = ({
       defaultExercise,
       ...(entry.alts ?? []).map((id: MovementId) => ({ id: id as ExerciseId, reps: 0 })),
     ];
-    const validIds = new Set(options.map((o) => o.id));
     const override = overrides[key];
-    const selected: ExerciseId = override && validIds.has(override) ? override : defaultExercise.id;
+    const selected: ExerciseId = override !== undefined ? override : defaultExercise.id;
     return { key, defaultExercise, options, selected };
   });
 
@@ -51,11 +50,9 @@ export const buildPlan = ({
         (a) => ({ ...a, id: a.id as ExerciseId }),
       ),
     ];
-    const validIds = new Set(options.map((o) => o.id));
     const override = overrides[key];
-    const selectedOpt =
-      override && validIds.has(override) ? options.find((o) => o.id === override)! : defaultExercise;
-    return { key, defaultExercise, options, selected: selectedOpt.id };
+    const selected: ExerciseId = override !== undefined ? override : defaultExercise.id;
+    return { key, defaultExercise, options, selected };
   });
 
   return [...numberSlots, ...faceSlots];
