@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { motion, useReducedMotion } from 'framer-motion';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { t } from '@lingui/core/macro';
 import { Trans } from '@lingui/react/macro';
 import { HelpCircle } from 'lucide-react';
@@ -19,8 +19,10 @@ const helpButtonClassName =
 
 export default function Setup() {
   const location = useLocation();
+  const navigate = useNavigate();
   const returnedConfig = (location.state as { config?: SetupConfig } | null)?.config;
   const [phase, setPhase] = useState<'landing' | 'wizard'>(() => (returnedConfig ? 'wizard' : 'landing'));
+  const [setupMode, setSetupMode] = useState<'guided' | 'manual'>('guided');
   const reduceMotion = useReducedMotion();
   const landingV = getLandingVariants(!!reduceMotion);
 
@@ -72,32 +74,94 @@ export default function Setup() {
                 variants={landingV.item}
                 className="[overflow-wrap:anywhere] text-balance break-words md:tracking-tight"
               >
-                <Trans>Start a new training</Trans>
+                <Trans>Build your deck</Trans>
               </motion.h1>
               <motion.p
                 variants={landingV.item}
                 className="mt-5 max-w-[min(100%,65ch)] text-pretty text-balance break-words text-base leading-[1.75] text-muted-foreground [overflow-wrap:anywhere] sm:mt-6 sm:text-lg sm:leading-[1.7]"
               >
-                <Trans>Pick your level, gear, and focus—then you&apos;ll shuffle in and draw the deck.</Trans>
+                <Trans>
+                  Let us configure your deck step by step — or go manual and assign every card yourself.
+                </Trans>
               </motion.p>
             </div>
           </div>
 
           <motion.div variants={landingV.item} className="w-full shrink-0 pt-2 sm:pt-4">
-            <motion.div
-              whileHover={{ scale: reduceMotion ? 1 : 1.02 }}
-              whileTap={{ scale: reduceMotion ? 1 : 0.98 }}
-              transition={{ duration: DURATION.fast, ease: EASE_OUT }}
-              className="mx-auto w-full sm:max-w-xs"
-            >
-              <Button
-                type="button"
-                className="h-auto min-h-11 w-full touch-manipulation px-8 py-3"
-                onClick={() => setPhase('wizard')}
+            <div className="mx-auto flex w-full flex-col gap-4 sm:max-w-xs">
+              <div
+                className="relative flex w-full gap-1 overflow-hidden rounded-lg border border-border/50 bg-muted/30 p-1"
+                role="group"
+                aria-label={t`Setup mode`}
               >
-                <Trans>Continue</Trans>
-              </Button>
-            </motion.div>
+                {(['guided', 'manual'] as const).map((m) => (
+                  <button
+                    key={m}
+                    type="button"
+                    aria-pressed={setupMode === m}
+                    onClick={() => setSetupMode(m)}
+                    className={cn(
+                      'relative z-0 min-h-11 min-w-0 flex-1 touch-manipulation rounded-md px-3 text-sm font-medium',
+                      'outline-none transition-[color,transform] duration-150',
+                      'focus-visible:z-20 focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-offset-0',
+                      setupMode === m
+                        ? 'text-foreground'
+                        : 'text-muted-foreground hover:text-foreground',
+                    )}
+                  >
+                    {setupMode === m ? (
+                      <motion.div
+                        layoutId="setup-landing-mode"
+                        className="absolute inset-0 rounded-md bg-background shadow-sm -z-10"
+                        transition={{ type: 'spring', stiffness: 520, damping: 38 }}
+                      />
+                    ) : null}
+                    <span className="relative z-10">
+                      {m === 'guided' ? <Trans>Guided</Trans> : <Trans>Manual</Trans>}
+                    </span>
+                  </button>
+                ))}
+              </div>
+
+              <div className="min-h-11 text-center text-sm text-muted-foreground [overflow-wrap:anywhere]">
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.p
+                    key={setupMode}
+                    initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 4 }}
+                    animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                    exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -3 }}
+                    transition={{ duration: reduceMotion ? 0.1 : 0.2, ease: EASE_OUT }}
+                    className="text-pretty"
+                  >
+                    {setupMode === 'guided' ? (
+                      <Trans>We&apos;ll build your deck based on your level and gear.</Trans>
+                    ) : (
+                      <Trans>Assign an exercise to every card yourself.</Trans>
+                    )}
+                  </motion.p>
+                </AnimatePresence>
+              </div>
+
+              <motion.div
+                whileHover={{ scale: reduceMotion ? 1 : 1.02 }}
+                whileTap={{ scale: reduceMotion ? 1 : 0.98 }}
+                transition={{ duration: DURATION.fast, ease: EASE_OUT }}
+              >
+                <Button
+                  type="button"
+                  className="h-auto min-h-11 w-full touch-manipulation px-8 py-3"
+                  onClick={() => {
+                    if (setupMode === 'manual') {
+                      navigate('/deck', { state: { mode: 'manual' } });
+                    } else {
+                      setPhase('wizard');
+                    }
+                  }}
+                >
+                  <Trans>Go!</Trans>
+                </Button>
+              </motion.div>
+            </div>
           </motion.div>
         </motion.div>
       ) : (

@@ -74,7 +74,7 @@ export default function SetupWizard({ onLeaveToLanding, initialConfig }: Props) 
     } catch {
       // non-blocking; config save failure shouldn't block review
     }
-    navigate('/review', { state: { config: draft } });
+    navigate('/deck', { state: { mode: 'guided', config: draft } });
   };
 
   const selectAndMaybeAdvance = (patch: (prev: SetupConfig) => SetupConfig) => {

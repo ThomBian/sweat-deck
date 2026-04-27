@@ -33,9 +33,9 @@ msgstr "{0} sur {1}"
 #. placeholder {0}: entry.defaultDistanceM
 #. placeholder {0}: ex.distanceM
 #. placeholder {0}: opt.distanceM
+#: src/components/deck/DeckSlotCard.tsx
+#: src/components/deck/ExercisePickerSheet.tsx
 #: src/components/ExercisePanel.tsx
-#: src/components/review/ExerciseSearchSheet.tsx
-#: src/components/review/ReviewCard.tsx
 msgid "{0}m"
 msgstr "{0} m"
 
@@ -51,13 +51,13 @@ msgstr "{0} m"
 #. placeholder {0}: entry.defaultReps
 #. placeholder {0}: opt.reps
 #. placeholder {0}: rx.reps
-#: src/components/review/ExerciseSearchSheet.tsx
-#: src/components/review/ReviewCard.tsx
+#: src/components/deck/DeckSlotCard.tsx
+#: src/components/deck/ExercisePickerSheet.tsx
 msgid "×{0} reps"
 msgstr "×{0} rép."
 
-#: src/components/review/ExerciseSearchSheet.tsx
-#: src/components/review/ReviewCard.tsx
+#: src/components/deck/DeckSlotCard.tsx
+#: src/components/deck/ExercisePickerSheet.tsx
 msgid "×N reps"
 msgstr "×N rép."
 
@@ -113,7 +113,7 @@ msgstr "Avancé"
 #~ msgid "Affects face cards"
 #~ msgstr "S’applique aux figures"
 
-#: src/components/review/ExerciseSearchSheet.tsx
+#: src/components/deck/ExercisePickerSheet.tsx
 msgid "All exercises"
 msgstr "Tous les exercices"
 
@@ -137,8 +137,20 @@ msgstr ""
 msgid "Assault Bike"
 msgstr ""
 
+#: src/routes/Setup.tsx
+msgid "Assign an exercise to every card yourself."
+msgstr ""
+
+#: src/routes/DeckBuilder.tsx
+#~ msgid "Assign an exercise to every card."
+#~ msgstr ""
+
+#: src/components/deck/DeckSlotCard.tsx
+msgid "Assign exercise"
+msgstr ""
+
 #: src/components/SetupWizard.tsx
-#: src/routes/Review.tsx
+#: src/routes/DeckBuilder.tsx
 msgid "Back"
 msgstr "Retour"
 
@@ -194,6 +206,10 @@ msgstr ""
 msgid "Broad Jumps"
 msgstr "Sauts en longueur"
 
+#: src/routes/Setup.tsx
+msgid "Build your deck"
+msgstr ""
+
 #: src/i18n/exercises.ts
 msgid "Bulgarian Split Squats"
 msgstr "Squats bulgares"
@@ -246,7 +262,7 @@ msgstr ""
 msgid "Chin-ups"
 msgstr ""
 
-#: src/components/review/ReviewCard.tsx
+#: src/components/deck/DeckSlotCard.tsx
 msgid "Choose an alternative"
 msgstr "Choisir une variante"
 
@@ -275,8 +291,8 @@ msgid "Combine the last 2 exercises — 10 reps each"
 msgstr "Combinez les 2 derniers exercices — 10 répétitions chacun"
 
 #: src/routes/Setup.tsx
-msgid "Continue"
-msgstr "Continuer"
+#~ msgid "Continue"
+#~ msgstr "Continuer"
 
 #: src/routes/Onboarding.tsx
 msgid "Continue without saving"
@@ -295,7 +311,7 @@ msgid "Couldn't save your progress to this device. Check storage permissions or 
 msgstr "Impossible d’enregistrer votre progression sur cet appareil. Vérifiez les autorisations de stockage ou réessayez."
 
 #. placeholder {0}: tExercise(selected)
-#: src/components/review/ExerciseSearchSheet.tsx
+#: src/components/deck/ExercisePickerSheet.tsx
 msgid "Current move: <0>{0}</0>"
 msgstr "Mouvement actuel : <0>{0}</0>"
 
@@ -403,11 +419,11 @@ msgstr "Durée"
 msgid "Enabling cardio mode favors high-intensity movements."
 msgstr "Activer le mode cardio favorisera les mouvements à haute intensité."
 
-#: src/routes/Review.tsx
+#: src/routes/DeckBuilder.tsx
 msgid "Exercise slots"
 msgstr "Emplacements d’exercices"
 
-#: src/components/review/ExerciseSearchSheet.tsx
+#: src/components/deck/ExercisePickerSheet.tsx
 msgid "Face card"
 msgstr "Carte figure"
 
@@ -471,6 +487,10 @@ msgstr "L’équipement change les mouvements proposés pour chaque couleur."
 msgid "Glute Bridges"
 msgstr "Pont"
 
+#: src/routes/Setup.tsx
+msgid "Go!"
+msgstr ""
+
 #: src/i18n/exercises.ts
 msgid "Goblet Squats"
 msgstr "Goblet Squat"
@@ -482,6 +502,10 @@ msgstr ""
 #: src/routes/Onboarding.tsx
 msgid "Got it"
 msgstr "Compris"
+
+#: src/routes/Setup.tsx
+msgid "Guided"
+msgstr ""
 
 #: src/i18n/exercises.ts
 msgid "Hack Squats"
@@ -607,9 +631,13 @@ msgstr ""
 msgid "Leg Press"
 msgstr ""
 
-#: src/components/review/ExerciseSearchSheet.tsx
+#: src/components/deck/ExercisePickerSheet.tsx
 msgid "Legs"
 msgstr "Jambes"
+
+#: src/routes/Setup.tsx
+msgid "Let us configure your deck step by step — or go manual and assign every card yourself."
+msgstr ""
 
 #: src/routes/Index.tsx
 msgid "Loading"
@@ -639,11 +667,15 @@ msgstr ""
 msgid "Man-Makers"
 msgstr "Man-makers"
 
+#: src/routes/Setup.tsx
+msgid "Manual"
+msgstr ""
+
 #: src/i18n/exercises.ts
 #~ msgid "Max-Effort Leg Burnout"
 #~ msgstr "Brûlure des jambes max"
 
-#: src/components/review/ExerciseSearchSheet.tsx
+#: src/components/deck/ExercisePickerSheet.tsx
 msgid "Mixed"
 msgstr "Mixte"
 
@@ -707,7 +739,7 @@ msgstr "Sans limite"
 msgid "Nordic Curls"
 msgstr ""
 
-#: src/components/review/ExerciseSearchSheet.tsx
+#: src/components/deck/ExercisePickerSheet.tsx
 msgid "Number card"
 msgstr "Carte numérotée"
 
@@ -747,9 +779,13 @@ msgstr "Pause"
 msgid "Paused"
 msgstr "En pause"
 
+#: src/components/deck/ExercisePickerSheet.tsx
+msgid "Pick an exercise for this card."
+msgstr ""
+
 #: src/routes/Setup.tsx
-msgid "Pick your level, gear, and focus—then you'll shuffle in and draw the deck."
-msgstr "Choisissez le niveau, l’équipement et ce que vous voulez travailler — puis mélangez et tirez votre première carte."
+#~ msgid "Pick your level, gear, and focus—then you'll shuffle in and draw the deck."
+#~ msgstr "Choisissez le niveau, l’équipement et ce que vous voulez travailler — puis mélangez et tirez votre première carte."
 
 #: src/i18n/exercises.ts
 msgid "Pike Push-ups"
@@ -767,7 +803,7 @@ msgstr "Planche"
 msgid "Plank to Push-up"
 msgstr "Planche avec pompe"
 
-#: src/components/review/ExerciseSearchSheet.tsx
+#: src/components/deck/ExercisePickerSheet.tsx
 msgid "Posterior"
 msgstr "Chaîne postérieure"
 
@@ -775,7 +811,7 @@ msgstr "Chaîne postérieure"
 msgid "Preacher Curls"
 msgstr ""
 
-#: src/components/review/ExerciseSearchSheet.tsx
+#: src/components/deck/ExercisePickerSheet.tsx
 msgid "Pull"
 msgstr "Tirage"
 
@@ -783,7 +819,7 @@ msgstr "Tirage"
 msgid "Pull-ups"
 msgstr "Tractions"
 
-#: src/components/review/ExerciseSearchSheet.tsx
+#: src/components/deck/ExercisePickerSheet.tsx
 msgid "Push"
 msgstr "Poussée"
 
@@ -803,11 +839,11 @@ msgstr "Rappel rapide"
 msgid "Rack Pulls"
 msgstr ""
 
-#: src/components/review/ExerciseSearchSheet.tsx
+#: src/components/deck/ExercisePickerSheet.tsx
 msgid "Recommended"
 msgstr "Recommandés"
 
-#: src/components/review/ExerciseSearchSheet.tsx
+#: src/components/deck/ExercisePickerSheet.tsx
 msgid "Recommended exercises"
 msgstr "Exercices recommandés"
 
@@ -819,7 +855,7 @@ msgstr "Tirage renegade"
 msgid "Replay tutorial"
 msgstr "Revoir le tutoriel"
 
-#: src/routes/Review.tsx
+#: src/routes/DeckBuilder.tsx
 msgid "Reset swaps"
 msgstr "Réinitialiser les échanges"
 
@@ -836,7 +872,7 @@ msgid "Resume"
 msgstr "Reprendre"
 
 #: src/components/SetupWizard.tsx
-#: src/routes/Review.tsx
+#: src/routes/DeckBuilder.tsx
 msgid "Review your deck"
 msgstr "Vérifiez votre paquet"
 
@@ -868,19 +904,19 @@ msgstr "Même principe : le paquet mène l’entraînement—ouvrez la section c
 msgid "Saving…"
 msgstr "Enregistrement…"
 
-#: src/components/review/ReviewCard.tsx
+#: src/components/deck/DeckSlotCard.tsx
 msgid "Search all exercises"
 msgstr "Rechercher tous les exercices"
 
-#: src/components/review/ExerciseSearchSheet.tsx
+#: src/components/deck/ExercisePickerSheet.tsx
 msgid "Search exercises…"
 msgstr "Rechercher des exercices…"
 
-#: src/components/review/ReviewCard.tsx
+#: src/components/deck/DeckSlotCard.tsx
 msgid "Search or change {selectedName}"
 msgstr "Rechercher ou changer : {selectedName}"
 
-#: src/components/review/ExerciseSearchSheet.tsx
+#: src/components/deck/ExercisePickerSheet.tsx
 msgid "Search results"
 msgstr "Résultats de recherche"
 
@@ -907,6 +943,10 @@ msgstr "Séance bouclée — à votre rythme."
 #: src/components/Timer.tsx
 #~ msgid "Session time"
 #~ msgstr "Chrono de séance"
+
+#: src/routes/Setup.tsx
+msgid "Setup mode"
+msgstr ""
 
 #: src/i18n/exercises.ts
 msgid "Shoulder Press"
@@ -953,8 +993,8 @@ msgid "Standing Calf Raises"
 msgstr "Élévations mollets debout"
 
 #: src/routes/Setup.tsx
-msgid "Start a new training"
-msgstr "Démarrer un entraînement"
+#~ msgid "Start a new training"
+#~ msgstr "Démarrer un entraînement"
 
 #: src/lib/summaryKudos.ts
 msgid "Start somewhere—you started today."
@@ -964,7 +1004,7 @@ msgstr "Tout part d’un début — vous avez lancé la chose aujourd’hui."
 msgid "Start timer"
 msgstr "Lancer le minuteur"
 
-#: src/routes/Review.tsx
+#: src/routes/DeckBuilder.tsx
 msgid "Start workout"
 msgstr "Démarrer l’entraînement"
 
@@ -994,7 +1034,7 @@ msgstr ""
 #~ msgid "Swap {0}"
 #~ msgstr "Remplacer {0}"
 
-#: src/components/review/ReviewCard.tsx
+#: src/components/deck/DeckSlotCard.tsx
 msgid "Swap {selectedName}"
 msgstr "Remplacer {selectedName}"
 
@@ -1026,13 +1066,17 @@ msgstr ""
 #~ msgid "Take a breath. Your clock is on hold—resume when you are ready."
 #~ msgstr "Respirez. Le chrono est en pause — reprenez quand vous voulez."
 
+#: src/routes/DeckBuilder.tsx
+msgid "Tap a card to pick or change each exercise."
+msgstr ""
+
 #: src/routes/Review.tsx
 #~ msgid "Tap a card to swap"
 #~ msgstr "Touchez une carte pour la remplacer"
 
-#: src/routes/Review.tsx
-msgid "Tap a card to swap or search the full list."
-msgstr "Touchez une carte pour échanger ou parcourir toute la liste."
+#: src/routes/DeckBuilder.tsx
+#~ msgid "Tap a card to swap or search the full list."
+#~ msgstr "Touchez une carte pour échanger ou parcourir toute la liste."
 
 #: src/components/ExercisePanel.tsx
 msgid "Tap the stack to draw your first card."
@@ -1141,6 +1185,10 @@ msgstr ""
 #: src/i18n/exercises.ts
 msgid "Water Break"
 msgstr "Pause hydratation"
+
+#: src/routes/Setup.tsx
+msgid "We'll build your deck based on your level and gear."
+msgstr ""
 
 #: src/i18n/exercises.ts
 msgid "Weighted Calf Raises"

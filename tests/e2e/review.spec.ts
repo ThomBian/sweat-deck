@@ -18,20 +18,20 @@ async function completeWizardToReview(page: Page) {
   await expect(page).toHaveURL(/\/onboarding$|\/$/);
   await page.getByRole('button', { name: 'Got it' }).click();
   await expect(page).toHaveURL(/\/setup$/);
-  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByRole('button', { name: 'Go!' }).click();
   for (let i = 0; i < 4; i++) {
     await page.getByRole('button', { name: 'Next' }).click();
   }
   await page.getByRole('button', { name: 'Review your deck' }).click();
-  await expect(page).toHaveURL(/\/review$/);
+  await expect(page).toHaveURL(/\/deck$/);
 }
 
-test.describe('review route', () => {
+test.describe('deck route', () => {
   test.beforeEach(async ({ page }) => {
     await resetDb(page);
   });
 
-  test('completing wizard lands on /review with 7 slot cards', async ({ page }) => {
+  test('completing wizard lands on /deck with 7 slot cards', async ({ page }) => {
     await completeWizardToReview(page);
     const grid = page.locator('[aria-label="Exercise slots"] > div');
     await expect(grid).toHaveCount(7);
@@ -83,10 +83,37 @@ test.describe('review route', () => {
     await expect(heartCard).not.toHaveClass(/ring-primary/);
   });
 
-  test('Back from /review preserves draft and returns to /setup', async ({ page }) => {
+  test('Back from /deck preserves draft and returns to /setup', async ({ page }) => {
     await completeWizardToReview(page);
     await page.getByRole('button', { name: 'Back' }).click();
     await expect(page).toHaveURL(/\/setup$/);
     await expect(page.getByRole('button', { name: 'Review your deck' })).toBeVisible();
+  });
+});
+
+test.describe('manual mode', () => {
+  test.beforeEach(async ({ page }) => {
+    await resetDb(page);
+  });
+
+  test('Manual "Go!" navigates to /deck with all slots empty', async ({ page }) => {
+    await expect(page).toHaveURL(/\/onboarding$|\/$/);
+    await page.getByRole('button', { name: 'Got it' }).click();
+    await expect(page).toHaveURL(/\/setup$/);
+    await page.getByRole('button', { name: 'Manual' }).click();
+    await page.getByRole('button', { name: 'Go!' }).click();
+    await expect(page).toHaveURL(/\/deck$/);
+    const assignBtns = page.getByRole('button', { name: /assign exercise/i });
+    await expect(assignBtns).toHaveCount(7);
+  });
+
+  test('"Start workout" is disabled until all slots assigned in manual mode', async ({ page }) => {
+    await expect(page).toHaveURL(/\/onboarding$|\/$/);
+    await page.getByRole('button', { name: 'Got it' }).click();
+    await page.getByRole('button', { name: 'Manual' }).click();
+    await page.getByRole('button', { name: 'Go!' }).click();
+    await expect(page).toHaveURL(/\/deck$/);
+    const startBtn = page.getByRole('button', { name: 'Start workout' });
+    await expect(startBtn).toBeDisabled();
   });
 });

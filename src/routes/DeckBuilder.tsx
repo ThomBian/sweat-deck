@@ -1,66 +1,58 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import { t } from '@lingui/core/macro';
 import { Trans } from '@lingui/react/macro';
-import { useGameStore } from '@/store/gameStore';
-import { buildPlan } from '@/domain/plan';
-import type { ExerciseId } from '@/domain/exercise';
-import type { SlotKey } from '@/domain/plan';
-import type { SetupConfig } from '@/domain/config';
-import { ReviewCard } from '@/components/review/ReviewCard';
+import { DEFAULT_CONFIG, type SetupConfig } from '@/domain/config';
+import { DeckSlotCard } from '@/components/deck/DeckSlotCard';
 import { Button } from '@/components/ui/button';
 import { ShuffleTransition } from '@/components/ShuffleTransition';
 import { DURATION, EASE_OUT } from '@/lib/motion';
 import { SHELL_SETUP } from '@/lib/layout';
 import { cn } from '@/lib/utils';
-import { saveLastConfig } from '@/store/db';
+import { useDeckComposer } from '@/hooks/useDeckComposer';
 
-export default function Review() {
+type LocationState = { mode?: 'guided' | 'manual'; config?: SetupConfig } | null;
+
+export default function DeckBuilder() {
   const navigate = useNavigate();
   const location = useLocation();
-  const reduceMotion = useReducedMotion();
-  const config: SetupConfig | undefined = (location.state as { config?: SetupConfig } | null)?.config;
-
-  const overrides = useGameStore((s) => s.overrides);
-  const setOverride = useGameStore((s) => s.setOverride);
-  const resetOverrides = useGameStore((s) => s.resetOverrides);
-  const start = useGameStore((s) => s.start);
-
-  const [showShuffle, setShowShuffle] = useState(false);
-  const [isStarting, setIsStarting] = useState(false);
+  const state = location.state as LocationState;
+  const mode = state?.mode ?? 'guided';
+  const config = state?.config;
 
   useEffect(() => {
-    if (!config) {
+    if (mode === 'guided' && !config) {
       navigate('/setup', { replace: true });
-      return;
     }
-    resetOverrides();
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- run once on mount only
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!config) return null;
+  if (mode === 'guided' && !config) return null;
 
-  const plan = buildPlan({ config, overrides });
-  const hasOverrides = Object.keys(overrides).length > 0;
+  const composerInput =
+    mode === 'manual'
+      ? { mode: 'manual' as const }
+      : { mode: 'guided' as const, config: config! };
 
-  const handlePick = (key: SlotKey, id: ExerciseId) => {
-    setOverride(key, id);
-  };
+  return <DeckBuilderInner config={config} composerInput={composerInput} />;
+}
 
-  const handleStart = async () => {
-    if (showShuffle || isStarting) return;
-    setIsStarting(true);
-    try {
-      await saveLastConfig(config);
-    } catch {
-      // non-blocking
-    }
-    start(config);
-    setShowShuffle(true);
-  };
+function DeckBuilderInner({
+  config,
+  composerInput,
+}: {
+  config: SetupConfig | undefined;
+  composerInput: { mode: 'guided'; config: SetupConfig } | { mode: 'manual' };
+}) {
+  const navigate = useNavigate();
+  const reduceMotion = useReducedMotion();
+  const { slots, isReady, setSlot, handleStart, footerLocked, showShuffle, hasOverrides, resetOverrides } =
+    useDeckComposer(composerInput);
 
-  const footerLocked = showShuffle || isStarting;
+  /** Same title + lede in guided and manual — slot cards show empty/filled; behavior differs (e.g. Start disabled). */
+  const heading = t`Review your deck`;
+  const subheading = t`Tap a card to pick or change each exercise.`;
 
   return (
     <Fragment>
@@ -74,7 +66,6 @@ export default function Review() {
             'min-h-0 flex-1 overflow-y-auto overscroll-y-contain',
             'px-5 sm:px-6',
             'pt-[max(1.25rem,env(safe-area-inset-top))] sm:pt-6',
-            /* Clear fixed footer + safe area + extra for expanded alt rows */
             'max-md:pb-[max(10rem,calc(env(safe-area-inset-bottom)+6.25rem))]',
             'md:pb-[max(8.5rem,calc(env(safe-area-inset-bottom)+5.5rem))]',
           )}
@@ -87,27 +78,26 @@ export default function Review() {
           >
             <header className="flex flex-col gap-2 sm:gap-3">
               <h1 className="min-w-0 font-display text-2xl font-semibold tracking-tight text-balance break-words sm:text-3xl">
-                <Trans>Review your deck</Trans>
+                {heading}
               </h1>
-              <p className="max-w-[65ch] text-pretty break-words text-sm leading-relaxed text-muted-foreground [overflow-wrap:anywhere]">
-                <Trans>Tap a card to swap or search the full list.</Trans>
+              <p className="max-w-[65ch] text-pretty text-balance break-words text-sm leading-relaxed text-muted-foreground [overflow-wrap:anywhere]">
+                {subheading}
               </p>
             </header>
 
             <div
               className={cn(
-                /* Slightly looser row rhythm than column gap — easier vertical scan */
                 'grid gap-x-3 gap-y-4 sm:gap-y-5 [&>*]:min-w-0',
                 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4',
               )}
               aria-label={t`Exercise slots`}
             >
-              {plan.map((slot) => (
-                <ReviewCard
+              {slots.map((slot) => (
+                <DeckSlotCard
                   key={slot.key}
-                  config={config}
+                  config={composerInput.mode === 'guided' ? composerInput.config : DEFAULT_CONFIG}
                   slot={slot}
-                  onPick={(id) => handlePick(slot.key, id)}
+                  onPick={(id) => setSlot(slot.key, id)}
                 />
               ))}
             </div>
@@ -147,21 +137,21 @@ export default function Review() {
                 variant="outline"
                 className="min-h-11 touch-manipulation"
                 disabled={footerLocked}
-                onClick={() => navigate('/setup', { state: { config } })}
+                onClick={() => navigate('/setup', { state: config ? { config } : undefined })}
               >
                 <Trans>Back</Trans>
               </Button>
             </motion.div>
             <motion.div
               className="min-w-0 shrink"
-              whileHover={{ scale: reduceMotion || footerLocked ? 1 : 1.02 }}
-              whileTap={{ scale: reduceMotion || footerLocked ? 1 : 0.98 }}
+              whileHover={{ scale: reduceMotion || footerLocked || !isReady ? 1 : 1.02 }}
+              whileTap={{ scale: reduceMotion || footerLocked || !isReady ? 1 : 0.98 }}
               transition={{ duration: DURATION.fast, ease: EASE_OUT }}
             >
               <Button
                 type="button"
                 className="min-h-11 touch-manipulation"
-                disabled={footerLocked}
+                disabled={footerLocked || !isReady}
                 onClick={() => void handleStart()}
               >
                 <Trans>Start workout</Trans>

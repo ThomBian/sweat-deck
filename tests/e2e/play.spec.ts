@@ -19,12 +19,12 @@ async function completeOnboardingAndSetup(page: Page) {
   await expect(page).toHaveURL(/\/onboarding$|\/$/);
   await page.getByRole('button', { name: 'Got it' }).click();
   await expect(page).toHaveURL(/\/setup$/);
-  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByRole('button', { name: 'Go!' }).click();
   for (let i = 0; i < 4; i++) {
     await page.getByRole('button', { name: 'Next' }).click();
   }
   await page.getByRole('button', { name: 'Review your deck' }).click();
-  await expect(page).toHaveURL(/\/review$/);
+  await expect(page).toHaveURL(/\/deck$/);
   await page.getByRole('button', { name: 'Start workout' }).click();
   await expect(page).toHaveURL(/\/play$/, { timeout: 15_000 });
 }

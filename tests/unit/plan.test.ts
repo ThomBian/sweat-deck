@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { buildPlan } from '@/domain/plan';
+import { buildPlan, buildManualSlots } from '@/domain/plan';
 import type { SetupConfig } from '@/domain/config';
 
 const cfg: SetupConfig = {
@@ -69,5 +69,20 @@ describe('buildPlan', () => {
     const slots = buildPlan({ config: { ...cfg, cardio: true }, overrides: {} });
     const j = slots.find((s) => s.key === 'face:J')!;
     expect(j.defaultExercise.id).toBe('skierg');
+  });
+});
+
+describe('buildManualSlots', () => {
+  it('returns 7 slot keys in order: hearts diamonds clubs spades J Q K', () => {
+    const keys = buildManualSlots();
+    expect(keys).toEqual([
+      'suit:hearts',
+      'suit:diamonds',
+      'suit:clubs',
+      'suit:spades',
+      'face:J',
+      'face:Q',
+      'face:K',
+    ]);
   });
 });

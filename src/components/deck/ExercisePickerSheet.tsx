@@ -30,7 +30,7 @@ type Props = {
   onOpenChange: (open: boolean) => void;
   slotKey: SlotKey;
   config: SetupConfig;
-  selected: ExerciseId;
+  selected?: ExerciseId;
   onPick: (id: ExerciseId) => void;
   /** When the slot is a face card, used to preview sensible reps/time/distance for search hits. */
   facePrescriptionCtx?: FacePrescriptionCtx;
@@ -83,7 +83,7 @@ function rxLabel(slotKey: SlotKey, entry: ExerciseEntry, faceCtx?: FacePrescript
 const DISMISS_OFFSET_PX = 72;
 const DISMISS_VELOCITY = 420;
 
-export function ExerciseSearchSheet({
+export function ExercisePickerSheet({
   open,
   onOpenChange,
   slotKey,
@@ -119,7 +119,7 @@ export function ExerciseSearchSheet({
     return [...hit].sort(recFirst);
   }, [q, recIds, i18n.locale]);
 
-  /** Everything not in Recommended, for the default “browse more” list. */
+  /** Everything not in Recommended, for the default "browse more" list. */
   const restOfExercises = useMemo(() => {
     return ALL_EXERCISES.filter((e) => !recIds.has(e.id)).sort((a, b) => {
       const byGroup = a.group.localeCompare(b.group);
@@ -162,7 +162,6 @@ export function ExerciseSearchSheet({
                   },
                 })}
           >
-            {/* Drag surface: handle + title only — search + list keep native scroll/focus */}
             <div
               className="touch-none select-none"
               onPointerDown={(e) => {
@@ -189,10 +188,14 @@ export function ExerciseSearchSheet({
                   )}
                 </Dialog.Title>
                 <Dialog.Description className="px-0.5 pt-1.5 text-sm leading-relaxed text-muted-foreground">
-                  <Trans>
-                    Current move:{' '}
-                    <span className="font-medium text-foreground">{tExercise(selected)}</span>
-                  </Trans>
+                  {selected ? (
+                    <Trans>
+                      Current move:{' '}
+                      <span className="font-medium text-foreground">{tExercise(selected)}</span>
+                    </Trans>
+                  ) : (
+                    <Trans>Pick an exercise for this card.</Trans>
+                  )}
                 </Dialog.Description>
               </div>
             </div>
@@ -215,7 +218,6 @@ export function ExerciseSearchSheet({
             <div
               className={cn(
                 'min-h-0 flex-1 overflow-y-auto overscroll-y-contain touch-pan-y',
-                /* Cap list height so the sheet + keyboard stay predictable; content scrolls inside */
                 'max-h-[min(56dvh,calc(80dvh-10.5rem))]',
               )}
             >
@@ -298,12 +300,12 @@ function ResultRow({
   onPick,
 }: {
   entry: ExerciseEntry;
-  selected: ExerciseId;
+  selected: ExerciseId | undefined;
   showRecommendedHeart: boolean;
   rx: string;
   onPick: () => void;
 }) {
-  const isSel = entry.id === selected;
+  const isSel = selected !== undefined && entry.id === selected;
   const meta = exerciseMetaLine(entry);
   return (
     <div role="option" aria-selected={isSel} className="min-w-0">
