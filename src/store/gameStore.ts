@@ -3,7 +3,8 @@ import type { Card } from '@/domain/card';
 import { type SetupConfig, DEFAULT_CONFIG, type Equipment, type Theme } from '@/domain/config';
 import { build54, draw, drawNonAce, type DrawResult } from '@/domain/deck';
 import type { Difficulty } from '@/domain/difficulty';
-import { resolve, type Exercise } from '@/domain/exercise';
+import { resolve, type Exercise, type ExerciseId } from '@/domain/exercise';
+import type { PlanOverrides, SlotKey } from '@/domain/plan';
 import { pickJokerEffect } from '@/domain/joker';
 import { createRng, type Rng } from '@/lib/rng';
 import { computeEffortSec, getLimitSecFromConfig, isDeckEffortOnlyCard } from '@/lib/sessionTimer';
@@ -45,6 +46,7 @@ type GameState = {
   completedDeck: boolean;
   lastRestAtElapsedSec: number;
   rng: Rng;
+  overrides: PlanOverrides;
 };
 
 type FinishOpts = { reason: EndReason; completedDeck: boolean };
@@ -57,6 +59,9 @@ type GameActions = {
   pause: (by: 'user' | 'visibility') => void;
   resume: () => void;
   reset: () => void;
+  setOverride: (key: SlotKey, id: ExerciseId) => void;
+  clearOverride: (key: SlotKey) => void;
+  resetOverrides: () => void;
 };
 
 const makeInitialState = (): GameState => ({
@@ -74,17 +79,19 @@ const makeInitialState = (): GameState => ({
   completedDeck: false,
   lastRestAtElapsedSec: 0,
   rng: createRng(Date.now()),
+  overrides: {},
 });
 
 const exerciseFromCard = (
   card: Card,
   config: SetupConfig,
+  overrides: PlanOverrides,
   historyBefore: Card[],
   rng: Rng,
 ): Exercise =>
   card.type === 'joker'
     ? pickJokerEffect({ history: historyBefore, rng }).exercise
-    : resolve({ card, config });
+    : resolve({ card, config, overrides });
 
 export const useGameStore = create<GameState & GameActions>((set, get) => ({
   ...makeInitialState(),
@@ -92,12 +99,14 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
   start: (config) => {
     if (!validateConfig(config)) return;
     void saveLastConfig(config);
+    const currentOverrides = get().overrides;
     set({
       ...makeInitialState(),
       config,
       deck: build54(),
       startedAt: Date.now(),
       rng: createRng(Date.now()),
+      overrides: currentOverrides,
     });
   },
 
@@ -152,7 +161,7 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
     }
 
     const historyBefore = s0.drawn;
-    const exercise = exerciseFromCard(card, config, historyBefore, rng);
+    const exercise = exerciseFromCard(card, config, s0.overrides, historyBefore, rng);
     const nextDrawn = [...s0.drawn, card];
     const updateRest = card.type === 'ace';
 
@@ -229,4 +238,15 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
   },
 
   reset: () => set(makeInitialState()),
+
+  setOverride: (key, id) => set((s) => ({ overrides: { ...s.overrides, [key]: id } })),
+
+  clearOverride: (key) =>
+    set((s) => {
+      const next = { ...s.overrides };
+      delete next[key];
+      return { overrides: next };
+    }),
+
+  resetOverrides: () => set({ overrides: {} }),
 }));
