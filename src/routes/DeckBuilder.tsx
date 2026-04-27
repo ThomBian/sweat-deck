@@ -8,7 +8,7 @@ import { buildPlan } from '@/domain/plan';
 import type { ExerciseId } from '@/domain/exercise';
 import type { SlotKey } from '@/domain/plan';
 import type { SetupConfig } from '@/domain/config';
-import { ReviewCard } from '@/components/review/ReviewCard';
+import { DeckSlotCard } from '@/components/deck/DeckSlotCard';
 import { Button } from '@/components/ui/button';
 import { ShuffleTransition } from '@/components/ShuffleTransition';
 import { DURATION, EASE_OUT } from '@/lib/motion';
@@ -16,11 +16,14 @@ import { SHELL_SETUP } from '@/lib/layout';
 import { cn } from '@/lib/utils';
 import { saveLastConfig } from '@/store/db';
 
-export default function Review() {
+type LocationState = { mode?: 'guided' | 'manual'; config?: SetupConfig } | null;
+
+export default function DeckBuilder() {
   const navigate = useNavigate();
   const location = useLocation();
   const reduceMotion = useReducedMotion();
-  const config: SetupConfig | undefined = (location.state as { config?: SetupConfig } | null)?.config;
+  const state = (location.state as LocationState) ?? null;
+  const config: SetupConfig | undefined = state?.config;
 
   const overrides = useGameStore((s) => s.overrides);
   const setOverride = useGameStore((s) => s.setOverride);
@@ -74,7 +77,6 @@ export default function Review() {
             'min-h-0 flex-1 overflow-y-auto overscroll-y-contain',
             'px-5 sm:px-6',
             'pt-[max(1.25rem,env(safe-area-inset-top))] sm:pt-6',
-            /* Clear fixed footer + safe area + extra for expanded alt rows */
             'max-md:pb-[max(10rem,calc(env(safe-area-inset-bottom)+6.25rem))]',
             'md:pb-[max(8.5rem,calc(env(safe-area-inset-bottom)+5.5rem))]',
           )}
@@ -96,14 +98,13 @@ export default function Review() {
 
             <div
               className={cn(
-                /* Slightly looser row rhythm than column gap — easier vertical scan */
                 'grid gap-x-3 gap-y-4 sm:gap-y-5 [&>*]:min-w-0',
                 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4',
               )}
               aria-label={t`Exercise slots`}
             >
               {plan.map((slot) => (
-                <ReviewCard
+                <DeckSlotCard
                   key={slot.key}
                   config={config}
                   slot={slot}
@@ -147,7 +148,7 @@ export default function Review() {
                 variant="outline"
                 className="min-h-11 touch-manipulation"
                 disabled={footerLocked}
-                onClick={() => navigate('/setup', { state: { config } })}
+                onClick={() => navigate('/setup', { state: config ? { config } : undefined })}
               >
                 <Trans>Back</Trans>
               </Button>

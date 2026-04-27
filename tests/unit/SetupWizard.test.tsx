@@ -74,7 +74,7 @@ describe('SetupWizard', () => {
     expect(await screen.findByRole('button', { name: 'Full Gym' })).toHaveAttribute('aria-pressed', 'true');
   });
 
-  it('Review your deck saves config and navigates to /review', async () => {
+  it('Review your deck saves config and navigates to /deck', async () => {
     const saveSpy = vi.spyOn(dbMod, 'saveLastConfig').mockResolvedValue(undefined);
     const user = userEvent.setup();
     render(wrap(<SetupWizard />));
@@ -85,8 +85,11 @@ describe('SetupWizard', () => {
     await user.click(screen.getByRole('button', { name: 'Review your deck' }));
 
     expect(saveSpy).toHaveBeenCalledWith(expect.objectContaining({ difficulty: 'intermediate' }));
-    expect(mockNavigate).toHaveBeenCalledWith('/review', {
-      state: { config: expect.objectContaining({ difficulty: 'intermediate' }) },
+    expect(mockNavigate).toHaveBeenCalledWith('/deck', {
+      state: {
+        mode: 'guided',
+        config: expect.objectContaining({ difficulty: 'intermediate' }),
+      },
     });
     expect(useGameStore.getState().deck.length).toBe(0);
     saveSpy.mockRestore();

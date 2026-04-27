@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 import { tExercise } from '@/i18n/exercises';
 import { SetupOptionButton } from '@/components/setup/SetupOptionButton';
 import { Button } from '@/components/ui/button';
-import { ExerciseSearchSheet } from '@/components/review/ExerciseSearchSheet';
+import { ExercisePickerSheet } from '@/components/deck/ExercisePickerSheet';
 import type { FaceRank } from '@/domain/card';
 import { faceFreePickPrescription } from '@/domain/exerciseDb';
 import type { PlanSlot } from '@/domain/plan';
@@ -39,7 +39,7 @@ function prescriptionLabel(opt: PlanSlot['options'][number]): string {
 
 type Props = { config: SetupConfig; slot: PlanSlot; onPick: (id: ExerciseId) => void };
 
-export function ReviewCard({ config, slot, onPick }: Props) {
+export function DeckSlotCard({ config, slot, onPick }: Props) {
   const [open, setOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const reduceMotion = useReducedMotion();
@@ -157,11 +157,7 @@ export function ReviewCard({ config, slot, onPick }: Props) {
         aria-expanded={hasAlts ? open : undefined}
         aria-haspopup={hasAlts ? undefined : 'dialog'}
         {...(open && hasAlts ? { 'aria-controls': altPanelId } : {})}
-        aria-label={
-          hasAlts
-            ? t`Swap ${selectedName}`
-            : t`Search or change ${selectedName}`
-        }
+        aria-label={hasAlts ? t`Swap ${selectedName}` : t`Search or change ${selectedName}`}
         onClick={handleCardActivate}
         className={cn(
           cardSurface,
@@ -235,7 +231,7 @@ export function ReviewCard({ config, slot, onPick }: Props) {
         ) : null}
       </AnimatePresence>
 
-      <ExerciseSearchSheet
+      <ExercisePickerSheet
         open={searchOpen}
         onOpenChange={setSearchOpen}
         slotKey={slot.key}

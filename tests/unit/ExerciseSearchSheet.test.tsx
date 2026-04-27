@@ -3,7 +3,7 @@ import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { I18nProvider } from '@lingui/react';
 import { i18n } from '@/i18n';
-import { ExerciseSearchSheet } from '@/components/review/ExerciseSearchSheet';
+import { ExercisePickerSheet } from '@/components/deck/ExercisePickerSheet';
 import type { SetupConfig } from '@/domain/config';
 
 const cfg: SetupConfig = {
@@ -17,12 +17,12 @@ beforeEach(() => {
   i18n.activate('en');
 });
 
-describe('ExerciseSearchSheet', () => {
+describe('ExercisePickerSheet', () => {
   it('lists recommended rows when query is empty', () => {
     const onPick = vi.fn();
     render(
       <I18nProvider i18n={i18n}>
-        <ExerciseSearchSheet
+        <ExercisePickerSheet
           open
           onOpenChange={() => {}}
           slotKey="suit:hearts"
@@ -56,7 +56,7 @@ describe('ExerciseSearchSheet', () => {
     const onPick = vi.fn();
     render(
       <I18nProvider i18n={i18n}>
-        <ExerciseSearchSheet
+        <ExercisePickerSheet
           open
           onOpenChange={() => {}}
           slotKey="suit:hearts"

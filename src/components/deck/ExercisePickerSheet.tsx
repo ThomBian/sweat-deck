@@ -83,7 +83,7 @@ function rxLabel(slotKey: SlotKey, entry: ExerciseEntry, faceCtx?: FacePrescript
 const DISMISS_OFFSET_PX = 72;
 const DISMISS_VELOCITY = 420;
 
-export function ExerciseSearchSheet({
+export function ExercisePickerSheet({
   open,
   onOpenChange,
   slotKey,
@@ -119,7 +119,7 @@ export function ExerciseSearchSheet({
     return [...hit].sort(recFirst);
   }, [q, recIds, i18n.locale]);
 
-  /** Everything not in Recommended, for the default “browse more” list. */
+  /** Everything not in Recommended, for the default "browse more" list. */
   const restOfExercises = useMemo(() => {
     return ALL_EXERCISES.filter((e) => !recIds.has(e.id)).sort((a, b) => {
       const byGroup = a.group.localeCompare(b.group);
@@ -162,7 +162,6 @@ export function ExerciseSearchSheet({
                   },
                 })}
           >
-            {/* Drag surface: handle + title only — search + list keep native scroll/focus */}
             <div
               className="touch-none select-none"
               onPointerDown={(e) => {
@@ -215,7 +214,6 @@ export function ExerciseSearchSheet({
             <div
               className={cn(
                 'min-h-0 flex-1 overflow-y-auto overscroll-y-contain touch-pan-y',
-                /* Cap list height so the sheet + keyboard stay predictable; content scrolls inside */
                 'max-h-[min(56dvh,calc(80dvh-10.5rem))]',
               )}
             >
