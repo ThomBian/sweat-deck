@@ -5,13 +5,22 @@ import { NUMBER_MOVEMENTS, FACE_CHALLENGES, FACE_CHALLENGES_CARDIO } from './map
 import type { MovementId } from './mappings';
 
 export type SlotKey = `suit:${Suit}` | `face:${FaceRank}`;
-export type PlanOverrides = Partial<Record<SlotKey, ExerciseId>>;
+
+export type SlotOverride = {
+  id?: ExerciseId;
+  reps?: number;
+  durationSec?: number;
+  distanceM?: number;
+};
+
+export type PlanOverrides = Partial<Record<SlotKey, SlotOverride>>;
 
 export type PlanSlot = {
   key: SlotKey;
   defaultExercise: { id: ExerciseId; reps?: number; durationSec?: number; distanceM?: number };
   options: Array<{ id: ExerciseId; reps?: number; durationSec?: number; distanceM?: number }>;
   selected: ExerciseId;
+  prescriptionOverride?: { reps?: number; durationSec?: number; distanceM?: number };
 };
 
 const SUIT_ORDER: Suit[] = ['hearts', 'diamonds', 'clubs', 'spades'];
@@ -33,7 +42,7 @@ export const buildPlan = ({
       ...(entry.alts ?? []).map((id: MovementId) => ({ id: id as ExerciseId, reps: 0 })),
     ];
     const override = overrides[key];
-    const selected: ExerciseId = override !== undefined ? override : defaultExercise.id;
+    const selected: ExerciseId = override?.id ?? defaultExercise.id;
     return { key, defaultExercise, options, selected };
   });
 
@@ -51,8 +60,17 @@ export const buildPlan = ({
       ),
     ];
     const override = overrides[key];
-    const selected: ExerciseId = override !== undefined ? override : defaultExercise.id;
-    return { key, defaultExercise, options, selected };
+    const selected: ExerciseId = override?.id ?? defaultExercise.id;
+    const prescriptionOverride =
+      override &&
+      (override.reps !== undefined || override.durationSec !== undefined || override.distanceM !== undefined)
+        ? {
+            ...(override.reps !== undefined && { reps: override.reps }),
+            ...(override.durationSec !== undefined && { durationSec: override.durationSec }),
+            ...(override.distanceM !== undefined && { distanceM: override.distanceM }),
+          }
+        : undefined;
+    return { key, defaultExercise, options, selected, prescriptionOverride };
   });
 
   return [...numberSlots, ...faceSlots];

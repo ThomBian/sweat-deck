@@ -39,15 +39,50 @@ describe('buildPlan', () => {
   });
 
   it('selected reflects a valid override', () => {
-    const slots = buildPlan({ config: cfg, overrides: { 'suit:hearts': 'pike-pushups' } });
+    const slots = buildPlan({ config: cfg, overrides: { 'suit:hearts': { id: 'pike-pushups' } } });
     const hearts = slots.find((s) => s.key === 'suit:hearts')!;
     expect(hearts.selected).toBe('pike-pushups');
   });
 
   it('applies an override id not in curated options', () => {
-    const slots = buildPlan({ config: cfg, overrides: { 'suit:hearts': 'bench-press' } });
+    const slots = buildPlan({ config: cfg, overrides: { 'suit:hearts': { id: 'bench-press' } } });
     const hearts = slots.find((s) => s.key === 'suit:hearts')!;
     expect(hearts.selected).toBe('bench-press');
+  });
+
+  it('selected reflects id in SlotOverride', () => {
+    const slots = buildPlan({ config: cfg, overrides: { 'suit:hearts': { id: 'pike-pushups' } } });
+    const hearts = slots.find((s) => s.key === 'suit:hearts')!;
+    expect(hearts.selected).toBe('pike-pushups');
+  });
+
+  it('face slot prescriptionOverride is set when override has reps', () => {
+    const slots = buildPlan({ config: cfg, overrides: { 'face:J': { reps: 30 } } });
+    const j = slots.find((s) => s.key === 'face:J')!;
+    expect(j.prescriptionOverride).toEqual({ reps: 30 });
+    expect(j.selected).toBe(j.defaultExercise.id);
+  });
+
+  it('face slot prescriptionOverride is undefined when no override', () => {
+    const slots = buildPlan({ config: cfg, overrides: {} });
+    const j = slots.find((s) => s.key === 'face:J')!;
+    expect(j.prescriptionOverride).toBeUndefined();
+  });
+
+  it('face slot prescriptionOverride combined with id override', () => {
+    const slots = buildPlan({
+      config: cfg,
+      overrides: { 'face:J': { id: 'hollow-body-hold', durationSec: 90 } },
+    });
+    const j = slots.find((s) => s.key === 'face:J')!;
+    expect(j.selected).toBe('hollow-body-hold');
+    expect(j.prescriptionOverride).toEqual({ durationSec: 90 });
+  });
+
+  it('number slots have no prescriptionOverride', () => {
+    const slots = buildPlan({ config: cfg, overrides: { 'suit:hearts': { id: 'pike-pushups' } } });
+    const hearts = slots.find((s) => s.key === 'suit:hearts')!;
+    expect(hearts.prescriptionOverride).toBeUndefined();
   });
 
   it('number slots have reps: 0 placeholder', () => {
