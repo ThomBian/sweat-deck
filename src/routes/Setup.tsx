@@ -89,7 +89,7 @@ export default function Setup() {
           </div>
         </motion.div>
       ) : (
-        <div className="flex min-h-0 min-w-0 w-full flex-1 flex-col overflow-y-auto overscroll-y-contain">
+        <div className="flex min-h-0 min-w-0 w-full flex-1 flex-col overflow-x-clip overflow-y-auto overscroll-y-contain">
           <SetupWizard
             onLeaveToLanding={() => setPhase('landing')}
             {...(returnedConfig != null ? { initialConfig: returnedConfig } : {})}

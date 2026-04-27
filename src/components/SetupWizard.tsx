@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { t } from '@lingui/core/macro';
 import { Trans } from '@lingui/react/macro';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion, type Transition } from 'framer-motion';
 import { usePersistedConfig } from '@/hooks/usePersistedConfig';
 import { saveLastConfig } from '@/store/db';
 import { DEFAULT_CONFIG, type SetupConfig } from '@/domain/config';
@@ -24,6 +24,7 @@ export default function SetupWizard({ onLeaveToLanding, initialConfig }: Props) 
   const [step, setStep] = useState(0);
   const [draft, setDraft] = useState<SetupConfig>(DEFAULT_CONFIG);
   const seededRef = useRef(false);
+  const advanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [loadingLineIdx] = useState(() => Math.floor(Math.random() * 2));
 
   const steps = [
@@ -56,6 +57,15 @@ export default function SetupWizard({ onLeaveToLanding, initialConfig }: Props) 
     seededRef.current = true;
   }, [loaded, persisted, initialConfig]);
 
+  useEffect(
+    () => () => {
+      if (advanceTimerRef.current != null) {
+        clearTimeout(advanceTimerRef.current);
+      }
+    },
+    [],
+  );
+
   const handleGoToReview = async () => {
     try {
       await saveLastConfig(draft);
@@ -67,7 +77,14 @@ export default function SetupWizard({ onLeaveToLanding, initialConfig }: Props) 
 
   const selectAndMaybeAdvance = (patch: (prev: SetupConfig) => SetupConfig) => {
     setDraft(patch);
-    setStep((s) => (s < steps.length - 1 ? s + 1 : s));
+    if (advanceTimerRef.current != null) {
+      clearTimeout(advanceTimerRef.current);
+    }
+    const delayMs = reduceMotion ? 55 : Math.round(DURATION.setupCommit * 1000);
+    advanceTimerRef.current = setTimeout(() => {
+      advanceTimerRef.current = null;
+      setStep((s) => (s < steps.length - 1 ? s + 1 : s));
+    }, delayMs);
   };
 
   if (!loaded) {
@@ -85,9 +102,12 @@ export default function SetupWizard({ onLeaveToLanding, initialConfig }: Props) 
   }
 
   const { title } = steps[step]!;
-  const nudgeTransition = reduceMotion
+  const stepPanelTransition: Transition = reduceMotion
     ? { duration: 0.05, ease: EASE_OUT }
-    : { duration: DURATION.pageOut, ease: EASE_OUT };
+    : {
+        opacity: { duration: DURATION.pageIn, ease: EASE_OUT },
+        x: { duration: DURATION.pageIn, ease: EASE_OUT },
+      };
 
   return (
     <>
@@ -125,56 +145,58 @@ export default function SetupWizard({ onLeaveToLanding, initialConfig }: Props) 
         })}
       </div>
 
-      <h1 className="min-w-0 font-display text-2xl font-semibold tracking-tight text-balance break-words sm:text-3xl">
-        {title}
-      </h1>
-
       <AnimatePresence mode="wait" initial={false}>
-        {step < stepNudges.length ? (
-          <motion.p
-            key={step}
-            initial={{ opacity: 0, y: reduceMotion ? 0 : 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: reduceMotion ? 0 : -4 }}
-            transition={nudgeTransition}
-            className="-mt-2 max-w-[65ch] text-pretty break-words text-sm font-medium leading-relaxed text-deck-reward"
-          >
-            {stepNudges[step]!}
-          </motion.p>
-        ) : null}
-      </AnimatePresence>
+        <motion.div
+          key={step}
+          className="flex flex-col gap-6"
+          initial={reduceMotion ? false : { opacity: 0, x: 28 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={reduceMotion ? undefined : { opacity: 0, x: -22 }}
+          transition={stepPanelTransition}
+        >
+          <h1 className="min-w-0 font-display text-2xl font-semibold tracking-tight text-balance break-words sm:text-3xl">
+            {title}
+          </h1>
 
-      {step === 0 && (
-        <DifficultyStep
-          value={draft.difficulty}
-          onChange={(v) => selectAndMaybeAdvance((d) => ({ ...d, difficulty: v }))}
-        />
-      )}
-      {step === 1 && (
-        <EquipmentStep
-          value={draft.equipment}
-          onChange={(v) => selectAndMaybeAdvance((d) => ({ ...d, equipment: v }))}
-        />
-      )}
-      {step === 2 && (
-        <ThemeStep value={draft.theme} onChange={(v) => selectAndMaybeAdvance((d) => ({ ...d, theme: v }))} />
-      )}
-      {step === 3 && (
-        <CardioStep value={draft.cardio} onChange={(v) => selectAndMaybeAdvance((d) => ({ ...d, cardio: v }))} />
-      )}
-      {step === 4 && (
-        <TimeStep
-          value={draft.timeLimitMin}
-          onChange={(v) => {
-            setDraft((d) => {
-              const next: SetupConfig = { ...d };
-              if (v === undefined) delete next.timeLimitMin;
-              else next.timeLimitMin = v;
-              return next;
-            });
-          }}
-        />
-      )}
+          {step < stepNudges.length ? (
+            <p className="-mt-2 max-w-[65ch] text-pretty break-words text-sm font-medium leading-relaxed text-deck-reward">
+              {stepNudges[step]!}
+            </p>
+          ) : null}
+
+          {step === 0 && (
+            <DifficultyStep
+              value={draft.difficulty}
+              onChange={(v) => selectAndMaybeAdvance((d) => ({ ...d, difficulty: v }))}
+            />
+          )}
+          {step === 1 && (
+            <EquipmentStep
+              value={draft.equipment}
+              onChange={(v) => selectAndMaybeAdvance((d) => ({ ...d, equipment: v }))}
+            />
+          )}
+          {step === 2 && (
+            <ThemeStep value={draft.theme} onChange={(v) => selectAndMaybeAdvance((d) => ({ ...d, theme: v }))} />
+          )}
+          {step === 3 && (
+            <CardioStep value={draft.cardio} onChange={(v) => selectAndMaybeAdvance((d) => ({ ...d, cardio: v }))} />
+          )}
+          {step === 4 && (
+            <TimeStep
+              value={draft.timeLimitMin}
+              onChange={(v) => {
+                setDraft((d) => {
+                  const next: SetupConfig = { ...d };
+                  if (v === undefined) delete next.timeLimitMin;
+                  else next.timeLimitMin = v;
+                  return next;
+                });
+              }}
+            />
+          )}
+        </motion.div>
+      </AnimatePresence>
       </div>
 
       <footer className="fixed bottom-0 left-0 right-0 z-50 border-t border-border/40 bg-background/90 px-4 py-4 backdrop-blur-md sm:px-6">

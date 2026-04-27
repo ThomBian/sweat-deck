@@ -47,9 +47,9 @@ describe('SetupWizard', () => {
 
     expect(screen.getByRole('heading', { name: 'How hard?' })).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Next' }));
-    expect(screen.getByRole('heading', { name: 'What equipment?' })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: 'What equipment?' })).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Back' }));
-    expect(screen.getByRole('heading', { name: 'How hard?' })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: 'How hard?' })).toBeInTheDocument();
   });
 
   it('seeds draft from persisted config', async () => {
@@ -71,7 +71,7 @@ describe('SetupWizard', () => {
 
     expect(screen.getByRole('button', { name: 'Hell' })).toHaveAttribute('aria-pressed', 'true');
     await user.click(screen.getByRole('button', { name: 'Next' }));
-    expect(screen.getByRole('button', { name: 'Full Gym' })).toHaveAttribute('aria-pressed', 'true');
+    expect(await screen.findByRole('button', { name: 'Full Gym' })).toHaveAttribute('aria-pressed', 'true');
   });
 
   it('Review your deck saves config and navigates to /review', async () => {

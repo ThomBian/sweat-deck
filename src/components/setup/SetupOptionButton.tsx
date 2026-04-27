@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion, useAnimationControls, useReducedMotion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { DURATION, EASE_OUT } from '@/lib/motion';
 
@@ -25,13 +25,26 @@ export function SetupOptionButton({
   'aria-label': ariaLabel,
 }: Props) {
   const reduceMotion = useReducedMotion();
+  const settle = useAnimationControls();
+
+  const handleClick = () => {
+    onClick();
+    if (!reduceMotion) {
+      void settle.start({
+        scale: [1, 0.968, 1],
+        transition: { duration: 0.29, times: [0, 0.38, 1], ease: EASE_OUT },
+      });
+    }
+  };
 
   return (
     <motion.button
       type={type}
       disabled={disabled}
       aria-pressed={ariaPressed}
-      onClick={onClick}
+      animate={settle}
+      initial={{ scale: 1 }}
+      onClick={handleClick}
       aria-label={ariaLabel}
       className={cn(
         'min-h-14 w-full min-w-0 touch-manipulation rounded-xl border px-4 py-3 text-left text-base font-medium break-words outline-none',
@@ -42,8 +55,6 @@ export function SetupOptionButton({
           : 'border-border/50 bg-card/60 text-foreground hover:bg-card/90',
         className
       )}
-      whileHover={{ scale: reduceMotion ? 1 : 1.012 }}
-      whileTap={{ scale: reduceMotion ? 1 : 0.985 }}
       transition={{ duration: DURATION.fast, ease: EASE_OUT }}
     >
       {children}

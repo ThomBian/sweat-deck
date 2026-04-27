@@ -8,4 +8,6 @@ export const DURATION = {
   pageOut: 0.22,
   /** Small UI feedback */
   fast: 0.14,
+  /** Setup wizard: pause after picking an option before advancing (Typeform-style readback) */
+  setupCommit: 0.3,
 } as const;
