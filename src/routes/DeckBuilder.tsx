@@ -4,7 +4,10 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { t } from '@lingui/core/macro';
 import { Trans } from '@lingui/react/macro';
 import { DEFAULT_CONFIG, type SetupConfig } from '@/domain/config';
+import type { SlotKey } from '@/domain/plan';
 import { DeckSlotCard } from '@/components/deck/DeckSlotCard';
+import type { PrescriptionType } from '@/components/deck/PrescriptionStepper';
+import { useGameStore } from '@/store/gameStore';
 import { Button } from '@/components/ui/button';
 import { ShuffleTransition } from '@/components/ShuffleTransition';
 import { DURATION, EASE_OUT } from '@/lib/motion';
@@ -47,8 +50,13 @@ function DeckBuilderInner({
 }) {
   const navigate = useNavigate();
   const reduceMotion = useReducedMotion();
+  const mergePrescriptionOverride = useGameStore((s) => s.mergePrescriptionOverride);
   const { slots, isReady, setSlot, handleStart, footerLocked, showShuffle, hasOverrides, resetOverrides } =
     useDeckComposer(composerInput);
+
+  const handlePrescriptionChange = (key: SlotKey, field: PrescriptionType, value: number) => {
+    mergePrescriptionOverride(key, field, value);
+  };
 
   /** Same title + lede in guided and manual — slot cards show empty/filled; behavior differs (e.g. Start disabled). */
   const heading = t`Review your deck`;
@@ -98,6 +106,7 @@ function DeckBuilderInner({
                   config={composerInput.mode === 'guided' ? composerInput.config : DEFAULT_CONFIG}
                   slot={slot}
                   onPick={(id) => setSlot(slot.key, id)}
+                  onPrescriptionChange={(field, value) => handlePrescriptionChange(slot.key, field, value)}
                 />
               ))}
             </div>
