@@ -51,8 +51,8 @@ msgid "500m SkiErg Sprint"
 msgstr "Sprint SkiErg 500 m"
 
 #: src/components/SetupWizard.tsx
-msgid "A cap ends the run at time; no limit means you play the stack."
-msgstr "Une limite de temps clôt la session ; sans limite, vous jouez tout le paquet."
+#~ msgid "A cap ends the run at time; no limit means you play the stack."
+#~ msgstr "Une limite de temps clôt la session ; sans limite, vous jouez tout le paquet."
 
 #: src/i18n/labels.ts
 msgid "A forgiving spread—plenty of low reps to build the habit."
@@ -116,7 +116,7 @@ msgstr "Poids du corps"
 
 #: src/i18n/exercises.ts
 msgid "Bodyweight Rows"
-msgstr "Tirages au poids du corps"
+msgstr "Tirage poids du corps"
 
 #: src/components/Timer.tsx
 #~ msgid "Bonus round — past the timer"
@@ -142,6 +142,10 @@ msgstr "Tirage horizontal"
 msgid "Calf Raises"
 msgstr "Élévations mollets"
 
+#: src/components/SetupWizard.tsx
+msgid "Cardio mode?"
+msgstr "Mode Cardio ?"
+
 #: src/routes/Summary.tsx
 msgid "Cards drawn"
 msgstr "Cartes tirées"
@@ -162,7 +166,7 @@ msgstr "Fermer les détails de difficulté"
 msgid "Clubs"
 msgstr "Trèfles"
 
-#: src/i18n/exercises.ts
+#: src/components/ExercisePanel.tsx
 msgid "Combine the last 2 exercises — 10 reps each"
 msgstr "Combinez les 2 derniers exercices — 10 répétitions chacun"
 
@@ -198,6 +202,10 @@ msgstr "Lancer l’entraînement"
 msgid "Diamonds"
 msgstr "Carreaux"
 
+#: src/components/SetupWizard.tsx
+msgid "Difficulty affects the odds of drawing harder cards, and the default exercises you're assigned."
+msgstr "La difficulté impacte la probabilité de tirer des cartes difficiles, ainsi que les exercices assignés par défaut."
+
 #: src/routes/Play.tsx
 msgid "Difficulty details"
 msgstr "Détails de la difficulté"
@@ -210,6 +218,10 @@ msgstr "Détails de la difficulté"
 msgid "Done"
 msgstr "Terminé"
 
+#: src/i18n/exercises.ts
+msgid "Double up"
+msgstr "Combo des 2 derniers"
+
 #: src/routes/Play.tsx
 #~ msgid "draw · move · repeat"
 #~ msgstr "tirer · bouger · enchaîner"
@@ -219,8 +231,8 @@ msgid "Draw a card from the stack"
 msgstr "Tirer une carte du paquet"
 
 #: src/components/SetupWizard.tsx
-msgid "Draws skew heavier as difficulty rises—still a card game, not a spreadsheet."
-msgstr "Les tirages penchent plus lourd quand la difficulté augmente — c’est un jeu de cartes, pas un tableur."
+#~ msgid "Draws skew heavier as difficulty rises—still a card game, not a spreadsheet."
+#~ msgstr "Les tirages penchent plus lourd quand la difficulté augmente — c’est un jeu de cartes, pas un tableur."
 
 #: src/i18n/exercises.ts
 msgid "Dumbbell Floor Press"
@@ -246,6 +258,10 @@ msgstr "Durée"
 #~ msgid "Elapsed session time"
 #~ msgstr "Temps de session écoulé"
 
+#: src/components/SetupWizard.tsx
+msgid "Enabling cardio mode favors high-intensity movements."
+msgstr "Activer le mode cardio favorisera les mouvements à haute intensité."
+
 #: src/routes/Onboarding.tsx
 msgid "Face cards are fixed high-intensity challenges."
 msgstr "Les figures sont des défis d’intensité fixe."
@@ -255,8 +271,12 @@ msgid "Face cards are high-intensity. Aces are a one-minute rest break."
 msgstr "Les figures sont intenses. Les as offrent une pause d’une minute."
 
 #: src/components/setup/CardioStep.tsx
-msgid "Face cards can use your cardio pick"
-msgstr "Les figures peuvent utiliser votre choix cardio"
+#~ msgid "Face cards can use your cardio pick"
+#~ msgstr "Les figures peuvent utiliser votre choix cardio"
+
+#: src/i18n/exercises.ts
+msgid "Fast Jumping Jacks"
+msgstr "Jumping jacks rapides"
 
 #: src/components/SetupWizard.tsx
 msgid "Finding your last setup in the stack…"
@@ -292,11 +312,11 @@ msgstr "L’équipement change les mouvements proposés pour chaque couleur."
 
 #: src/i18n/exercises.ts
 msgid "Glute Bridges"
-msgstr "Ponts fessiers"
+msgstr "Pont"
 
 #: src/i18n/exercises.ts
 msgid "Goblet Squats"
-msgstr "Squats gobelet"
+msgstr "Goblet Squat"
 
 #: src/routes/Onboarding.tsx
 msgid "Got it"
@@ -312,7 +332,7 @@ msgstr "Cœurs"
 
 #: src/i18n/exercises.ts
 msgid "Heavy Sled Push"
-msgstr "Poussée de traîneau lourd"
+msgstr "Poussée de traîneau"
 
 #: src/i18n/labels.ts
 msgid "Hell"
@@ -341,6 +361,10 @@ msgstr "Comment ça marche"
 #: src/components/SetupWizard.tsx
 msgid "If you're new here, we'll start from friendly defaults."
 msgstr "Si vous débutez, nous partons de réglages modérés."
+
+#: src/i18n/labels.ts
+msgid "Intensity goes up—8s, 9s, 10s are the new normal."
+msgstr "L’intensité augmente : 8, 9, 10 deviennent le quotidien."
 
 #: src/components/LocaleToggle.tsx
 msgid "Interface language"
@@ -372,7 +396,7 @@ msgstr "Squats sautés"
 
 #: src/i18n/exercises.ts
 msgid "Kettlebell Swings"
-msgstr "Balancements kettlebell"
+msgstr "Kettlebell swing"
 
 #: src/i18n/exercises.ts
 msgid "Lat Pulldown"
@@ -403,12 +427,16 @@ msgid "Man-Makers"
 msgstr "Man-makers"
 
 #: src/i18n/exercises.ts
-msgid "Max-Effort Leg Burnout"
-msgstr "Brûlure des jambes max"
+#~ msgid "Max-Effort Leg Burnout"
+#~ msgstr "Brûlure des jambes max"
 
 #: src/i18n/labels.ts
-msgid "More volume, fewer breathers. Expect 6s, 7s, 8s as your normal."
-msgstr "Plus de volume, moins de relâche. 6, 7, 8 répétitions : votre fil conducteur."
+#~ msgid "More volume, fewer breathers. Expect 6s, 7s, 8s as your normal."
+#~ msgstr "Plus de volume, moins de relâche. 6, 7, 8 répétitions : votre fil conducteur."
+
+#: src/i18n/labels.ts
+msgid "More volume, less rest. Expect 6s, 7s, 8s as your normal."
+msgstr "Plus de volume, moins de repos. 6, 7, 8 répétitions : votre fil conducteur."
 
 #: src/i18n/labels.ts
 msgid "Most: 2–4 · Rare: 9–10"
@@ -488,11 +516,11 @@ msgstr "En pause"
 
 #: src/routes/Setup.tsx
 msgid "Pick your level, gear, and focus—then you'll shuffle in and draw the deck."
-msgstr "Choisissez le niveau, l’équipement et le focus — puis mélangez et tirez le paquet."
+msgstr "Choisissez le niveau, l’équipement et ce que vous voulez travailler — puis mélangez et tirez votre première carte."
 
 #: src/i18n/exercises.ts
 msgid "Pike Push-ups"
-msgstr "Pompes piquées"
+msgstr "Pompes pike"
 
 #: src/i18n/exercises.ts
 msgid "Plank Hold"
@@ -500,7 +528,7 @@ msgstr "Planche"
 
 #: src/i18n/exercises.ts
 msgid "Plank to Push-up"
-msgstr "Planche à pompe"
+msgstr "Planche avec pompe"
 
 #: src/i18n/exercises.ts
 msgid "Pull-ups"
@@ -520,7 +548,7 @@ msgstr "Rappel rapide"
 
 #: src/i18n/exercises.ts
 msgid "Renegade Rows"
-msgstr "Rowing renégat"
+msgstr "Tirage renegade"
 
 #: src/routes/Setup.tsx
 msgid "Replay tutorial"
@@ -547,12 +575,16 @@ msgid "Row"
 msgstr "Rameur"
 
 #: src/routes/Onboarding.tsx
-msgid "Rules are the same—expand below if you want the full list."
-msgstr "Les règles sont identiques : ouvrez la section pour la liste complète."
+#~ msgid "Rules are the same—expand below if you want the full list."
+#~ msgstr "Les règles sont identiques : ouvrez la section pour la liste complète."
 
 #: src/routes/Onboarding.tsx
 #~ msgid "Rules haven't changed—here's the quick refresher."
 #~ msgstr "Règles inchangées — petit rappel."
+
+#: src/routes/Onboarding.tsx
+msgid "Same deck-to-workout flow—open below for the full rules list when you need it."
+msgstr "Même principe : le paquet mène l’entraînement—ouvrez la section ci-dessous pour la liste complète des règles, quand vous en avez besoin."
 
 #: src/components/SetupWizard.tsx
 #: src/routes/Onboarding.tsx
@@ -604,8 +636,8 @@ msgid "Spades"
 msgstr "Piques"
 
 #: src/components/SetupWizard.tsx
-msgid "Specialty cardio?"
-msgstr "Cardio spécialisé ?"
+#~ msgid "Specialty cardio?"
+#~ msgstr "Cardio spécialisé ?"
 
 #: src/i18n/exercises.ts
 msgid "Squats"
@@ -637,6 +669,10 @@ msgstr "Étape {0} sur {1} : {title}"
 msgid "Sweat Deck — Card-driven workouts"
 msgstr "Sweat Deck — entraînements menés par les cartes"
 
+#: src/routes/Onboarding.tsx
+msgid "Sweat Deck is a workout app: you train with a shuffled playing deck—each card sets your next move, reps, and a few wildcards—so you build variety and a bit of play into every session."
+msgstr "Sweat Deck est une appli d’entraînement : vous progressez grâce à un jeu de cartes —chaque carte détermine le mouvement, les répétitions, les jokers sont des cartes spéciales avec des surprises—pour varier l’entraînement et y mettre un peu de fun."
+
 #: src/components/LocaleToggle.tsx
 msgid "Switch to English"
 msgstr "Passer en anglais"
@@ -662,8 +698,8 @@ msgid "The balanced lane—enough work to feel it, not enough to drown."
 msgstr "L’équilibre : assez d’effort pour le sentir, pas assez pour sombrer."
 
 #: src/i18n/labels.ts
-msgid "The bell curve slides high—8s, 9s, 10s are the new normal."
-msgstr "La courbe monte : 8, 9, 10 deviennent le quotidien."
+#~ msgid "The bell curve slides high—8s, 9s, 10s are the new normal."
+#~ msgstr "La courbe monte : 8, 9, 10 deviennent le quotidien."
 
 #: src/components/ExercisePanel.tsx
 #~ msgid "The deck's ready—tap the stack to turn the first card."
@@ -671,15 +707,19 @@ msgstr "La courbe monte : 8, 9, 10 deviennent le quotidien."
 
 #: src/components/SetupWizard.tsx
 msgid "Theme nudges upper, lower, or full-body patterns into the mix."
-msgstr "Le thème penche davantage haut du corps, bas du corps ou le corps entier."
+msgstr "Les parties du corps à travailler aujourd’hui."
 
 #: src/components/ExercisePanel.tsx
 #~ msgid "This move"
 #~ msgstr "Ce mouvement"
 
 #: src/routes/Onboarding.tsx
-msgid "Three ideas to get you to your first card—everything else is optional."
-msgstr "Trois idées pour atteindre le premier tirage — le reste est optionnel."
+#~ msgid "Three ideas to get you to your first card—everything else is optional."
+#~ msgstr "Trois idées pour atteindre le premier tirage — le reste est optionnel."
+
+#: src/routes/Onboarding.tsx
+msgid "Three quick ideas before your first card; the rest is optional."
+msgstr "Trois idées rapides avant votre premier tirage ; le reste est optionnel."
 
 #: src/i18n/exercises.ts
 msgid "Thrusters"
@@ -754,8 +794,8 @@ msgid "What equipment?"
 msgstr "Quel équipement ?"
 
 #: src/components/SetupWizard.tsx
-msgid "When this is on, face cards can pull from your cardio pick."
-msgstr "Si c’est activé, les figures peuvent piocher dans votre choix cardio."
+#~ msgid "When this is on, face cards can pull from your cardio pick."
+#~ msgstr "Si c’est activé, les figures peuvent piocher dans votre choix cardio."
 
 #: src/routes/Onboarding.tsx
 msgid "When you tap draw, the deck does the programming."

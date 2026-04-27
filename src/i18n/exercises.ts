@@ -88,7 +88,7 @@ export const tExercise = (id: ExerciseId): string => {
     case 'water-break':
       return t`Water Break`;
     case 'max-effort-leg-burnout':
-      return t`Max-Effort Leg Burnout`;
+      return t`Fast Jumping Jacks`;
     case 'sudden-death-50-burpees':
       return t`50 Burpees`;
     case 'sudden-death-100m-sprint':
@@ -96,6 +96,6 @@ export const tExercise = (id: ExerciseId): string => {
     case 'sudden-death-500m-skierg':
       return t`500m SkiErg Sprint`;
     case 'double-up':
-      return t`Combine the last 2 exercises — 10 reps each`;
+      return t`Double up`;
   }
 };

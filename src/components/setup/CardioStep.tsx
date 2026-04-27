@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { t } from '@lingui/core/macro';
-import { Trans } from '@lingui/react/macro';
 import { SetupOptionButton } from '@/components/setup/SetupOptionButton';
 import { useSetupOptionsMotion } from '@/lib/setupMotion';
 
@@ -20,9 +19,6 @@ export function CardioStep({ value, onChange }: Props) {
       initial="hidden"
       animate="show"
     >
-      <motion.p variants={item} className="text-sm break-words text-muted-foreground">
-        <Trans>Face cards can use your cardio pick</Trans>
-      </motion.p>
       {options.map((opt) => {
         const selected = opt.v === value;
         return (

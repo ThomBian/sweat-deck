@@ -120,16 +120,31 @@ export default function Onboarding() {
           <Trans>Welcome to Sweat Deck</Trans>
         </motion.h1>
 
-        <motion.p
-          variants={block}
-          className="mt-3 max-w-[65ch] text-pretty break-words text-sm leading-relaxed text-muted-foreground"
-        >
-          {replay ? (
-            <Trans>Rules are the same—expand below if you want the full list.</Trans>
-          ) : (
-            <Trans>Three ideas to get you to your first card—everything else is optional.</Trans>
-          )}
-        </motion.p>
+        {replay ? (
+          <motion.p
+            variants={block}
+            className="mt-3 max-w-[65ch] text-pretty break-words text-sm leading-relaxed text-muted-foreground"
+          >
+            <Trans>Same deck-to-workout flow—open below for the full rules list when you need it.</Trans>
+          </motion.p>
+        ) : (
+          <>
+            <motion.p
+              variants={block}
+              className="mt-3 max-w-[65ch] text-pretty break-words text-sm leading-relaxed text-muted-foreground"
+            >
+              <Trans>
+                Sweat Deck is a workout app: you train with a shuffled playing deck—each card sets your next move, reps, and a few wildcards—so you build variety and a bit of play into every session.
+              </Trans>
+            </motion.p>
+            <motion.p
+              variants={block}
+              className="mt-3 max-w-[65ch] text-pretty break-words text-sm leading-relaxed text-muted-foreground"
+            >
+              <Trans>Three quick ideas before your first card; the rest is optional.</Trans>
+            </motion.p>
+          </>
+        )}
 
         <motion.ol
           variants={list}

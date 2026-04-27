@@ -15,12 +15,17 @@ const SUIT_TEXT: Record<string, string> = {
   spades: 'text-suit-spades',
 };
 
-type Props = { card: Card | null; faceDown?: boolean };
+type Props = { card: Card | null; faceDown?: boolean; className?: string };
 
-export const CardFace = ({ card, faceDown = false }: Props) => {
+export const CardFace = ({ card, faceDown = false, className }: Props) => {
   if (faceDown || !card) {
     return (
-      <div className="font-display flex h-48 w-32 items-center justify-center rounded-2xl bg-gradient-to-br from-deck-accent to-deck-accent-deep shadow-xl ring-1 ring-white/15">
+      <div
+        className={cn(
+          'font-display flex h-48 w-32 items-center justify-center rounded-2xl bg-gradient-to-br from-deck-accent to-deck-accent-deep shadow-xl ring-1 ring-white/15',
+          className,
+        )}
+      >
         <div className="h-40 w-24 rounded-xl border-2 border-white/35" />
       </div>
     );
@@ -34,7 +39,8 @@ export const CardFace = ({ card, faceDown = false }: Props) => {
     <div
       className={cn(
         'font-display flex h-48 w-32 flex-col justify-between rounded-2xl bg-deck-card p-3 shadow-xl ring-1 ring-border/50',
-        colorClass
+        colorClass,
+        className,
       )}
     >
       <span className="text-2xl font-bold">{label}</span>

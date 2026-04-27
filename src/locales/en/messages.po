@@ -51,8 +51,8 @@ msgid "500m SkiErg Sprint"
 msgstr "500m SkiErg Sprint"
 
 #: src/components/SetupWizard.tsx
-msgid "A cap ends the run at time; no limit means you play the stack."
-msgstr "A cap ends the run at time; no limit means you play the stack."
+#~ msgid "A cap ends the run at time; no limit means you play the stack."
+#~ msgstr "A cap ends the run at time; no limit means you play the stack."
 
 #: src/i18n/labels.ts
 msgid "A forgiving spread—plenty of low reps to build the habit."
@@ -142,6 +142,10 @@ msgstr "Cable Rows"
 msgid "Calf Raises"
 msgstr "Calf Raises"
 
+#: src/components/SetupWizard.tsx
+msgid "Cardio mode?"
+msgstr "Cardio mode?"
+
 #: src/routes/Summary.tsx
 msgid "Cards drawn"
 msgstr "Cards drawn"
@@ -162,7 +166,7 @@ msgstr "Close difficulty details"
 msgid "Clubs"
 msgstr "Clubs"
 
-#: src/i18n/exercises.ts
+#: src/components/ExercisePanel.tsx
 msgid "Combine the last 2 exercises — 10 reps each"
 msgstr "Combine the last 2 exercises — 10 reps each"
 
@@ -198,6 +202,10 @@ msgstr "Deal the workout"
 msgid "Diamonds"
 msgstr "Diamonds"
 
+#: src/components/SetupWizard.tsx
+msgid "Difficulty affects the odds of drawing harder cards, and the default exercises you're assigned."
+msgstr "Difficulty affects the odds of drawing harder cards, and the default exercises you're assigned."
+
 #: src/routes/Play.tsx
 msgid "Difficulty details"
 msgstr "Difficulty details"
@@ -210,6 +218,10 @@ msgstr "Difficulty details"
 msgid "Done"
 msgstr "Done"
 
+#: src/i18n/exercises.ts
+msgid "Double up"
+msgstr "Double up"
+
 #: src/routes/Play.tsx
 #~ msgid "draw · move · repeat"
 #~ msgstr "draw · move · repeat"
@@ -219,8 +231,8 @@ msgid "Draw a card from the stack"
 msgstr "Draw a card from the stack"
 
 #: src/components/SetupWizard.tsx
-msgid "Draws skew heavier as difficulty rises—still a card game, not a spreadsheet."
-msgstr "Draws skew heavier as difficulty rises—still a card game, not a spreadsheet."
+#~ msgid "Draws skew heavier as difficulty rises—still a card game, not a spreadsheet."
+#~ msgstr "Draws skew heavier as difficulty rises—still a card game, not a spreadsheet."
 
 #: src/i18n/exercises.ts
 msgid "Dumbbell Floor Press"
@@ -246,6 +258,10 @@ msgstr "Elapsed"
 #~ msgid "Elapsed session time"
 #~ msgstr "Elapsed session time"
 
+#: src/components/SetupWizard.tsx
+msgid "Enabling cardio mode favors high-intensity movements."
+msgstr "Enabling cardio mode favors high-intensity movements."
+
 #: src/routes/Onboarding.tsx
 msgid "Face cards are fixed high-intensity challenges."
 msgstr "Face cards are fixed high-intensity challenges."
@@ -255,8 +271,12 @@ msgid "Face cards are high-intensity. Aces are a one-minute rest break."
 msgstr "Face cards are high-intensity. Aces are a one-minute rest break."
 
 #: src/components/setup/CardioStep.tsx
-msgid "Face cards can use your cardio pick"
-msgstr "Face cards can use your cardio pick"
+#~ msgid "Face cards can use your cardio pick"
+#~ msgstr "Face cards can use your cardio pick"
+
+#: src/i18n/exercises.ts
+msgid "Fast Jumping Jacks"
+msgstr "Fast Jumping Jacks"
 
 #: src/components/SetupWizard.tsx
 msgid "Finding your last setup in the stack…"
@@ -342,6 +362,10 @@ msgstr "How it works"
 msgid "If you're new here, we'll start from friendly defaults."
 msgstr "If you're new here, we'll start from friendly defaults."
 
+#: src/i18n/labels.ts
+msgid "Intensity goes up—8s, 9s, 10s are the new normal."
+msgstr "Intensity goes up—8s, 9s, 10s are the new normal."
+
 #: src/components/LocaleToggle.tsx
 msgid "Interface language"
 msgstr "Interface language"
@@ -403,12 +427,16 @@ msgid "Man-Makers"
 msgstr "Man-Makers"
 
 #: src/i18n/exercises.ts
-msgid "Max-Effort Leg Burnout"
-msgstr "Max-Effort Leg Burnout"
+#~ msgid "Max-Effort Leg Burnout"
+#~ msgstr "Max-Effort Leg Burnout"
 
 #: src/i18n/labels.ts
-msgid "More volume, fewer breathers. Expect 6s, 7s, 8s as your normal."
-msgstr "More volume, fewer breathers. Expect 6s, 7s, 8s as your normal."
+#~ msgid "More volume, fewer breathers. Expect 6s, 7s, 8s as your normal."
+#~ msgstr "More volume, fewer breathers. Expect 6s, 7s, 8s as your normal."
+
+#: src/i18n/labels.ts
+msgid "More volume, less rest. Expect 6s, 7s, 8s as your normal."
+msgstr "More volume, less rest. Expect 6s, 7s, 8s as your normal."
 
 #: src/i18n/labels.ts
 msgid "Most: 2–4 · Rare: 9–10"
@@ -547,12 +575,16 @@ msgid "Row"
 msgstr "Row"
 
 #: src/routes/Onboarding.tsx
-msgid "Rules are the same—expand below if you want the full list."
-msgstr "Rules are the same—expand below if you want the full list."
+#~ msgid "Rules are the same—expand below if you want the full list."
+#~ msgstr "Rules are the same—expand below if you want the full list."
 
 #: src/routes/Onboarding.tsx
 #~ msgid "Rules haven't changed—here's the quick refresher."
 #~ msgstr "Rules haven't changed—here's the quick refresher."
+
+#: src/routes/Onboarding.tsx
+msgid "Same deck-to-workout flow—open below for the full rules list when you need it."
+msgstr "Same deck-to-workout flow—open below for the full rules list when you need it."
 
 #: src/components/SetupWizard.tsx
 #: src/routes/Onboarding.tsx
@@ -604,8 +636,8 @@ msgid "Spades"
 msgstr "Spades"
 
 #: src/components/SetupWizard.tsx
-msgid "Specialty cardio?"
-msgstr "Specialty cardio?"
+#~ msgid "Specialty cardio?"
+#~ msgstr "Specialty cardio?"
 
 #: src/i18n/exercises.ts
 msgid "Squats"
@@ -637,6 +669,10 @@ msgstr "Step {0} of {1}: {title}"
 msgid "Sweat Deck — Card-driven workouts"
 msgstr "Sweat Deck — Card-driven workouts"
 
+#: src/routes/Onboarding.tsx
+msgid "Sweat Deck is a workout app: you train with a shuffled playing deck—each card sets your next move, reps, and a few wildcards—so you build variety and a bit of play into every session."
+msgstr "Sweat Deck is a workout app: you train with a shuffled playing deck—each card sets your next move, reps, and a few wildcards—so you build variety and a bit of play into every session."
+
 #: src/components/LocaleToggle.tsx
 msgid "Switch to English"
 msgstr "Switch to English"
@@ -662,8 +698,8 @@ msgid "The balanced lane—enough work to feel it, not enough to drown."
 msgstr "The balanced lane—enough work to feel it, not enough to drown."
 
 #: src/i18n/labels.ts
-msgid "The bell curve slides high—8s, 9s, 10s are the new normal."
-msgstr "The bell curve slides high—8s, 9s, 10s are the new normal."
+#~ msgid "The bell curve slides high—8s, 9s, 10s are the new normal."
+#~ msgstr "The bell curve slides high—8s, 9s, 10s are the new normal."
 
 #: src/components/ExercisePanel.tsx
 #~ msgid "The deck's ready—tap the stack to turn the first card."
@@ -678,8 +714,12 @@ msgstr "Theme nudges upper, lower, or full-body patterns into the mix."
 #~ msgstr "This move"
 
 #: src/routes/Onboarding.tsx
-msgid "Three ideas to get you to your first card—everything else is optional."
-msgstr "Three ideas to get you to your first card—everything else is optional."
+#~ msgid "Three ideas to get you to your first card—everything else is optional."
+#~ msgstr "Three ideas to get you to your first card—everything else is optional."
+
+#: src/routes/Onboarding.tsx
+msgid "Three quick ideas before your first card; the rest is optional."
+msgstr "Three quick ideas before your first card; the rest is optional."
 
 #: src/i18n/exercises.ts
 msgid "Thrusters"
@@ -754,8 +794,8 @@ msgid "What equipment?"
 msgstr "What equipment?"
 
 #: src/components/SetupWizard.tsx
-msgid "When this is on, face cards can pull from your cardio pick."
-msgstr "When this is on, face cards can pull from your cardio pick."
+#~ msgid "When this is on, face cards can pull from your cardio pick."
+#~ msgstr "When this is on, face cards can pull from your cardio pick."
 
 #: src/routes/Onboarding.tsx
 msgid "When you tap draw, the deck does the programming."

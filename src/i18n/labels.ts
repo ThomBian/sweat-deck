@@ -59,9 +59,9 @@ export const tDifficultyDescription = (d: Difficulty): string => {
     case 'intermediate':
       return t`The balanced lane—enough work to feel it, not enough to drown.`;
     case 'hard':
-      return t`More volume, fewer breathers. Expect 6s, 7s, 8s as your normal.`;
+      return t`More volume, less rest. Expect 6s, 7s, 8s as your normal.`;
     case 'advanced':
-      return t`The bell curve slides high—8s, 9s, 10s are the new normal.`;
+      return t`Intensity goes up—8s, 9s, 10s are the new normal.`;
     case 'hell':
       return t`Nines and tens dominate. A low card is a gift from the deck.`;
   }

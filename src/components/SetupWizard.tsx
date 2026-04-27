@@ -35,16 +35,15 @@ export default function SetupWizard({ onLeaveToLanding }: Props) {
     { title: t`How hard?`, key: 'difficulty' as const },
     { title: t`What equipment?`, key: 'equipment' as const },
     { title: t`Which focus?`, key: 'theme' as const },
-    { title: t`Specialty cardio?`, key: 'cardio' as const },
+    { title: t`Cardio mode?`, key: 'cardio' as const },
     { title: t`Time limit?`, key: 'time' as const },
   ] as const;
 
   const stepNudges = [
-    t`Draws skew heavier as difficulty rises—still a card game, not a spreadsheet.`,
+    t`Difficulty affects the odds of drawing harder cards, and the default exercises you're assigned.`,
     t`Gear changes which moves you see for each suit.`,
     t`Theme nudges upper, lower, or full-body patterns into the mix.`,
-    t`When this is on, face cards can pull from your cardio pick.`,
-    t`A cap ends the run at time; no limit means you play the stack.`,
+    t`Enabling cardio mode favors high-intensity movements.`,
   ] as const;
 
   const loadingLines = [
@@ -95,7 +94,6 @@ export default function SetupWizard({ onLeaveToLanding }: Props) {
   }
 
   const { title } = steps[step]!;
-  const nudge = stepNudges[step]!;
   const nudgeTransition = reduceMotion
     ? { duration: 0.05, ease: EASE_OUT }
     : { duration: DURATION.pageOut, ease: EASE_OUT };
@@ -141,16 +139,18 @@ export default function SetupWizard({ onLeaveToLanding }: Props) {
         </h1>
 
         <AnimatePresence mode="wait" initial={false}>
-          <motion.p
-            key={step}
-            initial={{ opacity: 0, y: reduceMotion ? 0 : 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: reduceMotion ? 0 : -4 }}
-            transition={nudgeTransition}
-            className="-mt-2 max-w-[65ch] text-pretty break-words text-sm font-medium leading-relaxed text-deck-reward"
-          >
-            {nudge}
-          </motion.p>
+          {step < stepNudges.length ? (
+            <motion.p
+              key={step}
+              initial={{ opacity: 0, y: reduceMotion ? 0 : 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: reduceMotion ? 0 : -4 }}
+              transition={nudgeTransition}
+              className="-mt-2 max-w-[65ch] text-pretty break-words text-sm font-medium leading-relaxed text-deck-reward"
+            >
+              {stepNudges[step]!}
+            </motion.p>
+          ) : null}
         </AnimatePresence>
 
         {step === 0 && (
