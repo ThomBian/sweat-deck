@@ -38,6 +38,15 @@ function prescriptionLabel(opt: PlanSlot['options'][number]): string {
   return '';
 }
 
+/** Shown on the main slot button only. Omits the reps placeholder (`reps: 0`) so suit/number cards match face cards: either a real dose or no pill — never generic “×N reps” on the card. */
+function compactCardPrescriptionLabel(opt: PlanSlot['options'][number]): string {
+  if (opt.reps === 0) return '';
+  if (opt.reps != null) return t`×${opt.reps} reps`;
+  if (opt.durationSec != null) return formatMSS(opt.durationSec);
+  if (opt.distanceM != null) return t`${opt.distanceM}m`;
+  return '';
+}
+
 type Props = { config: SetupConfig; slot: ComposerSlot; onPick: (id: ExerciseId) => void };
 
 export function DeckSlotCard({ config, slot, onPick }: Props) {
@@ -104,7 +113,7 @@ export function DeckSlotCard({ config, slot, onPick }: Props) {
   const slotParts = slotHeaderParts(slot.key);
   const swapContextHeadingId = `review-swap-h-${slot.key.replaceAll(':', '-')}`;
   const altPanelId = `review-alts-${slot.key.replaceAll(':', '-')}`;
-  const rxLabel = selectedOpt ? prescriptionLabel(selectedOpt) : '';
+  const rxLabel = selectedOpt ? compactCardPrescriptionLabel(selectedOpt) : '';
 
   useEffect(() => {
     if (!hasAlts || !open) return;
