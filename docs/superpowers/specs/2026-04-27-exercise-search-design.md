@@ -32,9 +32,9 @@ Exports:
 - `recommendedFor({ slotKey, config }): ExerciseEntry[]` — theme-aware recommendations (see below)
 
 **`recommendedFor` logic:**
-- For `suit:X` slots: collect all exercises that appear in `NUMBER_MOVEMENTS[config.theme][X]` across **all equipment levels**. This naturally respects the theme — e.g. for Upper Body, clubs and spades surface upper-body movements, not legs.
-- For `face:X` slots: collect exercises from `FACE_CHALLENGES[X]` across all equipment levels + `FACE_CHALLENGES_CARDIO[X]`.
-- Deduplicate, then sort: exercises compatible with `config.equipment` first.
+- For `suit:X` slots: collect the default exercise + `alts` from `NUMBER_MOVEMENTS[config.theme][X][config.equipment]`. Respects both theme (Upper/Lower/Full Body) and the user's equipment level.
+- For `face:X` slots: collect from `FACE_CHALLENGES[X][config.equipment]` + `FACE_CHALLENGES_CARDIO[X]` if cardio is enabled.
+- "All exercises" in the sheet still surfaces the full DB — equipment filtering only applies to the Recommended section.
 
 ### Plan / resolve relaxation
 
@@ -101,7 +101,7 @@ type Props = {
 - Tapping a result calls `onPick(id)` and closes sheet.
 - Swipe down or Escape closes sheet without picking.
 
-**Recommended set** = `recommendedFor({ slotKey, config })` — derived from `NUMBER_MOVEMENTS[config.theme][suit]` across all equipment levels, so it always respects the active theme (Upper Body, Lower Body, Full Body).
+**Recommended set** = `recommendedFor({ slotKey, config })` — exercises from `NUMBER_MOVEMENTS[config.theme][suit][config.equipment]` (default + alts). Respects both theme and equipment: Upper Body + Weights gives only upper-body dumbbell movements.
 
 ---
 
