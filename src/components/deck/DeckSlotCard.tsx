@@ -7,6 +7,8 @@ import { tExercise } from '@/i18n/exercises';
 import { SetupOptionButton } from '@/components/setup/SetupOptionButton';
 import { Button } from '@/components/ui/button';
 import { ExercisePickerSheet } from '@/components/deck/ExercisePickerSheet';
+import { PrescriptionStepper } from '@/components/deck/PrescriptionStepper';
+import type { PrescriptionType } from '@/components/deck/PrescriptionStepper';
 import type { FaceRank } from '@/domain/card';
 import { faceFreePickPrescription } from '@/domain/exerciseDb';
 import type { PlanSlot } from '@/domain/plan';
@@ -47,9 +49,21 @@ function compactCardPrescriptionLabel(opt: PlanSlot['options'][number]): string 
   return '';
 }
 
-type Props = { config: SetupConfig; slot: ComposerSlot; onPick: (id: ExerciseId) => void };
+function getPrescriptionType(opt: PlanSlot['options'][number]): PrescriptionType | null {
+  if (opt.reps != null && opt.reps !== 0) return 'reps';
+  if (opt.durationSec != null) return 'durationSec';
+  if (opt.distanceM != null) return 'distanceM';
+  return null;
+}
 
-export function DeckSlotCard({ config, slot, onPick }: Props) {
+type Props = {
+  config: SetupConfig;
+  slot: ComposerSlot;
+  onPick: (id: ExerciseId) => void;
+  onPrescriptionChange?: (field: PrescriptionType, value: number) => void;
+};
+
+export function DeckSlotCard({ config, slot, onPick, onPrescriptionChange }: Props) {
   const [open, setOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const reduceMotion = useReducedMotion();
@@ -82,14 +96,19 @@ export function DeckSlotCard({ config, slot, onPick }: Props) {
     }
   }, [open, searchOpen, hasAlts, reduceMotion, scrollSectionIntoView]);
 
-  const isOverridden =
-    slot.selected !== undefined &&
-    slot.defaultExercise !== undefined &&
-    slot.selected !== slot.defaultExercise.id;
+  const isEmpty = slot.selected === undefined;
+  const swappedFromDefault =
+    slot.defaultExercise !== undefined && slot.selected !== slot.defaultExercise.id;
+  const rxCustom = slot.prescriptionOverride != null;
+  const isOverridden = !isEmpty && (swappedFromDefault || rxCustom);
+
+  const isFaceSlot = slot.key.startsWith('face:');
+
   const suitMatch = slot.key.match(/^suit:(.+)$/);
   const faceMatch = slot.key.match(/^face:(.+)$/);
   const glyph = suitMatch ? SUIT_GLYPH[suitMatch[1]!] : faceMatch?.[1] ?? '';
   const suitColor = suitMatch ? SUIT_COLOR[suitMatch[1]!] : undefined;
+
   const selectedOpt = (() => {
     if (!slot.selected) return undefined;
     const fromOptions = slot.options.find((o) => o.id === slot.selected);
@@ -109,6 +128,14 @@ export function DeckSlotCard({ config, slot, onPick }: Props) {
       ? ({ ...slot.defaultExercise, id: slot.selected } as PlanSlot['options'][number])
       : undefined;
   })();
+
+  const prescriptionType =
+    isFaceSlot && !isEmpty && selectedOpt ? getPrescriptionType(selectedOpt) : null;
+  const prescriptionValue =
+    prescriptionType && selectedOpt
+      ? (slot.prescriptionOverride?.[prescriptionType] ?? selectedOpt[prescriptionType] ?? 1)
+      : 0;
+
   const selectedName = slot.selected ? tExercise(slot.selected) : t`Assign exercise`;
   const slotParts = slotHeaderParts(slot.key);
   const swapContextHeadingId = `review-swap-h-${slot.key.replaceAll(':', '-')}`;
@@ -137,7 +164,6 @@ export function DeckSlotCard({ config, slot, onPick }: Props) {
     else setSearchOpen(true);
   };
 
-  const isEmpty = slot.selected === undefined;
   const cardSurface = cn(
     'relative flex min-h-14 min-w-0 w-full flex-col gap-2.5 rounded-xl border py-3 ps-4 pe-10 text-left text-base font-medium break-words outline-none',
     'transition-[border-color,background-color,color,box-shadow,transform] duration-200 ease-out',
@@ -165,11 +191,35 @@ export function DeckSlotCard({ config, slot, onPick }: Props) {
     </>
   );
 
-  return (
-    <div
-      ref={sectionRef}
-      className="relative flex min-w-0 w-full scroll-mt-4 flex-col gap-3 sm:scroll-mt-5"
-    >
+  const cardBody =
+    isFaceSlot && prescriptionType && !isEmpty ? (
+      <div className={cardSurface}>
+        {statusCorner}
+        <motion.button
+          ref={toggleRef}
+          type="button"
+          aria-expanded={hasAlts ? open : undefined}
+          aria-haspopup={hasAlts ? undefined : 'dialog'}
+          {...(open && hasAlts ? { 'aria-controls': altPanelId } : {})}
+          aria-label={hasAlts ? t`Swap ${selectedName}` : t`Search or change ${selectedName}`}
+          onClick={handleCardActivate}
+          className={cn(
+            'flex min-w-0 items-start gap-2 text-left touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 rounded-sm',
+            !isOverridden ? 'hover:opacity-80' : 'hover:opacity-90',
+          )}
+          {...(!reduceMotion ? { whileTap: { scale: 0.985 } } : {})}
+          transition={{ duration: DURATION.fast, ease: EASE_OUT }}
+        >
+          <span className="font-display text-xl font-bold leading-none">{glyph}</span>
+          <span className="min-w-0 text-sm font-semibold leading-snug break-words">{selectedName}</span>
+        </motion.button>
+        <PrescriptionStepper
+          value={prescriptionValue}
+          type={prescriptionType}
+          onChange={(v) => onPrescriptionChange?.(prescriptionType, v)}
+        />
+      </div>
+    ) : (
       <motion.button
         ref={toggleRef}
         type="button"
@@ -197,6 +247,14 @@ export function DeckSlotCard({ config, slot, onPick }: Props) {
       >
         {cardMain}
       </motion.button>
+    );
+
+  return (
+    <div
+      ref={sectionRef}
+      className="relative flex min-w-0 w-full scroll-mt-4 flex-col gap-3 sm:scroll-mt-5"
+    >
+      {cardBody}
 
       <AnimatePresence>
         {open && hasAlts ? (

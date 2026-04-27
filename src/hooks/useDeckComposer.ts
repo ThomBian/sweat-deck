@@ -1,6 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useGameStore } from '@/store/gameStore';
-import { buildPlan, buildManualSlots, type SlotKey, type PlanSlot } from '@/domain/plan';
+import {
+  buildPlan,
+  buildManualSlots,
+  type SlotKey,
+  type PlanSlot,
+  type SlotOverride,
+} from '@/domain/plan';
 import { DEFAULT_CONFIG, type SetupConfig } from '@/domain/config';
 import type { ExerciseId } from '@/domain/exercise';
 import { saveLastConfig } from '@/store/db';
@@ -14,7 +20,18 @@ export type ComposerSlot = {
   selected: ExerciseId | undefined;
   options: PlanSlot['options'];
   defaultExercise: PlanSlot['defaultExercise'] | undefined;
+  prescriptionOverride?: PlanSlot['prescriptionOverride'];
 };
+
+function prescriptionFromOverride(ov: SlotOverride | undefined): PlanSlot['prescriptionOverride'] {
+  if (!ov) return undefined;
+  if (ov.reps === undefined && ov.durationSec === undefined && ov.distanceM === undefined) return undefined;
+  return {
+    ...(ov.reps !== undefined && { reps: ov.reps }),
+    ...(ov.durationSec !== undefined && { durationSec: ov.durationSec }),
+    ...(ov.distanceM !== undefined && { distanceM: ov.distanceM }),
+  };
+}
 
 export type DeckComposerState = {
   slots: ComposerSlot[];
@@ -44,13 +61,23 @@ export function useDeckComposer(input: ComposerMode): DeckComposerState {
 
   const slots: ComposerSlot[] =
     input.mode === 'guided'
-      ? (buildPlan({ config, overrides }) as ComposerSlot[])
-      : buildManualSlots().map((key) => ({
-          key,
-          selected: overrides[key] as ExerciseId | undefined,
-          options: [] as PlanSlot['options'],
-          defaultExercise: undefined,
-        }));
+      ? buildPlan({ config, overrides }).map((s) => ({
+          key: s.key,
+          selected: s.selected,
+          options: s.options,
+          defaultExercise: s.defaultExercise,
+          prescriptionOverride: s.prescriptionOverride,
+        }))
+      : buildManualSlots().map((key) => {
+          const ov = overrides[key];
+          return {
+            key,
+            selected: ov?.id,
+            options: [] as PlanSlot['options'],
+            defaultExercise: undefined,
+            prescriptionOverride: prescriptionFromOverride(ov),
+          };
+        });
 
   const isReady =
     input.mode === 'guided' ? true : slots.every((s) => s.selected !== undefined);
@@ -58,7 +85,7 @@ export function useDeckComposer(input: ComposerMode): DeckComposerState {
   const hasOverrides = input.mode === 'guided' && Object.keys(overrides).length > 0;
 
   const setSlot = (key: SlotKey, id: ExerciseId) => {
-    setOverride(key, id);
+    setOverride(key, { id });
   };
 
   const handleStart = async () => {
