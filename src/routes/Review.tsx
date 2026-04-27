@@ -113,7 +113,7 @@ export default function Review() {
             </div>
 
             {hasOverrides ? (
-              <div className="mt-1 border-t border-border/40 pt-4 sm:mt-2 sm:pt-5">
+              <div className="mt-2 border-t border-border/40 pt-4 sm:pt-5">
                 <motion.div
                   whileTap={{ scale: reduceMotion || footerLocked ? 1 : 0.98 }}
                   transition={{ duration: DURATION.fast, ease: EASE_OUT }}
@@ -121,7 +121,7 @@ export default function Review() {
                   <Button
                     type="button"
                     variant="ghost"
-                    className="min-h-11 w-full touch-manipulation justify-start px-3 text-left text-muted-foreground sm:w-auto sm:px-2"
+                    className="h-auto min-h-11 w-full touch-manipulation justify-start px-2 text-left text-muted-foreground sm:w-auto"
                     disabled={footerLocked}
                     onClick={() => resetOverrides()}
                   >
@@ -136,41 +136,7 @@ export default function Review() {
         </div>
 
         <footer className="fixed bottom-0 left-0 right-0 z-50 border-t border-border/40 bg-background/90 px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] backdrop-blur-md sm:px-6">
-          {/* Same footer rhythm as SetupWizard: min-h-11, justify-between, no oversized primary */}
-          <div className="mx-auto flex min-w-0 max-w-lg items-center justify-between gap-3 md:hidden">
-            <motion.div
-              className="min-w-0 shrink"
-              whileTap={{ scale: reduceMotion || footerLocked ? 1 : 0.98 }}
-              transition={{ duration: DURATION.fast, ease: EASE_OUT }}
-            >
-              <Button
-                type="button"
-                variant="outline"
-                className="min-h-11 touch-manipulation"
-                disabled={footerLocked}
-                onClick={() => navigate('/setup', { state: { config } })}
-              >
-                <Trans>Back</Trans>
-              </Button>
-            </motion.div>
-            <motion.div
-              className="min-w-0 shrink"
-              whileHover={{ scale: reduceMotion || footerLocked ? 1 : 1.02 }}
-              whileTap={{ scale: reduceMotion || footerLocked ? 1 : 0.98 }}
-              transition={{ duration: DURATION.fast, ease: EASE_OUT }}
-            >
-              <Button
-                type="button"
-                className="min-h-11 touch-manipulation"
-                disabled={footerLocked}
-                onClick={() => void handleStart()}
-              >
-                <Trans>Start workout</Trans>
-              </Button>
-            </motion.div>
-          </div>
-
-          <div className="mx-auto hidden min-w-0 max-w-lg md:flex md:flex-wrap md:items-center md:justify-between md:gap-3">
+          <div className="mx-auto flex min-w-0 max-w-lg items-center justify-between gap-3">
             <motion.div
               className="min-w-0 shrink"
               whileTap={{ scale: reduceMotion || footerLocked ? 1 : 0.98 }}

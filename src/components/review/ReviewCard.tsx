@@ -66,8 +66,8 @@ export function ReviewCard({ config, slot, onPick }: Props) {
 
     if (open && hasAlts) {
       const ms = reduceMotion ? 0 : Math.round(DURATION.pageOut * 1000);
-      const t = window.setTimeout(scrollSectionIntoView, ms);
-      return () => clearTimeout(t);
+      const timeoutId = window.setTimeout(scrollSectionIntoView, ms);
+      return () => clearTimeout(timeoutId);
     }
   }, [open, searchOpen, hasAlts, reduceMotion, scrollSectionIntoView]);
 
@@ -206,7 +206,7 @@ export function ReviewCard({ config, slot, onPick }: Props) {
             <Button
               type="button"
               variant="ghost"
-              className="min-h-10 w-full touch-manipulation text-muted-foreground"
+              className="min-h-11 w-full touch-manipulation text-muted-foreground"
               onClick={() => setSearchOpen(true)}
             >
               <Trans>Search all exercises</Trans>
