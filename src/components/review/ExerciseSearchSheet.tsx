@@ -96,18 +96,24 @@ export function ExerciseSearchSheet({ open, onOpenChange, slotKey, config, selec
         <Dialog.Backdrop className="fixed inset-0 z-[100] bg-black/50" />
         <Dialog.Popup
           className={cn(
-            'fixed inset-x-0 bottom-0 z-[101] flex max-h-[80dvh] flex-col rounded-t-2xl border border-border/50 bg-background shadow-lg',
+            'fixed inset-x-0 bottom-0 z-[101] flex max-h-[80dvh] flex-col rounded-t-[1.25rem] border border-border/50 bg-background shadow-lg',
             'pb-[env(safe-area-inset-bottom)]',
           )}
         >
-          <div className="flex shrink-0 flex-col gap-3 border-b border-border/40 p-4">
-            <Dialog.Title className="font-display text-lg font-semibold">
+          {/* Sheet affordance — separates chrome from content; keeps the panel from feeling like a floating box */}
+          <div className="flex shrink-0 justify-center pt-3 pb-1" aria-hidden>
+            <span className="h-1 w-10 shrink-0 rounded-full bg-muted-foreground/20" />
+          </div>
+
+          <div className="flex shrink-0 flex-col gap-4 border-b border-border/40 px-5 pb-5 sm:px-6">
+            <Dialog.Title className="px-0.5 font-display text-xl font-semibold tracking-tight text-balance">
               {glyph ? (
-                <span>
-                  {glyph} {family}
+                <span className="inline-flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                  <span className="text-2xl leading-none">{glyph}</span>
+                  <span className="text-lg sm:text-xl">{family}</span>
                 </span>
               ) : (
-                family
+                <span className="font-mono text-2xl tabular-nums tracking-tight">{family}</span>
               )}
             </Dialog.Title>
             <label className="sr-only" htmlFor="exercise-search-input">
@@ -120,17 +126,21 @@ export function ExerciseSearchSheet({ open, onOpenChange, slotKey, config, selec
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder={t`Search exercises…`}
-              className="w-full rounded-lg border border-border/60 bg-card px-3 py-2 text-base outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+              className="min-h-12 w-full rounded-xl border border-border/60 bg-card px-4 py-3 text-base outline-none transition-[border-color,box-shadow] focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50"
             />
           </div>
 
-          <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">
+          <div className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-y-contain">
             {showRecommendedOnly ? (
-              <div className="flex min-h-0 flex-1 flex-col gap-2 px-4 pt-3">
-                <h2 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+              <div className="flex min-h-0 flex-1 flex-col px-5 pt-5 pb-6 sm:px-6">
+                <h2 className="mb-3 text-[0.6875rem] font-semibold tracking-wider text-muted-foreground uppercase">
                   <Trans>Recommended</Trans>
                 </h2>
-                <div role="listbox" aria-label={t`Recommended exercises`} className="flex flex-col gap-2">
+                <div
+                  role="listbox"
+                  aria-label={t`Recommended exercises`}
+                  className="flex flex-col gap-2.5"
+                >
                   {recommended.map((entry) => (
                     <ResultRow
                       key={entry.id}
@@ -143,7 +153,11 @@ export function ExerciseSearchSheet({ open, onOpenChange, slotKey, config, selec
                 </div>
               </div>
             ) : (
-              <div role="listbox" aria-label={t`Search results`} className="flex flex-col gap-2 px-4 py-3">
+              <div
+                role="listbox"
+                aria-label={t`Search results`}
+                className="flex flex-col gap-2.5 px-5 py-5 pb-6 sm:px-6"
+              >
                 {filteredSorted.map((entry) => (
                   <ResultRow
                     key={entry.id}
