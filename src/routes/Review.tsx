@@ -74,9 +74,9 @@ export default function Review() {
             'min-h-0 flex-1 overflow-y-auto overscroll-y-contain',
             'px-5 sm:px-6',
             'pt-[max(1.25rem,env(safe-area-inset-top))] sm:pt-6',
-            /* Clear fixed footer + safe area + extra for expanded alt rows; taller stacked footer on tiny screens */
-            'pb-[max(8.5rem,calc(env(safe-area-inset-bottom)+5.5rem))]',
-            'max-[360px]:pb-[max(12rem,calc(env(safe-area-inset-bottom)+8.5rem))]',
+            /* Clear fixed footer + safe area + extra for expanded alt rows; taller bar while footer is stacked (below md) */
+            'max-md:pb-[max(12rem,calc(env(safe-area-inset-bottom)+8.5rem))]',
+            'md:pb-[max(8.5rem,calc(env(safe-area-inset-bottom)+5.5rem))]',
           )}
         >
           <motion.div
@@ -115,8 +115,8 @@ export default function Review() {
         </div>
 
         <footer className="fixed bottom-0 left-0 right-0 z-50 border-t border-border/40 bg-background/90 px-3 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))] backdrop-blur-md sm:px-6 sm:pt-4">
-          {/* ≤360px: full-width stack so labels and 44px targets fit (incl. long translations) */}
-          <div className="mx-auto flex min-w-0 max-w-lg flex-col gap-2 min-[361px]:hidden">
+          {/* Below md: full-width stack — matches single-column deck; avoids cramped three-abreast on phones and small tablets */}
+          <div className="mx-auto flex min-w-0 max-w-lg flex-col gap-2 md:hidden">
             <motion.div
               whileTap={{ scale: reduceMotion || footerLocked ? 1 : 0.98 }}
               transition={{ duration: DURATION.fast, ease: EASE_OUT }}
@@ -167,7 +167,7 @@ export default function Review() {
             </motion.div>
           </div>
 
-          <div className="mx-auto hidden min-w-0 max-w-lg min-[361px]:flex min-[361px]:flex-wrap min-[361px]:items-center min-[361px]:justify-between min-[361px]:gap-3 sm:gap-4">
+          <div className="mx-auto hidden min-w-0 max-w-lg md:flex md:flex-wrap md:items-center md:justify-between md:gap-3 lg:gap-4">
             <motion.div
               className="min-w-0 shrink"
               whileTap={{ scale: reduceMotion || footerLocked ? 1 : 0.98 }}
@@ -176,7 +176,7 @@ export default function Review() {
               <Button
                 type="button"
                 variant="outline"
-                className="min-h-11 min-w-0 touch-manipulation sm:max-w-[min(100%,12rem)]"
+                className="min-h-11 min-w-0 touch-manipulation md:max-w-[min(100%,12rem)]"
                 disabled={footerLocked}
                 onClick={() => navigate('/setup', { state: { config } })}
               >
@@ -186,7 +186,7 @@ export default function Review() {
               </Button>
             </motion.div>
 
-            <div className="flex min-w-0 flex-1 basis-[12rem] flex-wrap items-center justify-end gap-2 sm:flex-none sm:basis-auto sm:gap-3">
+            <div className="flex min-w-0 flex-1 basis-[12rem] flex-wrap items-center justify-end gap-2 md:flex-none md:basis-auto md:gap-3">
               <motion.div
                 className="min-w-0 shrink"
                 whileTap={{ scale: reduceMotion || footerLocked || !hasOverrides ? 1 : 0.98 }}
