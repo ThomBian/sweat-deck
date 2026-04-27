@@ -56,14 +56,15 @@ describe('resolve with overrides', () => {
     expect(ex.reps).toBe(9);
   });
 
-  it('ignores a number-card override when id is not in the slot options', () => {
-    const overrides: PlanOverrides = { 'suit:hearts': 'bench-press' }; // gym, not bodyweight
+  it('applies a number-card override even when id is not in the slot options', () => {
+    const overrides: PlanOverrides = { 'suit:hearts': 'bench-press' };
     const ex = resolve({
       card: { type: 'number', suit: 'hearts', value: 5 },
       config: baseConfig,
       overrides,
     });
-    expect(ex.id).toBe('pushups');
+    expect(ex.id).toBe('bench-press');
+    expect(ex.reps).toBe(5);
   });
 
   it('applies a face-card override with its own prescription', () => {
@@ -76,6 +77,18 @@ describe('resolve with overrides', () => {
     expect(ex.id).toBe('hollow-body-hold');
     expect(ex.durationSec).toBe(45); // from alt definition in FACE_CHALLENGES
     expect(ex.reps).toBeUndefined();
+  });
+
+  it('applies a face-card free-pick with the slot default prescription', () => {
+    const overrides: PlanOverrides = { 'face:J': 'bench-press' };
+    const ex = resolve({
+      card: { type: 'face', suit: 'clubs', rank: 'J' },
+      config: baseConfig,
+      overrides,
+    });
+    expect(ex.id).toBe('bench-press');
+    expect(ex.reps).toBe(15);
+    expect(ex.durationSec).toBeUndefined();
   });
 
   it('ignores overrides for aces', () => {

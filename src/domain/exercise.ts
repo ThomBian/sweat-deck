@@ -27,9 +27,8 @@ export const resolve = ({ card, config, overrides }: ResolveArgs): Exercise => {
 
   if (card.type === 'number') {
     const movement = NUMBER_MOVEMENTS[config.theme][card.suit][config.equipment];
-    const validIds: ExerciseId[] = [movement.id, ...(movement.alts ?? [])];
     const ov = overrides?.[`suit:${card.suit}`];
-    const id = ov && (validIds as string[]).includes(ov) ? (ov as ExerciseId) : movement.id;
+    const id = (ov !== undefined ? ov : movement.id) as ExerciseId;
     return { id, reps: card.value };
   }
 
@@ -47,6 +46,11 @@ export const resolve = ({ card, config, overrides }: ResolveArgs): Exercise => {
         if (distanceM !== undefined) ex.distanceM = distanceM;
         return ex;
       }
+      const ex: Exercise = { id: ov as ExerciseId };
+      if (src.reps !== undefined) ex.reps = src.reps;
+      if (src.durationSec !== undefined) ex.durationSec = src.durationSec;
+      if (src.distanceM !== undefined) ex.distanceM = src.distanceM;
+      return ex;
     }
     return { ...srcRest, id: src.id as ExerciseId };
   }

@@ -56,4 +56,19 @@ describe('workout uses review overrides (store + drawNext)', () => {
 
     expect(jackCount).toBe(4);
   });
+
+  it('applies out-of-catalog suit override through the full deck drain', () => {
+    useGameStore.getState().setOverride('suit:hearts', 'bench-press');
+    useGameStore.getState().start(cfg);
+
+    while (useGameStore.getState().deck.length > 0) {
+      useGameStore.getState().drawNext();
+      const s = useGameStore.getState();
+      const last = s.drawn.at(-1);
+      if (last?.type === 'number' && last.suit === 'hearts') {
+        expect(s.current?.id).toBe('bench-press');
+        expect(s.current?.reps).toBe(last.value);
+      }
+    }
+  });
 });
