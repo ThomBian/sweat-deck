@@ -137,6 +137,14 @@ msgstr "Arnold Press"
 msgid "Assault Bike"
 msgstr "Assault Bike"
 
+#: src/routes/Setup.tsx
+msgid "Assign an exercise to every card yourself."
+msgstr "Assign an exercise to every card yourself."
+
+#: src/routes/DeckBuilder.tsx
+msgid "Assign an exercise to every card."
+msgstr "Assign an exercise to every card."
+
 #: src/components/deck/DeckSlotCard.tsx
 msgid "Assign exercise"
 msgstr "Assign exercise"
@@ -197,6 +205,11 @@ msgstr "Box Jumps"
 #: src/i18n/exercises.ts
 msgid "Broad Jumps"
 msgstr "Broad Jumps"
+
+#: src/routes/DeckBuilder.tsx
+#: src/routes/Setup.tsx
+msgid "Build your deck"
+msgstr "Build your deck"
 
 #: src/i18n/exercises.ts
 msgid "Bulgarian Split Squats"
@@ -279,8 +292,8 @@ msgid "Combine the last 2 exercises — 10 reps each"
 msgstr "Combine the last 2 exercises — 10 reps each"
 
 #: src/routes/Setup.tsx
-msgid "Continue"
-msgstr "Continue"
+#~ msgid "Continue"
+#~ msgstr "Continue"
 
 #: src/routes/Onboarding.tsx
 msgid "Continue without saving"
@@ -475,6 +488,10 @@ msgstr "Gear changes which moves you see for each suit."
 msgid "Glute Bridges"
 msgstr "Glute Bridges"
 
+#: src/routes/Setup.tsx
+msgid "Go!"
+msgstr "Go!"
+
 #: src/i18n/exercises.ts
 msgid "Goblet Squats"
 msgstr "Goblet Squats"
@@ -486,6 +503,10 @@ msgstr "Good Mornings"
 #: src/routes/Onboarding.tsx
 msgid "Got it"
 msgstr "Got it"
+
+#: src/routes/Setup.tsx
+msgid "Guided"
+msgstr "Guided"
 
 #: src/i18n/exercises.ts
 msgid "Hack Squats"
@@ -615,6 +636,10 @@ msgstr "Leg Press"
 msgid "Legs"
 msgstr "Legs"
 
+#: src/routes/Setup.tsx
+msgid "Let us configure your deck step by step — or go manual and assign every card yourself."
+msgstr "Let us configure your deck step by step — or go manual and assign every card yourself."
+
 #: src/routes/Index.tsx
 msgid "Loading"
 msgstr "Loading"
@@ -642,6 +667,10 @@ msgstr "Machine Chest Press"
 #: src/i18n/exercises.ts
 msgid "Man-Makers"
 msgstr "Man-Makers"
+
+#: src/routes/Setup.tsx
+msgid "Manual"
+msgstr "Manual"
 
 #: src/i18n/exercises.ts
 #~ msgid "Max-Effort Leg Burnout"
@@ -756,8 +785,8 @@ msgid "Pick an exercise for this card."
 msgstr "Pick an exercise for this card."
 
 #: src/routes/Setup.tsx
-msgid "Pick your level, gear, and focus—then you'll shuffle in and draw the deck."
-msgstr "Pick your level, gear, and focus—then you'll shuffle in and draw the deck."
+#~ msgid "Pick your level, gear, and focus—then you'll shuffle in and draw the deck."
+#~ msgstr "Pick your level, gear, and focus—then you'll shuffle in and draw the deck."
 
 #: src/i18n/exercises.ts
 msgid "Pike Push-ups"
@@ -916,6 +945,10 @@ msgstr "Session in the books—on your own terms."
 #~ msgid "Session time"
 #~ msgstr "Session time"
 
+#: src/routes/Setup.tsx
+msgid "Setup mode"
+msgstr "Setup mode"
+
 #: src/i18n/exercises.ts
 msgid "Shoulder Press"
 msgstr "Shoulder Press"
@@ -961,8 +994,8 @@ msgid "Standing Calf Raises"
 msgstr "Standing Calf Raises"
 
 #: src/routes/Setup.tsx
-msgid "Start a new training"
-msgstr "Start a new training"
+#~ msgid "Start a new training"
+#~ msgstr "Start a new training"
 
 #: src/lib/summaryKudos.ts
 msgid "Start somewhere—you started today."
@@ -1149,6 +1182,10 @@ msgstr "Wall Sit"
 #: src/i18n/exercises.ts
 msgid "Water Break"
 msgstr "Water Break"
+
+#: src/routes/Setup.tsx
+msgid "We'll build your deck based on your level and gear."
+msgstr "We'll build your deck based on your level and gear."
 
 #: src/i18n/exercises.ts
 msgid "Weighted Calf Raises"

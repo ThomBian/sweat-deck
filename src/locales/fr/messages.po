@@ -137,6 +137,14 @@ msgstr ""
 msgid "Assault Bike"
 msgstr ""
 
+#: src/routes/Setup.tsx
+msgid "Assign an exercise to every card yourself."
+msgstr ""
+
+#: src/routes/DeckBuilder.tsx
+msgid "Assign an exercise to every card."
+msgstr ""
+
 #: src/components/deck/DeckSlotCard.tsx
 msgid "Assign exercise"
 msgstr ""
@@ -197,6 +205,11 @@ msgstr ""
 #: src/i18n/exercises.ts
 msgid "Broad Jumps"
 msgstr "Sauts en longueur"
+
+#: src/routes/DeckBuilder.tsx
+#: src/routes/Setup.tsx
+msgid "Build your deck"
+msgstr ""
 
 #: src/i18n/exercises.ts
 msgid "Bulgarian Split Squats"
@@ -279,8 +292,8 @@ msgid "Combine the last 2 exercises — 10 reps each"
 msgstr "Combinez les 2 derniers exercices — 10 répétitions chacun"
 
 #: src/routes/Setup.tsx
-msgid "Continue"
-msgstr "Continuer"
+#~ msgid "Continue"
+#~ msgstr "Continuer"
 
 #: src/routes/Onboarding.tsx
 msgid "Continue without saving"
@@ -475,6 +488,10 @@ msgstr "L’équipement change les mouvements proposés pour chaque couleur."
 msgid "Glute Bridges"
 msgstr "Pont"
 
+#: src/routes/Setup.tsx
+msgid "Go!"
+msgstr ""
+
 #: src/i18n/exercises.ts
 msgid "Goblet Squats"
 msgstr "Goblet Squat"
@@ -486,6 +503,10 @@ msgstr ""
 #: src/routes/Onboarding.tsx
 msgid "Got it"
 msgstr "Compris"
+
+#: src/routes/Setup.tsx
+msgid "Guided"
+msgstr ""
 
 #: src/i18n/exercises.ts
 msgid "Hack Squats"
@@ -615,6 +636,10 @@ msgstr ""
 msgid "Legs"
 msgstr "Jambes"
 
+#: src/routes/Setup.tsx
+msgid "Let us configure your deck step by step — or go manual and assign every card yourself."
+msgstr ""
+
 #: src/routes/Index.tsx
 msgid "Loading"
 msgstr "Chargement"
@@ -642,6 +667,10 @@ msgstr ""
 #: src/i18n/exercises.ts
 msgid "Man-Makers"
 msgstr "Man-makers"
+
+#: src/routes/Setup.tsx
+msgid "Manual"
+msgstr ""
 
 #: src/i18n/exercises.ts
 #~ msgid "Max-Effort Leg Burnout"
@@ -756,8 +785,8 @@ msgid "Pick an exercise for this card."
 msgstr ""
 
 #: src/routes/Setup.tsx
-msgid "Pick your level, gear, and focus—then you'll shuffle in and draw the deck."
-msgstr "Choisissez le niveau, l’équipement et ce que vous voulez travailler — puis mélangez et tirez votre première carte."
+#~ msgid "Pick your level, gear, and focus—then you'll shuffle in and draw the deck."
+#~ msgstr "Choisissez le niveau, l’équipement et ce que vous voulez travailler — puis mélangez et tirez votre première carte."
 
 #: src/i18n/exercises.ts
 msgid "Pike Push-ups"
@@ -916,6 +945,10 @@ msgstr "Séance bouclée — à votre rythme."
 #~ msgid "Session time"
 #~ msgstr "Chrono de séance"
 
+#: src/routes/Setup.tsx
+msgid "Setup mode"
+msgstr ""
+
 #: src/i18n/exercises.ts
 msgid "Shoulder Press"
 msgstr "Développé épaules"
@@ -961,8 +994,8 @@ msgid "Standing Calf Raises"
 msgstr "Élévations mollets debout"
 
 #: src/routes/Setup.tsx
-msgid "Start a new training"
-msgstr "Démarrer un entraînement"
+#~ msgid "Start a new training"
+#~ msgstr "Démarrer un entraînement"
 
 #: src/lib/summaryKudos.ts
 msgid "Start somewhere—you started today."
@@ -1149,6 +1182,10 @@ msgstr ""
 #: src/i18n/exercises.ts
 msgid "Water Break"
 msgstr "Pause hydratation"
+
+#: src/routes/Setup.tsx
+msgid "We'll build your deck based on your level and gear."
+msgstr ""
 
 #: src/i18n/exercises.ts
 msgid "Weighted Calf Raises"

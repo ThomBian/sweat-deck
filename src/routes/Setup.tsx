@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import { t } from '@lingui/core/macro';
 import { Trans } from '@lingui/react/macro';
@@ -18,8 +18,10 @@ const helpButtonClassName =
 
 export default function Setup() {
   const location = useLocation();
+  const navigate = useNavigate();
   const returnedConfig = (location.state as { config?: SetupConfig } | null)?.config;
   const [phase, setPhase] = useState<'landing' | 'wizard'>(() => (returnedConfig ? 'wizard' : 'landing'));
+  const [setupMode, setSetupMode] = useState<'guided' | 'manual'>('guided');
   const reduceMotion = useReducedMotion();
   const pageT = reduceMotion ? 0.1 : DURATION.pageIn;
 
@@ -63,29 +65,68 @@ export default function Setup() {
             <div className="min-w-0 text-left">
               <DeckGlyphPulse className="mb-6 md:mb-8" />
               <h1 className="[overflow-wrap:anywhere] text-balance break-words md:tracking-tight">
-                <Trans>Start a new training</Trans>
+                <Trans>Build your deck</Trans>
               </h1>
               <p className="mt-5 max-w-[min(100%,65ch)] text-pretty break-words text-base leading-[1.75] text-muted-foreground [overflow-wrap:anywhere] sm:mt-6 sm:text-lg sm:leading-[1.7]">
-                <Trans>Pick your level, gear, and focus—then you&apos;ll shuffle in and draw the deck.</Trans>
+                <Trans>
+                  Let us configure your deck step by step — or go manual and assign every card yourself.
+                </Trans>
               </p>
             </div>
           </div>
 
           <div className="w-full shrink-0 pt-2 sm:pt-4">
-            <motion.div
-              whileHover={{ scale: reduceMotion ? 1 : 1.02 }}
-              whileTap={{ scale: reduceMotion ? 1 : 0.98 }}
-              transition={{ duration: DURATION.fast, ease: EASE_OUT }}
-              className="mx-auto w-full sm:max-w-xs"
-            >
-              <Button
-                type="button"
-                className="h-auto min-h-11 w-full touch-manipulation px-8 py-3"
-                onClick={() => setPhase('wizard')}
+            <div className="mx-auto flex w-full flex-col gap-4 sm:max-w-xs">
+              <div
+                className="flex w-full gap-1 rounded-lg border border-border/50 bg-muted/30 p-1"
+                role="group"
+                aria-label={t`Setup mode`}
               >
-                <Trans>Continue</Trans>
-              </Button>
-            </motion.div>
+                {(['guided', 'manual'] as const).map((m) => (
+                  <button
+                    key={m}
+                    type="button"
+                    onClick={() => setSetupMode(m)}
+                    className={cn(
+                      'min-h-9 min-w-0 flex-1 touch-manipulation rounded-md px-3 py-1.5 text-sm font-medium transition-all duration-150',
+                      setupMode === m
+                        ? 'bg-background text-foreground shadow-sm'
+                        : 'text-muted-foreground hover:text-foreground',
+                    )}
+                  >
+                    {m === 'guided' ? <Trans>Guided</Trans> : <Trans>Manual</Trans>}
+                  </button>
+                ))}
+              </div>
+
+              <p className="text-center text-sm text-muted-foreground">
+                {setupMode === 'guided' ? (
+                  <Trans>We&apos;ll build your deck based on your level and gear.</Trans>
+                ) : (
+                  <Trans>Assign an exercise to every card yourself.</Trans>
+                )}
+              </p>
+
+              <motion.div
+                whileHover={{ scale: reduceMotion ? 1 : 1.02 }}
+                whileTap={{ scale: reduceMotion ? 1 : 0.98 }}
+                transition={{ duration: DURATION.fast, ease: EASE_OUT }}
+              >
+                <Button
+                  type="button"
+                  className="h-auto min-h-11 w-full touch-manipulation px-8 py-3"
+                  onClick={() => {
+                    if (setupMode === 'manual') {
+                      navigate('/deck', { state: { mode: 'manual' } });
+                    } else {
+                      setPhase('wizard');
+                    }
+                  }}
+                >
+                  <Trans>Go!</Trans>
+                </Button>
+              </motion.div>
+            </div>
           </div>
         </motion.div>
       ) : (
