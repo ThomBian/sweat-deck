@@ -181,7 +181,11 @@ export function DeckSlotCard({ config, slot, onPick }: Props) {
         className={cn(
           cardSurface,
           'touch-manipulation focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50',
-          !isOverridden ? 'hover:bg-card/90' : 'hover:bg-primary/20',
+          !isOverridden
+            ? isEmpty
+              ? 'hover:border-border/60 hover:bg-muted/35'
+              : 'hover:bg-card/90'
+            : 'hover:bg-primary/20',
         )}
         {...(!reduceMotion
           ? {

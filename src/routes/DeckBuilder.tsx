@@ -80,7 +80,7 @@ function DeckBuilderInner({
               <h1 className="min-w-0 font-display text-2xl font-semibold tracking-tight text-balance break-words sm:text-3xl">
                 {heading}
               </h1>
-              <p className="max-w-[65ch] text-pretty break-words text-sm leading-relaxed text-muted-foreground [overflow-wrap:anywhere]">
+              <p className="max-w-[65ch] text-pretty text-balance break-words text-sm leading-relaxed text-muted-foreground [overflow-wrap:anywhere]">
                 {subheading}
               </p>
             </header>
