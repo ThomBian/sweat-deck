@@ -64,7 +64,10 @@ test.describe('review route', () => {
     await page.getByRole('button', { name: 'Search all exercises' }).click();
     await expect(page.getByRole('dialog')).toBeVisible();
     await page.getByRole('searchbox').fill('bench');
-    await page.getByRole('button', { name: 'Bench Press ×N reps', exact: true }).click();
+    await page
+      .getByRole('button', { name: /Bench Press[\s\S]*×N reps/ })
+      .first()
+      .click();
     await expect(page.getByRole('dialog')).toBeHidden();
     await expect(heartCard).toHaveClass(/ring-2/);
     await expect(page.getByRole('button', { name: 'Reset swaps' })).toBeEnabled();
