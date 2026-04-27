@@ -33,8 +33,14 @@ describe('ExerciseSearchSheet', () => {
       </I18nProvider>,
     );
     expect(screen.getByText(/Recommended/i)).toBeInTheDocument();
-    const list = screen.getByRole('listbox', { name: /Recommended exercises/i });
-    expect(within(list).getAllByRole('option').length).toBeGreaterThan(0);
+    const recList = screen.getByRole('listbox', { name: /Recommended exercises/i });
+    expect(within(recList).getAllByRole('option').length).toBeGreaterThan(0);
+
+    expect(screen.getByRole('heading', { name: /All exercises/i })).toBeInTheDocument();
+    const allLists = screen.getAllByRole('listbox');
+    const restList = allLists.find((el) => el.getAttribute('aria-labelledby')?.includes('exercise-sheet-all'));
+    expect(restList).toBeTruthy();
+    expect(within(restList!).getAllByRole('option').length).toBeGreaterThan(0);
   });
 
   it('calls onPick when an option is activated', async () => {

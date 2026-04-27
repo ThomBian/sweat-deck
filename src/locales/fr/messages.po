@@ -113,6 +113,10 @@ msgstr "Avancé"
 #~ msgid "Affects face cards"
 #~ msgstr "S’applique aux figures"
 
+#: src/components/review/ExerciseSearchSheet.tsx
+msgid "All exercises"
+msgstr "Tous les exercices"
+
 #: src/routes/Onboarding.tsx
 msgid "All rules (full list)"
 msgstr "Toutes les règles (liste complète)"

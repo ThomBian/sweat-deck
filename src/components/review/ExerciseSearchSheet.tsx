@@ -111,12 +111,22 @@ export function ExerciseSearchSheet({
     return [...hit].sort(recFirst);
   }, [q, recIds, i18n.locale]);
 
+  /** Everything not in Recommended, for the default “browse more” list. */
+  const restOfExercises = useMemo(() => {
+    return ALL_EXERCISES.filter((e) => !recIds.has(e.id)).sort((a, b) => {
+      const byGroup = a.group.localeCompare(b.group);
+      if (byGroup !== 0) return byGroup;
+      return tExercise(a.id).localeCompare(tExercise(b.id), i18n.locale);
+    });
+  }, [recIds, i18n.locale]);
+
   const handlePick = (id: ExerciseId) => {
     onPick(id);
     onOpenChange(false);
   };
 
   const showRecommendedOnly = !q;
+  const allSectionHeadingId = `exercise-sheet-all-${slotKey.replaceAll(':', '-')}`;
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange} modal>
@@ -188,9 +198,15 @@ export function ExerciseSearchSheet({
               />
             </div>
 
-            <div className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-y-contain touch-pan-y">
+            <div
+              className={cn(
+                'min-h-0 flex-1 overflow-y-auto overscroll-y-contain touch-pan-y',
+                /* Cap list height so the sheet + keyboard stay predictable; content scrolls inside */
+                'max-h-[min(56dvh,calc(80dvh-10.5rem))]',
+              )}
+            >
               {showRecommendedOnly ? (
-                <div className="flex min-h-0 flex-1 flex-col px-5 pt-5 pb-6 sm:px-6">
+                <div className="flex flex-col px-5 pt-5 pb-6 sm:px-6">
                   <h2 className="mb-3 text-[0.6875rem] font-semibold tracking-wider text-muted-foreground uppercase">
                     <Trans>Recommended</Trans>
                   </h2>
@@ -208,23 +224,45 @@ export function ExerciseSearchSheet({
                         onPick={() => handlePick(entry.id)}
                       />
                     ))}
+                  </div>
+
+                  <h2
+                    id={allSectionHeadingId}
+                    className="mt-6 mb-3 text-[0.6875rem] font-semibold tracking-wider text-muted-foreground uppercase"
+                  >
+                    <Trans>All exercises</Trans>
+                  </h2>
+                  <div
+                    role="listbox"
+                    aria-labelledby={allSectionHeadingId}
+                    className="flex flex-col gap-2.5"
+                  >
+                    {restOfExercises.map((entry) => (
+                      <ResultRow
+                        key={entry.id}
+                        entry={entry}
+                        selected={selected}
+                        rx={rxLabel(slotKey, entry, facePrescriptionCtx)}
+                        onPick={() => handlePick(entry.id)}
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <div
-                role="listbox"
-                aria-label={t`Search results`}
-                className="flex flex-col gap-2.5 px-5 py-5 pb-6 sm:px-6"
-              >
-                {filteredSorted.map((entry) => (
-                  <ResultRow
-                    key={entry.id}
-                    entry={entry}
-                    selected={selected}
-                    rx={rxLabel(slotKey, entry, facePrescriptionCtx)}
-                    onPick={() => handlePick(entry.id)}
-                  />
-                ))}
+              ) : (
+                <div
+                  role="listbox"
+                  aria-label={t`Search results`}
+                  className="flex flex-col gap-2.5 px-5 py-5 pb-6 sm:px-6"
+                >
+                  {filteredSorted.map((entry) => (
+                    <ResultRow
+                      key={entry.id}
+                      entry={entry}
+                      selected={selected}
+                      rx={rxLabel(slotKey, entry, facePrescriptionCtx)}
+                      onPick={() => handlePick(entry.id)}
+                    />
+                  ))}
                 </div>
               )}
             </div>
