@@ -32,22 +32,25 @@ describe('ExerciseCountdown', () => {
     mockHook.start = vi.fn();
   });
 
-  it('renders "Tap to start" in idle state', () => {
+  it('renders Start timer in idle state', () => {
     render(wrap(<ExerciseCountdown durationSec={60} />));
-    expect(screen.getByText(/tap to start/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /start timer/i })).toBeInTheDocument();
   });
 
-  it('clicking the ring calls start() when idle', () => {
+  it('clicking Start timer calls start() when idle', () => {
     render(wrap(<ExerciseCountdown durationSec={60} />));
-    fireEvent.click(screen.getByRole('button'));
+    fireEvent.click(screen.getByRole('button', { name: /start timer/i }));
     expect(mockHook.start).toHaveBeenCalledOnce();
   });
 
-  it('shows MM:SS in running state', () => {
+  it('shows large MM:SS and progress in running state', () => {
     mockHook.phase = 'running';
     mockHook.remaining = 45;
     render(wrap(<ExerciseCountdown durationSec={60} />));
     expect(screen.getByText('0:45')).toBeInTheDocument();
+    const bar = screen.getByRole('progressbar');
+    expect(bar).toHaveAttribute('aria-valuenow', '45');
+    expect(bar).toHaveAttribute('aria-valuemax', '60');
   });
 
   it('shows checkmark in done state', () => {
@@ -57,10 +60,10 @@ describe('ExerciseCountdown', () => {
     expect(screen.getByText('✓')).toBeInTheDocument();
   });
 
-  it('button is disabled when not idle', () => {
+  it('hides Start timer button when not idle', () => {
     mockHook.phase = 'running';
     mockHook.remaining = 30;
     render(wrap(<ExerciseCountdown durationSec={60} />));
-    expect(screen.getByRole('button')).toBeDisabled();
+    expect(screen.queryByRole('button', { name: /start timer/i })).not.toBeInTheDocument();
   });
 });

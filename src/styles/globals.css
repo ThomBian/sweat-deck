@@ -6,6 +6,13 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Animated conic origin for timer “studio” wash (Overdrive); keyframes in @layer components */
+@property --timer-ambient-orbit {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
 @layer utilities {
   .sr-only {
     position: absolute;
@@ -227,5 +234,86 @@ body,
   }
   .skip-to-content:focus-visible {
     @apply translate-y-0;
+  }
+
+  /**
+   * Timer ambient (Overdrive): conic “studio” wash + slow drift (rotate).
+   * Also: @property --timer-ambient-orbit for a smooth hue sweep where supported
+   * (browsers that don’t animate it still get a static conic; rotate does the movement).
+   */
+  @keyframes timer-ambient-hue {
+    to {
+      --timer-ambient-orbit: 360deg;
+    }
+  }
+
+  @keyframes timer-ambient-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .timer-ambient {
+    @apply relative overflow-hidden rounded-3xl;
+    box-shadow: inset 0 0 0 1px oklch(1 0 0 / 0.05);
+  }
+
+  .timer-ambient__bloom {
+    pointer-events: none;
+    position: absolute;
+    inset: -32%;
+    z-index: 0;
+    /* Page-level fill carries primary progress; keep this as a light local accent. */
+    opacity: 0.12;
+    border-radius: 50%;
+    filter: blur(50px) saturate(1.12);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    will-change: transform;
+    transform: translateZ(0) rotate(0deg);
+    mask-image: radial-gradient(closest-side, black 0%, black 52%, transparent 76%);
+    -webkit-mask-image: radial-gradient(closest-side, black 0%, black 52%, transparent 76%);
+  }
+
+  .timer-ambient__bloom--work {
+    background: conic-gradient(
+      from var(--timer-ambient-orbit) at 50% 48%,
+      oklch(0.2 0.1 58 / 0.42) 0deg,
+      oklch(0.15 0.05 300 / 0.28) 95deg,
+      oklch(0.18 0.08 32 / 0.36) 205deg,
+      oklch(0.2 0.1 58 / 0.42) 360deg
+    );
+    animation: timer-ambient-hue 34s linear infinite, timer-ambient-spin 48s linear infinite;
+  }
+
+  .timer-ambient__bloom--rest {
+    background: conic-gradient(
+      from var(--timer-ambient-orbit) at 50% 52%,
+      oklch(0.16 0.07 230 / 0.4) 0deg,
+      oklch(0.14 0.05 265 / 0.26) 100deg,
+      oklch(0.16 0.07 200 / 0.33) 210deg,
+      oklch(0.16 0.07 230 / 0.4) 360deg
+    );
+    animation: timer-ambient-hue 40s linear infinite reverse, timer-ambient-spin 56s linear infinite reverse;
+  }
+
+  .timer-ambient--reduced .timer-ambient__bloom--work,
+  .timer-ambient--reduced .timer-ambient__bloom--rest {
+    animation: none;
+    --timer-ambient-orbit: 52deg;
+    opacity: 0.2;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .timer-ambient__bloom--work,
+    .timer-ambient__bloom--rest {
+      animation: none;
+      --timer-ambient-orbit: 48deg;
+      opacity: 0.2;
+    }
+  }
+
+  .timer-ambient__content {
+    @apply relative z-10;
   }
 }

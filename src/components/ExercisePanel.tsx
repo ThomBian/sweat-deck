@@ -4,6 +4,7 @@ import { Plural, Trans } from '@lingui/react/macro';
 import { CardFace } from '@/components/CardFace';
 import type { Exercise } from '@/domain/exercise';
 import { tExercise } from '@/i18n/exercises';
+import { formatMSS } from '@/lib/formatTime';
 import { DURATION, EASE_OUT } from '@/lib/motion';
 import { useGameStore } from '@/store/gameStore';
 import type { ReactNode } from 'react';
@@ -16,7 +17,7 @@ export const ExercisePanel = ({ exercise }: Props) => {
 
   if (!exercise) {
     return (
-      <p className="max-w-prose text-center text-base leading-relaxed text-muted-foreground">
+      <p className="mx-auto w-full max-w-prose text-center text-base leading-relaxed text-muted-foreground">
         <Trans>Tap the stack to draw your first card.</Trans>
       </p>
     );
@@ -25,7 +26,7 @@ export const ExercisePanel = ({ exercise }: Props) => {
   const motionKey = `${exercise.id}-${detail ?? 'x'}`;
 
   return (
-    <div className="max-w-[min(100%,36rem)] text-center">
+    <div className="w-full text-center">
       <AnimatePresence mode="wait">
         <motion.div
           key={motionKey}
@@ -79,7 +80,7 @@ const formatDetail = (ex: Exercise): ReactNode | null => {
       </span>
     );
   }
-  if (ex.durationSec !== undefined) return null;
+  if (ex.durationSec !== undefined) return formatMSS(ex.durationSec);
   if (ex.distanceM !== undefined) return t`${ex.distanceM}m`;
   return null;
 };

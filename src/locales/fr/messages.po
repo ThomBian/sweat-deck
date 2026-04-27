@@ -16,6 +16,20 @@ msgstr ""
 msgid "{0, plural, one {# rep} other {# reps}}"
 msgstr "{0, plural, one {# répétition} other {# répétitions}}"
 
+#: src/components/ExerciseCountdown.tsx
+#~ msgid "{0} left"
+#~ msgstr "Reste {0}"
+
+#: src/components/ExerciseCountdown.tsx
+#~ msgid "{0} left of {1}"
+#~ msgstr "Reste {0} sur {1}"
+
+#. placeholder {0}: formatMSS(remaining)
+#. placeholder {1}: formatMSS(durationSec)
+#: src/components/ExerciseCountdown.tsx
+msgid "{0} of {1}"
+msgstr "{0} sur {1}"
+
 #. placeholder {0}: ex.distanceM
 #. placeholder {0}: opt.distanceM
 #: src/components/ExercisePanel.tsx
@@ -23,10 +37,10 @@ msgstr "{0, plural, one {# répétition} other {# répétitions}}"
 msgid "{0}m"
 msgstr "{0} m"
 
-#. placeholder {0}: opt.durationSec
+#: src/components/ExercisePanel.tsx
 #: src/components/review/ReviewCard.tsx
-msgid "{0}s"
-msgstr "{0} s"
+#~ msgid "{0}s"
+#~ msgstr "{0} s"
 
 #: src/components/review/ReviewCard.tsx
 msgid "{selectedName} — no alternatives to swap"
@@ -105,6 +119,14 @@ msgstr "Exercices de remplacement pour cette case"
 msgid "Applies to the whole app—screens, cards, and prompts."
 msgstr "S’applique à toute l’app : écrans, cartes et textes."
 
+#: src/i18n/exercises.ts
+msgid "Arnold Press"
+msgstr ""
+
+#: src/i18n/exercises.ts
+msgid "Assault Bike"
+msgstr ""
+
 #: src/components/SetupWizard.tsx
 #: src/routes/Review.tsx
 msgid "Back"
@@ -113,6 +135,10 @@ msgstr "Retour"
 #: src/i18n/exercises.ts
 msgid "Back Squats"
 msgstr "Squats arrière"
+
+#: src/i18n/exercises.ts
+msgid "Barbell Curls"
+msgstr ""
 
 #: src/i18n/exercises.ts
 msgid "Barbell Hip Thrusts"
@@ -130,6 +156,10 @@ msgstr "Débutant"
 msgid "Bench Press"
 msgstr "Développé couché"
 
+#: src/i18n/exercises.ts
+msgid "Bent-over Rows"
+msgstr ""
+
 #: src/i18n/labels.ts
 msgid "Bodyweight"
 msgstr "Poids du corps"
@@ -143,6 +173,14 @@ msgstr "Tirage poids du corps"
 #~ msgstr "Manche bonus — au-delà du chrono"
 
 #: src/i18n/exercises.ts
+msgid "Box Jump Burpees"
+msgstr ""
+
+#: src/i18n/exercises.ts
+msgid "Box Jumps"
+msgstr ""
+
+#: src/i18n/exercises.ts
 msgid "Broad Jumps"
 msgstr "Sauts en longueur"
 
@@ -153,6 +191,18 @@ msgstr "Squats bulgares"
 #: src/i18n/exercises.ts
 msgid "Burpees"
 msgstr "Burpees"
+
+#: src/i18n/exercises.ts
+msgid "Cable Chest Fly"
+msgstr ""
+
+#: src/i18n/exercises.ts
+msgid "Cable Curls"
+msgstr ""
+
+#: src/i18n/exercises.ts
+msgid "Cable Kickbacks"
+msgstr ""
 
 #: src/i18n/exercises.ts
 msgid "Cable Rows"
@@ -169,6 +219,22 @@ msgstr "Mode Cardio ?"
 #: src/routes/Summary.tsx
 msgid "Cards drawn"
 msgstr "Cartes tirées"
+
+#: src/i18n/exercises.ts
+msgid "Chest Fly"
+msgstr ""
+
+#: src/i18n/exercises.ts
+msgid "Chest-Supported Rows"
+msgstr ""
+
+#: src/i18n/exercises.ts
+msgid "Chin-ups"
+msgstr ""
+
+#: src/i18n/exercises.ts
+msgid "Clean & Press"
+msgstr ""
 
 #: src/routes/Play.tsx
 msgid "Clock stopped—resume or finish the session."
@@ -214,9 +280,25 @@ msgstr "Impossible d’enregistrer votre progression sur cet appareil. Vérifiez
 #~ msgid "Deal the workout"
 #~ msgstr "Lancer l’entraînement"
 
+#: src/i18n/exercises.ts
+msgid "Decline Bench Press"
+msgstr ""
+
+#: src/i18n/exercises.ts
+msgid "Decline Push-ups"
+msgstr ""
+
 #: src/routes/Setup.tsx
 #~ msgid "Defaults are tuned for a quick start—change anything in a tap."
 #~ msgstr "Des réglages par défaut faits pour démarrer vite — modifiez en un appui."
+
+#: src/i18n/exercises.ts
+msgid "Devil Press"
+msgstr ""
+
+#: src/i18n/exercises.ts
+msgid "Diamond Push-ups"
+msgstr ""
 
 #: src/i18n/labels.ts
 msgid "Diamonds"
@@ -229,6 +311,10 @@ msgstr "La difficulté impacte la probabilité de tirer des cartes difficiles, a
 #: src/routes/Play.tsx
 msgid "Difficulty details"
 msgstr "Détails de la difficulté"
+
+#: src/i18n/exercises.ts
+msgid "Dips"
+msgstr ""
 
 #: src/components/ExercisePanel.tsx
 #~ msgid "Do this"
@@ -255,6 +341,10 @@ msgstr "Tirer une carte du paquet"
 #~ msgstr "Les tirages penchent plus lourd quand la difficulté augmente — c’est un jeu de cartes, pas un tableur."
 
 #: src/i18n/exercises.ts
+msgid "Dumbbell Curls"
+msgstr ""
+
+#: src/i18n/exercises.ts
 msgid "Dumbbell Floor Press"
 msgstr "Développé couché haltères au sol"
 
@@ -265,6 +355,14 @@ msgstr "Développé haltères"
 #: src/i18n/exercises.ts
 msgid "Dumbbell Rows"
 msgstr "Rowing haltères"
+
+#: src/i18n/exercises.ts
+msgid "Dumbbell Snatch"
+msgstr ""
+
+#: src/i18n/exercises.ts
+msgid "Dumbbell Step-ups"
+msgstr ""
 
 #: src/routes/Onboarding.tsx
 msgid "Each suit maps to a movement pattern."
@@ -299,6 +397,10 @@ msgstr "Les figures sont intenses. Les as offrent une pause d’une minute."
 #~ msgstr "Les figures peuvent utiliser votre choix cardio"
 
 #: src/i18n/exercises.ts
+msgid "Face Pulls"
+msgstr ""
+
+#: src/i18n/exercises.ts
 msgid "Fast Jumping Jacks"
 msgstr "Jumping jacks rapides"
 
@@ -317,6 +419,10 @@ msgstr "Terminer la séance"
 #: src/routes/Onboarding.tsx
 msgid "For deep dives, replays, or if you are teaching a friend."
 msgstr "Pour le détail, les relectures ou quand vous expliquez l’appli."
+
+#: src/i18n/exercises.ts
+msgid "Front Squats"
+msgstr ""
 
 #: src/i18n/labels.ts
 msgid "Full Body"
@@ -342,9 +448,21 @@ msgstr "Pont"
 msgid "Goblet Squats"
 msgstr "Goblet Squat"
 
+#: src/i18n/exercises.ts
+msgid "Good Mornings"
+msgstr ""
+
 #: src/routes/Onboarding.tsx
 msgid "Got it"
 msgstr "Compris"
+
+#: src/i18n/exercises.ts
+msgid "Hack Squats"
+msgstr ""
+
+#: src/i18n/exercises.ts
+msgid "Hammer Curls"
+msgstr ""
 
 #: src/i18n/labels.ts
 msgid "Hard"
@@ -386,6 +504,14 @@ msgstr "Comment ça marche"
 msgid "If you're new here, we'll start from friendly defaults."
 msgstr "Si vous débutez, nous partons de réglages modérés."
 
+#: src/i18n/exercises.ts
+msgid "Incline Bench Press"
+msgstr ""
+
+#: src/i18n/exercises.ts
+msgid "Incline Dumbbell Press"
+msgstr ""
+
 #: src/i18n/labels.ts
 msgid "Intensity goes up—8s, 9s, 10s are the new normal."
 msgstr "L’intensité augmente : 8, 9, 10 deviennent le quotidien."
@@ -402,6 +528,10 @@ msgstr "Langue de l’interface — choisir la langue"
 msgid "Intermediate"
 msgstr "Intermédiaire"
 
+#: src/i18n/exercises.ts
+msgid "Inverted Rows"
+msgstr ""
+
 #: src/routes/Onboarding.tsx
 msgid "Jokers are chaos—wildcard rounds that react to cards you already drew."
 msgstr "Les jokers, c’est le chaos — des tours jokers selon ce que vous avez déjà tiré."
@@ -415,8 +545,16 @@ msgid "Jokers watch what you already pulled—same deck, different curveball."
 msgstr "Les jokers regardent ce que vous avez déjà pioché — même jeu, autre mauvaise surprise."
 
 #: src/i18n/exercises.ts
+msgid "Jump Rope"
+msgstr ""
+
+#: src/i18n/exercises.ts
 msgid "Jump Squats"
 msgstr "Squats sautés"
+
+#: src/i18n/exercises.ts
+msgid "Kettlebell Complex"
+msgstr ""
 
 #: src/i18n/exercises.ts
 msgid "Kettlebell Swings"
@@ -425,6 +563,22 @@ msgstr "Kettlebell swing"
 #: src/i18n/exercises.ts
 msgid "Lat Pulldown"
 msgstr "Tirage vertical"
+
+#: src/i18n/exercises.ts
+msgid "Lateral Raises"
+msgstr ""
+
+#: src/i18n/exercises.ts
+msgid "Leg Curls"
+msgstr ""
+
+#: src/i18n/exercises.ts
+msgid "Leg Extensions"
+msgstr ""
+
+#: src/i18n/exercises.ts
+msgid "Leg Press"
+msgstr ""
 
 #: src/routes/Index.tsx
 msgid "Loading"
@@ -445,6 +599,10 @@ msgstr "Bas du corps"
 #: src/i18n/exercises.ts
 msgid "Lunges"
 msgstr "Fentes"
+
+#: src/i18n/exercises.ts
+msgid "Machine Chest Press"
+msgstr ""
 
 #: src/i18n/exercises.ts
 msgid "Man-Makers"
@@ -510,6 +668,10 @@ msgstr "Sans limite"
 #~ msgid "No program builder. Just five choices, then the cards."
 #~ msgstr "Pas de constructeur de programme. Cinq choix, puis les cartes."
 
+#: src/i18n/exercises.ts
+msgid "Nordic Curls"
+msgstr ""
+
 #: src/routes/Onboarding.tsx
 msgid "Number cards use the face value as your rep count."
 msgstr "Les cartes numérotées : la valeur = votre nombre de répétitions."
@@ -525,6 +687,10 @@ msgstr "Activé"
 #: src/i18n/exercises.ts
 msgid "Overhead Press"
 msgstr "Développé militaire"
+
+#: src/i18n/exercises.ts
+msgid "Overhead Tricep Extension"
+msgstr ""
 
 #: src/components/Timer.tsx
 msgid "Overtime"
@@ -551,12 +717,20 @@ msgid "Pike Push-ups"
 msgstr "Pompes pike"
 
 #: src/i18n/exercises.ts
+msgid "Pistol Squats"
+msgstr ""
+
+#: src/i18n/exercises.ts
 msgid "Plank Hold"
 msgstr "Planche"
 
 #: src/i18n/exercises.ts
 msgid "Plank to Push-up"
 msgstr "Planche avec pompe"
+
+#: src/i18n/exercises.ts
+msgid "Preacher Curls"
+msgstr ""
 
 #: src/i18n/exercises.ts
 msgid "Pull-ups"
@@ -573,6 +747,10 @@ msgstr "Rappel rapide"
 #: src/routes/Setup.tsx
 #~ msgid "Quick setup"
 #~ msgstr "Config rapide"
+
+#: src/i18n/exercises.ts
+msgid "Rack Pulls"
+msgstr ""
 
 #: src/i18n/exercises.ts
 msgid "Renegade Rows"
@@ -606,6 +784,10 @@ msgstr "Vérifiez votre paquet"
 #: src/i18n/exercises.ts
 msgid "Romanian Deadlifts"
 msgstr "Soulevés de terre roumains"
+
+#: src/components/ExerciseCountdown.tsx
+msgid "Round complete"
+msgstr "Série terminée"
 
 #: src/i18n/exercises.ts
 msgid "Row"
@@ -664,12 +846,20 @@ msgid "Shuffling the deck…"
 msgstr "Mélange du paquet…"
 
 #: src/i18n/exercises.ts
+msgid "Single-Leg Glute Bridges"
+msgstr ""
+
+#: src/i18n/exercises.ts
 msgid "SkiErg"
 msgstr "SkiErg"
 
 #: src/App.tsx
 msgid "Skip to main content"
 msgstr "Aller au contenu principal"
+
+#: src/i18n/exercises.ts
+msgid "Skull Crushers"
+msgstr ""
 
 #: src/i18n/labels.ts
 msgid "Spades"
@@ -695,6 +885,10 @@ msgstr "Démarrer un entraînement"
 msgid "Start somewhere—you started today."
 msgstr "Tout part d’un début — vous avez lancé la chose aujourd’hui."
 
+#: src/components/ExerciseCountdown.tsx
+msgid "Start timer"
+msgstr "Lancer le minuteur"
+
 #: src/routes/Review.tsx
 msgid "Start workout"
 msgstr "Démarrer l’entraînement"
@@ -704,6 +898,22 @@ msgstr "Démarrer l’entraînement"
 #: src/components/SetupWizard.tsx
 msgid "Step {0} of {1}: {title}"
 msgstr "Étape {0} sur {1} : {title}"
+
+#: src/i18n/exercises.ts
+msgid "Step-ups"
+msgstr ""
+
+#: src/i18n/exercises.ts
+msgid "Straight-Arm Pulldown"
+msgstr ""
+
+#: src/i18n/exercises.ts
+msgid "Sumo Deadlifts"
+msgstr ""
+
+#: src/i18n/exercises.ts
+msgid "Sumo Squats"
+msgstr ""
 
 #: src/components/review/ReviewCard.tsx
 #~ msgid "Swap {0}"
@@ -733,6 +943,10 @@ msgstr "Passer en anglais"
 msgid "Switch to French"
 msgstr "Passer en français"
 
+#: src/i18n/exercises.ts
+msgid "T-Bar Rows"
+msgstr ""
+
 #: src/routes/Play.tsx
 #~ msgid "Take a breath. Your clock is on hold—resume when you are ready."
 #~ msgstr "Respirez. Le chrono est en pause — reprenez quand vous voulez."
@@ -746,8 +960,12 @@ msgid "Tap the stack to draw your first card."
 msgstr "Touchez le paquet pour tirer votre première carte."
 
 #: src/components/ExerciseCountdown.tsx
-msgid "Tap to start"
-msgstr "Appuyez pour démarrer"
+#~ msgid "Tap to start"
+#~ msgstr "Appuyez pour démarrer"
+
+#: src/components/ExerciseCountdown.tsx
+#~ msgid "Target"
+#~ msgstr "Objectif"
 
 #: src/routes/Onboarding.tsx
 msgid "That's the gist—short enough to remember between sets."
@@ -805,6 +1023,14 @@ msgstr "Limite de temps ?"
 #~ msgid "Time remaining in session"
 #~ msgstr "Temps restant sur la séance"
 
+#: src/i18n/exercises.ts
+msgid "Tricep Dips"
+msgstr ""
+
+#: src/i18n/exercises.ts
+msgid "Tricep Pushdown"
+msgstr ""
+
 #: src/routes/Onboarding.tsx
 msgid "Try again"
 msgstr "Réessayer"
@@ -828,6 +1054,10 @@ msgstr "Fentes marchées"
 #: src/i18n/exercises.ts
 msgid "Wall Balls"
 msgstr "Wall balls"
+
+#: src/i18n/exercises.ts
+msgid "Wall Sit"
+msgstr ""
 
 #: src/i18n/exercises.ts
 msgid "Water Break"

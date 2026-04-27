@@ -7,6 +7,7 @@ import { tExercise } from '@/i18n/exercises';
 import { SetupOptionButton } from '@/components/setup/SetupOptionButton';
 import type { PlanSlot } from '@/domain/plan';
 import type { ExerciseId } from '@/domain/exercise';
+import { formatMSS } from '@/lib/formatTime';
 import { DURATION, EASE_OUT } from '@/lib/motion';
 
 const SUIT_GLYPH: Record<string, string> = {
@@ -25,7 +26,7 @@ const SUIT_COLOR: Record<string, string> = {
 function prescriptionLabel(opt: PlanSlot['options'][number]): string {
   if (opt.reps === 0) return t`×N reps`;
   if (opt.reps != null) return t`×${opt.reps} reps`;
-  if (opt.durationSec != null) return t`${opt.durationSec}s`;
+  if (opt.durationSec != null) return formatMSS(opt.durationSec);
   if (opt.distanceM != null) return t`${opt.distanceM}m`;
   return '';
 }
@@ -116,7 +117,7 @@ export function ReviewCard({ slot, onPick }: Props) {
           )}
           {...(!reduceMotion
             ? {
-                whileHover: { scale: 1.012 },
+                whileHover: { y: -2 },
                 whileTap: { scale: 0.985 },
               }
             : {})}

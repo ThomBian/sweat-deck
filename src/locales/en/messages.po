@@ -16,6 +16,20 @@ msgstr ""
 msgid "{0, plural, one {# rep} other {# reps}}"
 msgstr "{0, plural, one {# rep} other {# reps}}"
 
+#: src/components/ExerciseCountdown.tsx
+#~ msgid "{0} left"
+#~ msgstr "{0} left"
+
+#: src/components/ExerciseCountdown.tsx
+#~ msgid "{0} left of {1}"
+#~ msgstr "{0} left of {1}"
+
+#. placeholder {0}: formatMSS(remaining)
+#. placeholder {1}: formatMSS(durationSec)
+#: src/components/ExerciseCountdown.tsx
+msgid "{0} of {1}"
+msgstr "{0} of {1}"
+
 #. placeholder {0}: ex.distanceM
 #. placeholder {0}: opt.distanceM
 #: src/components/ExercisePanel.tsx
@@ -23,10 +37,10 @@ msgstr "{0, plural, one {# rep} other {# reps}}"
 msgid "{0}m"
 msgstr "{0}m"
 
-#. placeholder {0}: opt.durationSec
+#: src/components/ExercisePanel.tsx
 #: src/components/review/ReviewCard.tsx
-msgid "{0}s"
-msgstr "{0}s"
+#~ msgid "{0}s"
+#~ msgstr "{0}s"
 
 #: src/components/review/ReviewCard.tsx
 msgid "{selectedName} — no alternatives to swap"
@@ -105,6 +119,14 @@ msgstr "Alternative exercises for this slot"
 msgid "Applies to the whole app—screens, cards, and prompts."
 msgstr "Applies to the whole app—screens, cards, and prompts."
 
+#: src/i18n/exercises.ts
+msgid "Arnold Press"
+msgstr "Arnold Press"
+
+#: src/i18n/exercises.ts
+msgid "Assault Bike"
+msgstr "Assault Bike"
+
 #: src/components/SetupWizard.tsx
 #: src/routes/Review.tsx
 msgid "Back"
@@ -113,6 +135,10 @@ msgstr "Back"
 #: src/i18n/exercises.ts
 msgid "Back Squats"
 msgstr "Back Squats"
+
+#: src/i18n/exercises.ts
+msgid "Barbell Curls"
+msgstr "Barbell Curls"
 
 #: src/i18n/exercises.ts
 msgid "Barbell Hip Thrusts"
@@ -130,6 +156,10 @@ msgstr "Beginner"
 msgid "Bench Press"
 msgstr "Bench Press"
 
+#: src/i18n/exercises.ts
+msgid "Bent-over Rows"
+msgstr "Bent-over Rows"
+
 #: src/i18n/labels.ts
 msgid "Bodyweight"
 msgstr "Bodyweight"
@@ -143,6 +173,14 @@ msgstr "Bodyweight Rows"
 #~ msgstr "Bonus round — past the timer"
 
 #: src/i18n/exercises.ts
+msgid "Box Jump Burpees"
+msgstr "Box Jump Burpees"
+
+#: src/i18n/exercises.ts
+msgid "Box Jumps"
+msgstr "Box Jumps"
+
+#: src/i18n/exercises.ts
 msgid "Broad Jumps"
 msgstr "Broad Jumps"
 
@@ -153,6 +191,18 @@ msgstr "Bulgarian Split Squats"
 #: src/i18n/exercises.ts
 msgid "Burpees"
 msgstr "Burpees"
+
+#: src/i18n/exercises.ts
+msgid "Cable Chest Fly"
+msgstr "Cable Chest Fly"
+
+#: src/i18n/exercises.ts
+msgid "Cable Curls"
+msgstr "Cable Curls"
+
+#: src/i18n/exercises.ts
+msgid "Cable Kickbacks"
+msgstr "Cable Kickbacks"
 
 #: src/i18n/exercises.ts
 msgid "Cable Rows"
@@ -169,6 +219,22 @@ msgstr "Cardio mode?"
 #: src/routes/Summary.tsx
 msgid "Cards drawn"
 msgstr "Cards drawn"
+
+#: src/i18n/exercises.ts
+msgid "Chest Fly"
+msgstr "Chest Fly"
+
+#: src/i18n/exercises.ts
+msgid "Chest-Supported Rows"
+msgstr "Chest-Supported Rows"
+
+#: src/i18n/exercises.ts
+msgid "Chin-ups"
+msgstr "Chin-ups"
+
+#: src/i18n/exercises.ts
+msgid "Clean & Press"
+msgstr "Clean & Press"
 
 #: src/routes/Play.tsx
 msgid "Clock stopped—resume or finish the session."
@@ -214,9 +280,25 @@ msgstr "Couldn't save your progress to this device. Check storage permissions or
 #~ msgid "Deal the workout"
 #~ msgstr "Deal the workout"
 
+#: src/i18n/exercises.ts
+msgid "Decline Bench Press"
+msgstr "Decline Bench Press"
+
+#: src/i18n/exercises.ts
+msgid "Decline Push-ups"
+msgstr "Decline Push-ups"
+
 #: src/routes/Setup.tsx
 #~ msgid "Defaults are tuned for a quick start—change anything in a tap."
 #~ msgstr "Defaults are tuned for a quick start—change anything in a tap."
+
+#: src/i18n/exercises.ts
+msgid "Devil Press"
+msgstr "Devil Press"
+
+#: src/i18n/exercises.ts
+msgid "Diamond Push-ups"
+msgstr "Diamond Push-ups"
 
 #: src/i18n/labels.ts
 msgid "Diamonds"
@@ -229,6 +311,10 @@ msgstr "Difficulty affects the odds of drawing harder cards, and the default exe
 #: src/routes/Play.tsx
 msgid "Difficulty details"
 msgstr "Difficulty details"
+
+#: src/i18n/exercises.ts
+msgid "Dips"
+msgstr "Dips"
 
 #: src/components/ExercisePanel.tsx
 #~ msgid "Do this"
@@ -255,6 +341,10 @@ msgstr "Draw a card from the stack"
 #~ msgstr "Draws skew heavier as difficulty rises—still a card game, not a spreadsheet."
 
 #: src/i18n/exercises.ts
+msgid "Dumbbell Curls"
+msgstr "Dumbbell Curls"
+
+#: src/i18n/exercises.ts
 msgid "Dumbbell Floor Press"
 msgstr "Dumbbell Floor Press"
 
@@ -265,6 +355,14 @@ msgstr "Dumbbell Press"
 #: src/i18n/exercises.ts
 msgid "Dumbbell Rows"
 msgstr "Dumbbell Rows"
+
+#: src/i18n/exercises.ts
+msgid "Dumbbell Snatch"
+msgstr "Dumbbell Snatch"
+
+#: src/i18n/exercises.ts
+msgid "Dumbbell Step-ups"
+msgstr "Dumbbell Step-ups"
 
 #: src/routes/Onboarding.tsx
 msgid "Each suit maps to a movement pattern."
@@ -299,6 +397,10 @@ msgstr "Face cards are high-intensity. Aces are a one-minute rest break."
 #~ msgstr "Face cards can use your cardio pick"
 
 #: src/i18n/exercises.ts
+msgid "Face Pulls"
+msgstr "Face Pulls"
+
+#: src/i18n/exercises.ts
 msgid "Fast Jumping Jacks"
 msgstr "Fast Jumping Jacks"
 
@@ -317,6 +419,10 @@ msgstr "Finish session"
 #: src/routes/Onboarding.tsx
 msgid "For deep dives, replays, or if you are teaching a friend."
 msgstr "For deep dives, replays, or if you are teaching a friend."
+
+#: src/i18n/exercises.ts
+msgid "Front Squats"
+msgstr "Front Squats"
 
 #: src/i18n/labels.ts
 msgid "Full Body"
@@ -342,9 +448,21 @@ msgstr "Glute Bridges"
 msgid "Goblet Squats"
 msgstr "Goblet Squats"
 
+#: src/i18n/exercises.ts
+msgid "Good Mornings"
+msgstr "Good Mornings"
+
 #: src/routes/Onboarding.tsx
 msgid "Got it"
 msgstr "Got it"
+
+#: src/i18n/exercises.ts
+msgid "Hack Squats"
+msgstr "Hack Squats"
+
+#: src/i18n/exercises.ts
+msgid "Hammer Curls"
+msgstr "Hammer Curls"
 
 #: src/i18n/labels.ts
 msgid "Hard"
@@ -386,6 +504,14 @@ msgstr "How it works"
 msgid "If you're new here, we'll start from friendly defaults."
 msgstr "If you're new here, we'll start from friendly defaults."
 
+#: src/i18n/exercises.ts
+msgid "Incline Bench Press"
+msgstr "Incline Bench Press"
+
+#: src/i18n/exercises.ts
+msgid "Incline Dumbbell Press"
+msgstr "Incline Dumbbell Press"
+
 #: src/i18n/labels.ts
 msgid "Intensity goes up—8s, 9s, 10s are the new normal."
 msgstr "Intensity goes up—8s, 9s, 10s are the new normal."
@@ -402,6 +528,10 @@ msgstr "Interface language — choose a language"
 msgid "Intermediate"
 msgstr "Intermediate"
 
+#: src/i18n/exercises.ts
+msgid "Inverted Rows"
+msgstr "Inverted Rows"
+
 #: src/routes/Onboarding.tsx
 msgid "Jokers are chaos—wildcard rounds that react to cards you already drew."
 msgstr "Jokers are chaos—wildcard rounds that react to cards you already drew."
@@ -415,8 +545,16 @@ msgid "Jokers watch what you already pulled—same deck, different curveball."
 msgstr "Jokers watch what you already pulled—same deck, different curveball."
 
 #: src/i18n/exercises.ts
+msgid "Jump Rope"
+msgstr "Jump Rope"
+
+#: src/i18n/exercises.ts
 msgid "Jump Squats"
 msgstr "Jump Squats"
+
+#: src/i18n/exercises.ts
+msgid "Kettlebell Complex"
+msgstr "Kettlebell Complex"
 
 #: src/i18n/exercises.ts
 msgid "Kettlebell Swings"
@@ -425,6 +563,22 @@ msgstr "Kettlebell Swings"
 #: src/i18n/exercises.ts
 msgid "Lat Pulldown"
 msgstr "Lat Pulldown"
+
+#: src/i18n/exercises.ts
+msgid "Lateral Raises"
+msgstr "Lateral Raises"
+
+#: src/i18n/exercises.ts
+msgid "Leg Curls"
+msgstr "Leg Curls"
+
+#: src/i18n/exercises.ts
+msgid "Leg Extensions"
+msgstr "Leg Extensions"
+
+#: src/i18n/exercises.ts
+msgid "Leg Press"
+msgstr "Leg Press"
 
 #: src/routes/Index.tsx
 msgid "Loading"
@@ -445,6 +599,10 @@ msgstr "Lower Body"
 #: src/i18n/exercises.ts
 msgid "Lunges"
 msgstr "Lunges"
+
+#: src/i18n/exercises.ts
+msgid "Machine Chest Press"
+msgstr "Machine Chest Press"
 
 #: src/i18n/exercises.ts
 msgid "Man-Makers"
@@ -510,6 +668,10 @@ msgstr "No limit"
 #~ msgid "No program builder. Just five choices, then the cards."
 #~ msgstr "No program builder. Just five choices, then the cards."
 
+#: src/i18n/exercises.ts
+msgid "Nordic Curls"
+msgstr "Nordic Curls"
+
 #: src/routes/Onboarding.tsx
 msgid "Number cards use the face value as your rep count."
 msgstr "Number cards use the face value as your rep count."
@@ -525,6 +687,10 @@ msgstr "On"
 #: src/i18n/exercises.ts
 msgid "Overhead Press"
 msgstr "Overhead Press"
+
+#: src/i18n/exercises.ts
+msgid "Overhead Tricep Extension"
+msgstr "Overhead Tricep Extension"
 
 #: src/components/Timer.tsx
 msgid "Overtime"
@@ -551,12 +717,20 @@ msgid "Pike Push-ups"
 msgstr "Pike Push-ups"
 
 #: src/i18n/exercises.ts
+msgid "Pistol Squats"
+msgstr "Pistol Squats"
+
+#: src/i18n/exercises.ts
 msgid "Plank Hold"
 msgstr "Plank Hold"
 
 #: src/i18n/exercises.ts
 msgid "Plank to Push-up"
 msgstr "Plank to Push-up"
+
+#: src/i18n/exercises.ts
+msgid "Preacher Curls"
+msgstr "Preacher Curls"
 
 #: src/i18n/exercises.ts
 msgid "Pull-ups"
@@ -573,6 +747,10 @@ msgstr "Quick refresher"
 #: src/routes/Setup.tsx
 #~ msgid "Quick setup"
 #~ msgstr "Quick setup"
+
+#: src/i18n/exercises.ts
+msgid "Rack Pulls"
+msgstr "Rack Pulls"
 
 #: src/i18n/exercises.ts
 msgid "Renegade Rows"
@@ -606,6 +784,10 @@ msgstr "Review your deck"
 #: src/i18n/exercises.ts
 msgid "Romanian Deadlifts"
 msgstr "Romanian Deadlifts"
+
+#: src/components/ExerciseCountdown.tsx
+msgid "Round complete"
+msgstr "Round complete"
 
 #: src/i18n/exercises.ts
 msgid "Row"
@@ -664,12 +846,20 @@ msgid "Shuffling the deck…"
 msgstr "Shuffling the deck…"
 
 #: src/i18n/exercises.ts
+msgid "Single-Leg Glute Bridges"
+msgstr "Single-Leg Glute Bridges"
+
+#: src/i18n/exercises.ts
 msgid "SkiErg"
 msgstr "SkiErg"
 
 #: src/App.tsx
 msgid "Skip to main content"
 msgstr "Skip to main content"
+
+#: src/i18n/exercises.ts
+msgid "Skull Crushers"
+msgstr "Skull Crushers"
 
 #: src/i18n/labels.ts
 msgid "Spades"
@@ -695,6 +885,10 @@ msgstr "Start a new training"
 msgid "Start somewhere—you started today."
 msgstr "Start somewhere—you started today."
 
+#: src/components/ExerciseCountdown.tsx
+msgid "Start timer"
+msgstr "Start timer"
+
 #: src/routes/Review.tsx
 msgid "Start workout"
 msgstr "Start workout"
@@ -704,6 +898,22 @@ msgstr "Start workout"
 #: src/components/SetupWizard.tsx
 msgid "Step {0} of {1}: {title}"
 msgstr "Step {0} of {1}: {title}"
+
+#: src/i18n/exercises.ts
+msgid "Step-ups"
+msgstr "Step-ups"
+
+#: src/i18n/exercises.ts
+msgid "Straight-Arm Pulldown"
+msgstr "Straight-Arm Pulldown"
+
+#: src/i18n/exercises.ts
+msgid "Sumo Deadlifts"
+msgstr "Sumo Deadlifts"
+
+#: src/i18n/exercises.ts
+msgid "Sumo Squats"
+msgstr "Sumo Squats"
 
 #: src/components/review/ReviewCard.tsx
 #~ msgid "Swap {0}"
@@ -733,6 +943,10 @@ msgstr "Switch to English"
 msgid "Switch to French"
 msgstr "Switch to French"
 
+#: src/i18n/exercises.ts
+msgid "T-Bar Rows"
+msgstr "T-Bar Rows"
+
 #: src/routes/Play.tsx
 #~ msgid "Take a breath. Your clock is on hold—resume when you are ready."
 #~ msgstr "Take a breath. Your clock is on hold—resume when you are ready."
@@ -746,8 +960,12 @@ msgid "Tap the stack to draw your first card."
 msgstr "Tap the stack to draw your first card."
 
 #: src/components/ExerciseCountdown.tsx
-msgid "Tap to start"
-msgstr "Tap to start"
+#~ msgid "Tap to start"
+#~ msgstr "Tap to start"
+
+#: src/components/ExerciseCountdown.tsx
+#~ msgid "Target"
+#~ msgstr "Target"
 
 #: src/routes/Onboarding.tsx
 msgid "That's the gist—short enough to remember between sets."
@@ -805,6 +1023,14 @@ msgstr "Time limit?"
 #~ msgid "Time remaining in session"
 #~ msgstr "Time remaining in session"
 
+#: src/i18n/exercises.ts
+msgid "Tricep Dips"
+msgstr "Tricep Dips"
+
+#: src/i18n/exercises.ts
+msgid "Tricep Pushdown"
+msgstr "Tricep Pushdown"
+
 #: src/routes/Onboarding.tsx
 msgid "Try again"
 msgstr "Try again"
@@ -828,6 +1054,10 @@ msgstr "Walking Lunges"
 #: src/i18n/exercises.ts
 msgid "Wall Balls"
 msgstr "Wall Balls"
+
+#: src/i18n/exercises.ts
+msgid "Wall Sit"
+msgstr "Wall Sit"
 
 #: src/i18n/exercises.ts
 msgid "Water Break"
