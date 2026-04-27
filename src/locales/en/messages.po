@@ -45,11 +45,12 @@ msgstr "{0}m"
 #~ msgstr "{0}s"
 
 #: src/components/review/ReviewCard.tsx
-msgid "{selectedName} — no alternatives to swap"
-msgstr "{selectedName} — no alternatives to swap"
+#~ msgid "{selectedName} — no alternatives to swap"
+#~ msgstr "{selectedName} — no alternatives to swap"
 
 #. placeholder {0}: entry.defaultReps
 #. placeholder {0}: opt.reps
+#. placeholder {0}: rx.reps
 #: src/components/review/ExerciseSearchSheet.tsx
 #: src/components/review/ReviewCard.tsx
 msgid "×{0} reps"
@@ -834,13 +835,17 @@ msgstr "Search all exercises"
 msgid "Search exercises…"
 msgstr "Search exercises…"
 
+#: src/components/review/ReviewCard.tsx
+msgid "Search or change {selectedName}"
+msgstr "Search or change {selectedName}"
+
 #: src/components/review/ExerciseSearchSheet.tsx
 msgid "Search results"
 msgstr "Search results"
 
 #: src/routes/Review.tsx
-msgid "Select a card to swap"
-msgstr "Select a card to swap"
+#~ msgid "Select a card to swap"
+#~ msgstr "Select a card to swap"
 
 #: src/components/Timer.tsx
 msgid "Session"
@@ -983,6 +988,10 @@ msgstr "T-Bar Rows"
 #: src/routes/Review.tsx
 #~ msgid "Tap a card to swap"
 #~ msgstr "Tap a card to swap"
+
+#: src/routes/Review.tsx
+msgid "Tap a card to swap or search the full list."
+msgstr "Tap a card to swap or search the full list."
 
 #: src/components/ExercisePanel.tsx
 msgid "Tap the stack to draw your first card."

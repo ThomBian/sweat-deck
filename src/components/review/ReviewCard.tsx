@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { t } from '@lingui/core/macro';
 import { Trans } from '@lingui/react/macro';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { Lock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { tExercise } from '@/i18n/exercises';
 import { SetupOptionButton } from '@/components/setup/SetupOptionButton';
@@ -68,7 +67,6 @@ export function ReviewCard({ config, slot, onPick }: Props) {
     return { ...slot.defaultExercise, id: slot.selected } as PlanSlot['options'][number];
   })();
   const selectedName = tExercise(slot.selected as ExerciseId);
-  const lockedLabel = t`${selectedName} — no alternatives to swap`;
   const altPanelId = `review-alts-${slot.key.replaceAll(':', '-')}`;
   const rxLabel = prescriptionLabel(selectedOpt);
 
@@ -89,8 +87,12 @@ export function ReviewCard({ config, slot, onPick }: Props) {
     setOpen(false);
   };
 
+  const handleCardActivate = () => {
+    if (hasAlts) setOpen((v) => !v);
+    else setSearchOpen(true);
+  };
+
   const cardSurface = cn(
-    /* pe-10: keep titles/pills clear of corner status (lock / override dot) */
     'relative flex min-h-14 min-w-0 w-full flex-col gap-2.5 rounded-xl border py-3 ps-4 pe-10 text-left text-base font-medium break-words outline-none',
     'transition-[border-color,background-color,color,box-shadow,transform] duration-200 ease-out',
     isOverridden
@@ -98,14 +100,7 @@ export function ReviewCard({ config, slot, onPick }: Props) {
       : 'border-border/50 bg-card/60',
   );
 
-  const statusCorner = !hasAlts ? (
-    <span
-      className="pointer-events-none absolute end-3 top-3 flex size-7 items-center justify-center rounded-md border border-border/40 bg-background/30 text-muted-foreground"
-      aria-hidden
-    >
-      <Lock className="size-3.5 shrink-0 opacity-90" strokeWidth={2.25} aria-hidden />
-    </span>
-  ) : isOverridden ? (
+  const statusCorner = isOverridden ? (
     <span className="absolute end-3 top-3 size-2 rounded-full bg-primary" aria-hidden />
   ) : null;
 
@@ -124,44 +119,33 @@ export function ReviewCard({ config, slot, onPick }: Props) {
 
   return (
     <div className="relative flex min-w-0 w-full flex-col gap-3">
-      {hasAlts ? (
-        <motion.button
-          ref={toggleRef}
-          type="button"
-          aria-expanded={open}
-          {...(open ? { 'aria-controls': altPanelId } : {})}
-          aria-label={t`Swap ${selectedName}`}
-          onClick={() => setOpen((v) => !v)}
-          className={cn(
-            cardSurface,
-            'touch-manipulation focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50',
-            !isOverridden ? 'hover:bg-card/90' : 'hover:bg-primary/20',
-          )}
-          {...(!reduceMotion
-            ? {
-                whileHover: { y: -2 },
-                whileTap: { scale: 0.985 },
-              }
-            : {})}
-          transition={{ duration: DURATION.fast, ease: EASE_OUT }}
-        >
-          {cardMain}
-        </motion.button>
-      ) : (
-        <>
-          <div role="group" aria-label={lockedLabel} className={cn(cardSurface, 'cursor-default')}>
-            {cardMain}
-          </div>
-          <Button
-            type="button"
-            variant="ghost"
-            className="min-h-10 w-full touch-manipulation text-muted-foreground"
-            onClick={() => setSearchOpen(true)}
-          >
-            <Trans>Search all exercises</Trans>
-          </Button>
-        </>
-      )}
+      <motion.button
+        ref={toggleRef}
+        type="button"
+        aria-expanded={hasAlts ? open : undefined}
+        aria-haspopup={hasAlts ? undefined : 'dialog'}
+        {...(open && hasAlts ? { 'aria-controls': altPanelId } : {})}
+        aria-label={
+          hasAlts
+            ? t`Swap ${selectedName}`
+            : t`Search or change ${selectedName}`
+        }
+        onClick={handleCardActivate}
+        className={cn(
+          cardSurface,
+          'touch-manipulation focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50',
+          !isOverridden ? 'hover:bg-card/90' : 'hover:bg-primary/20',
+        )}
+        {...(!reduceMotion
+          ? {
+              whileHover: { y: -2 },
+              whileTap: { scale: 0.985 },
+            }
+          : {})}
+        transition={{ duration: DURATION.fast, ease: EASE_OUT }}
+      >
+        {cardMain}
+      </motion.button>
 
       <AnimatePresence>
         {open && hasAlts ? (

@@ -89,7 +89,7 @@ export default function Review() {
                 <Trans>Review your deck</Trans>
               </h1>
               <p className="max-w-[65ch] text-pretty break-words text-sm leading-relaxed text-muted-foreground [overflow-wrap:anywhere]">
-                <Trans>Select a card to swap</Trans>
+                <Trans>Tap a card to swap or search the full list.</Trans>
               </p>
             </header>
 
