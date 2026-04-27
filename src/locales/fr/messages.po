@@ -122,8 +122,8 @@ msgid "All rules (full list)"
 msgstr "Toutes les règles (liste complète)"
 
 #: src/components/review/ReviewCard.tsx
-msgid "Alternative exercises for this slot"
-msgstr "Exercices de remplacement pour cette case"
+#~ msgid "Alternative exercises for this slot"
+#~ msgstr "Exercices de remplacement pour cette case"
 
 #: src/routes/Setup.tsx
 msgid "Applies to the whole app—screens, cards, and prompts."
@@ -230,7 +230,7 @@ msgstr "Mode Cardio ?"
 msgid "Cards drawn"
 msgstr "Cartes tirées"
 
-#: src/components/review/ExerciseSearchSheet.tsx
+#: src/lib/reviewSlotContext.ts
 msgid "Challenge"
 msgstr "Défi"
 
@@ -245,6 +245,10 @@ msgstr ""
 #: src/i18n/exercises.ts
 msgid "Chin-ups"
 msgstr ""
+
+#: src/components/review/ReviewCard.tsx
+msgid "Choose an alternative"
+msgstr "Choisir une variante"
 
 #: src/i18n/exercises.ts
 msgid "Clean & Press"
@@ -289,6 +293,11 @@ msgstr "Impossible de lire votre dernière config. Affichage des valeurs par dé
 #: src/routes/Onboarding.tsx
 msgid "Couldn't save your progress to this device. Check storage permissions or try again."
 msgstr "Impossible d’enregistrer votre progression sur cet appareil. Vérifiez les autorisations de stockage ou réessayez."
+
+#. placeholder {0}: tExercise(selected)
+#: src/components/review/ExerciseSearchSheet.tsx
+msgid "Current move: <0>{0}</0>"
+msgstr "Mouvement actuel : <0>{0}</0>"
 
 #: src/components/SetupWizard.tsx
 #~ msgid "Deal the workout"

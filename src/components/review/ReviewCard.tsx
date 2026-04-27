@@ -13,6 +13,7 @@ import type { PlanSlot } from '@/domain/plan';
 import type { ExerciseId } from '@/domain/exercise';
 import type { SetupConfig } from '@/domain/config';
 import { formatMSS } from '@/lib/formatTime';
+import { slotHeaderParts } from '@/lib/reviewSlotContext';
 import { DURATION, EASE_OUT } from '@/lib/motion';
 
 const SUIT_GLYPH: Record<string, string> = {
@@ -93,6 +94,8 @@ export function ReviewCard({ config, slot, onPick }: Props) {
     return { ...slot.defaultExercise, id: slot.selected } as PlanSlot['options'][number];
   })();
   const selectedName = tExercise(slot.selected as ExerciseId);
+  const slotParts = slotHeaderParts(slot.key);
+  const swapContextHeadingId = `review-swap-h-${slot.key.replaceAll(':', '-')}`;
   const altPanelId = `review-alts-${slot.key.replaceAll(':', '-')}`;
   const rxLabel = prescriptionLabel(selectedOpt);
 
@@ -181,13 +184,30 @@ export function ReviewCard({ config, slot, onPick }: Props) {
           <motion.div
             id={altPanelId}
             role="radiogroup"
-            aria-label={t`Alternative exercises for this slot`}
+            aria-labelledby={swapContextHeadingId}
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: reduceMotion ? 0.05 : DURATION.pageOut, ease: EASE_OUT }}
             className="flex flex-col gap-3 overflow-hidden"
           >
+            <div className="flex flex-col gap-1.5">
+              <h3
+                id={swapContextHeadingId}
+                className="text-[0.6875rem] font-semibold uppercase tracking-wider text-muted-foreground"
+              >
+                <Trans>Choose an alternative</Trans>
+              </h3>
+              <p className="text-sm text-foreground/90 [overflow-wrap:anywhere]">
+                <span className={cn('font-display text-lg font-bold leading-none', suitColor)}>
+                  {slotParts.glyph}
+                </span>
+                <span className="text-muted-foreground"> · </span>
+                <span>{slotParts.family}</span>
+                <span className="text-muted-foreground"> — </span>
+                <span className="font-medium">{selectedName}</span>
+              </p>
+            </div>
             {slot.options.map((opt) => (
               <SetupOptionButton
                 key={opt.id}

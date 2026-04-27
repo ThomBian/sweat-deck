@@ -15,23 +15,10 @@ import { formatMSS } from '@/lib/formatTime';
 import { SetupOptionButton } from '@/components/setup/SetupOptionButton';
 import { tEquipment } from '@/i18n/labels';
 import type { Equipment } from '@/domain/config';
+import { slotHeaderParts } from '@/lib/reviewSlotContext';
 import { Check, Heart } from 'lucide-react';
 
 const EQUIPMENT_META_ORDER: Equipment[] = ['bodyweight', 'weights', 'gym'];
-
-const SUIT_GLYPH: Record<string, string> = {
-  hearts: '♥',
-  diamonds: '♦',
-  clubs: '♣',
-  spades: '♠',
-};
-
-const SUIT_FAMILY: Record<string, string> = {
-  hearts: 'Push',
-  diamonds: 'Pull',
-  clubs: 'Legs',
-  spades: 'Posterior',
-};
 
 export type FacePrescriptionCtx = {
   rank: FaceRank;
@@ -93,17 +80,6 @@ function rxLabel(slotKey: SlotKey, entry: ExerciseEntry, faceCtx?: FacePrescript
   return t`×N reps`;
 }
 
-function headerParts(slotKey: SlotKey): { glyph: string; family: string } {
-  const m = slotKey.match(/^suit:(.+)$/);
-  if (m) {
-    const suit = m[1]!;
-    return { glyph: SUIT_GLYPH[suit] ?? '', family: SUIT_FAMILY[suit] ?? suit };
-  }
-  const fm = slotKey.match(/^face:(.+)$/);
-  if (fm) return { glyph: fm[1]!, family: t`Challenge` };
-  return { glyph: '', family: '' };
-}
-
 const DISMISS_OFFSET_PX = 72;
 const DISMISS_VELOCITY = 420;
 
@@ -128,7 +104,7 @@ export function ExerciseSearchSheet({
   }, [open]);
 
   const q = query.trim().toLowerCase();
-  const { glyph, family } = headerParts(slotKey);
+  const { glyph, family } = slotHeaderParts(slotKey);
 
   const filteredSorted = useMemo(() => {
     if (!q) return [];
@@ -212,6 +188,12 @@ export function ExerciseSearchSheet({
                     <span className="font-mono text-2xl tabular-nums tracking-tight">{family}</span>
                   )}
                 </Dialog.Title>
+                <Dialog.Description className="px-0.5 pt-1.5 text-sm leading-relaxed text-muted-foreground">
+                  <Trans>
+                    Current move:{' '}
+                    <span className="font-medium text-foreground">{tExercise(selected)}</span>
+                  </Trans>
+                </Dialog.Description>
               </div>
             </div>
 
