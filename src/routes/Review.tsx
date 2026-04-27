@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import { t } from '@lingui/core/macro';
@@ -12,7 +12,8 @@ import { ReviewCard } from '@/components/review/ReviewCard';
 import { Button } from '@/components/ui/button';
 import { ShuffleTransition } from '@/components/ShuffleTransition';
 import { DURATION, EASE_OUT } from '@/lib/motion';
-import { MAIN_PAD, SHELL_SETUP } from '@/lib/layout';
+import { SHELL_SETUP } from '@/lib/layout';
+import { cn } from '@/lib/utils';
 import { saveLastConfig } from '@/store/db';
 
 export default function Review() {
@@ -27,6 +28,7 @@ export default function Review() {
   const start = useGameStore((s) => s.start);
 
   const [showShuffle, setShowShuffle] = useState(false);
+  const [isStarting, setIsStarting] = useState(false);
 
   useEffect(() => {
     if (!config) {
@@ -47,6 +49,8 @@ export default function Review() {
   };
 
   const handleStart = async () => {
+    if (showShuffle || isStarting) return;
+    setIsStarting(true);
     try {
       await saveLastConfig(config);
     } catch {
@@ -56,64 +60,116 @@ export default function Review() {
     setShowShuffle(true);
   };
 
+  const footerLocked = showShuffle || isStarting;
+
   return (
-    <main
-      id="main-content"
-      className={['relative flex flex-col', SHELL_SETUP, MAIN_PAD, 'min-h-dvh pb-32'].join(' ')}
-    >
-      <motion.div
-        className="flex flex-col gap-6"
-        initial={{ opacity: 0, y: reduceMotion ? 0 : 6 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: reduceMotion ? 0.1 : DURATION.pageIn, ease: EASE_OUT }}
+    <Fragment>
+      <main
+        id="main-content"
+        inert={showShuffle ? true : undefined}
+        className={cn('relative flex h-dvh min-h-0 flex-col overflow-hidden', SHELL_SETUP)}
       >
-        <div className="flex flex-col gap-1">
-          <h1 className="font-display text-2xl font-semibold tracking-tight text-balance break-words sm:text-3xl">
-            <Trans>Review your deck</Trans>
-          </h1>
-          <p className="text-sm text-muted-foreground">
-            <Trans>Tap a card to swap</Trans>
-          </p>
-        </div>
-
-        <div className="grid grid-cols-2 gap-3 md:grid-cols-4" aria-label={t`Exercise slots`}>
-          {plan.map((slot) => (
-            <ReviewCard key={slot.key} slot={slot} onPick={(id) => handlePick(slot.key, id)} />
-          ))}
-        </div>
-      </motion.div>
-
-      <footer className="fixed bottom-0 left-0 right-0 z-50 border-t border-border/40 bg-background/90 px-4 py-4 backdrop-blur-md sm:px-6">
-        <div className="mx-auto flex min-w-0 max-w-lg items-center justify-between gap-3">
-          <Button
-            type="button"
-            variant="outline"
-            className="min-h-11 touch-manipulation"
-            onClick={() => navigate('/setup', { state: { config } })}
+        <div
+          className={cn(
+            'min-h-0 flex-1 overflow-y-auto overscroll-y-contain',
+            'px-5 sm:px-6',
+            'pt-[max(1.25rem,env(safe-area-inset-top))] sm:pt-6',
+            /* Clear fixed footer (~5rem) + safe area + extra for expanded alt rows */
+            'pb-[max(8.5rem,calc(env(safe-area-inset-bottom)+5.5rem))]',
+          )}
+        >
+          <motion.div
+            className="mx-auto flex w-full max-w-6xl flex-col gap-6 sm:gap-8"
+            initial={{ opacity: 0, y: reduceMotion ? 0 : 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: reduceMotion ? 0.1 : DURATION.pageIn, ease: EASE_OUT }}
           >
-            <Trans>Back</Trans>
-          </Button>
+            <header className="flex flex-col gap-2">
+              <h1 className="min-w-0 font-display text-2xl font-semibold tracking-tight text-balance break-words sm:text-3xl">
+                <Trans>Review your deck</Trans>
+              </h1>
+              <p className="max-w-[65ch] text-pretty break-words text-sm leading-relaxed text-muted-foreground [overflow-wrap:anywhere]">
+                <Trans>Select a card to swap</Trans>
+              </p>
+            </header>
 
-          <div className="flex items-center gap-2">
-            <Button
-              type="button"
-              variant="ghost"
-              className="min-h-11 touch-manipulation text-muted-foreground"
-              disabled={!hasOverrides}
-              onClick={() => resetOverrides()}
+            <div
+              className={cn(
+                /* Slightly looser row rhythm than column gap — easier vertical scan */
+                'grid gap-x-3 gap-y-4 sm:gap-y-5 [&>*]:min-w-0',
+                'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4',
+              )}
+              aria-label={t`Exercise slots`}
             >
-              <Trans>Reset swaps</Trans>
-            </Button>
-            <Button type="button" className="min-h-11 touch-manipulation" onClick={() => void handleStart()}>
-              <Trans>Start workout</Trans>
-            </Button>
-          </div>
+              {plan.map((slot) => (
+                <ReviewCard key={slot.key} slot={slot} onPick={(id) => handlePick(slot.key, id)} />
+              ))}
+            </div>
+          </motion.div>
         </div>
-      </footer>
 
+        <footer className="fixed bottom-0 left-0 right-0 z-50 border-t border-border/40 bg-background/90 px-4 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] backdrop-blur-md sm:px-6 sm:pt-4">
+          <div className="mx-auto flex min-w-0 max-w-lg flex-wrap items-center justify-between gap-3 sm:gap-4">
+            <motion.div
+              className="min-w-0 shrink"
+              whileTap={{ scale: reduceMotion || footerLocked ? 1 : 0.98 }}
+              transition={{ duration: DURATION.fast, ease: EASE_OUT }}
+            >
+              <Button
+                type="button"
+                variant="outline"
+                className="min-h-11 min-w-0 touch-manipulation sm:max-w-[min(100%,12rem)]"
+                disabled={footerLocked}
+                onClick={() => navigate('/setup', { state: { config } })}
+              >
+                <span className="truncate">
+                  <Trans>Back</Trans>
+                </span>
+              </Button>
+            </motion.div>
+
+            <div className="flex min-w-0 flex-1 basis-[12rem] flex-wrap items-center justify-end gap-2 sm:flex-none sm:basis-auto sm:gap-3">
+              <motion.div
+                className="min-w-0 shrink"
+                whileTap={{ scale: reduceMotion || footerLocked || !hasOverrides ? 1 : 0.98 }}
+                transition={{ duration: DURATION.fast, ease: EASE_OUT }}
+              >
+                <Button
+                  type="button"
+                  variant="ghost"
+                  className="min-h-11 min-w-0 touch-manipulation text-muted-foreground"
+                  disabled={footerLocked || !hasOverrides}
+                  onClick={() => resetOverrides()}
+                >
+                  <span className="truncate">
+                    <Trans>Reset swaps</Trans>
+                  </span>
+                </Button>
+              </motion.div>
+              <motion.div
+                className="min-w-0 shrink"
+                whileHover={{ scale: reduceMotion || footerLocked ? 1 : 1.02 }}
+                whileTap={{ scale: reduceMotion || footerLocked ? 1 : 0.98 }}
+                transition={{ duration: DURATION.fast, ease: EASE_OUT }}
+              >
+                <Button
+                  type="button"
+                  className="min-h-11 min-w-0 touch-manipulation"
+                  disabled={footerLocked}
+                  onClick={() => void handleStart()}
+                >
+                  <span className="truncate">
+                    <Trans>Start workout</Trans>
+                  </span>
+                </Button>
+              </motion.div>
+            </div>
+          </div>
+        </footer>
+      </main>
       {showShuffle ? (
         <ShuffleTransition onComplete={() => navigate('/play', { replace: true })} />
       ) : null}
-    </main>
+    </Fragment>
   );
 }

@@ -11,6 +11,7 @@ import { DeckGlyphPulse } from '@/components/DeckGlyphPulse';
 import { LocaleToggle } from '@/components/LocaleToggle';
 import { DURATION, EASE_OUT } from '@/lib/motion';
 import { MAIN_PAD, SHELL_SETUP } from '@/lib/layout';
+import { cn } from '@/lib/utils';
 
 const helpButtonClassName =
   'inline-flex size-11 shrink-0 touch-manipulation items-center justify-center rounded-lg border border-border/50 bg-card/60 text-muted-foreground transition-colors hover:bg-card hover:text-foreground active:bg-card/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
@@ -27,14 +28,13 @@ export default function Setup() {
   return (
     <main
       id="main-content"
-      className={[
+      className={cn(
         'relative flex flex-col',
         SHELL_SETUP,
-        MAIN_PAD,
         isLanding
-          ? 'h-dvh min-h-0 overflow-y-auto pb-8 sm:pb-10'
-          : 'min-h-dvh pt-2 pb-6 sm:pt-4',
-      ].join(' ')}
+          ? cn(MAIN_PAD, 'h-dvh min-h-0 overflow-y-auto pb-8 sm:pb-10')
+          : 'h-dvh min-h-0 flex-col overflow-hidden px-5 sm:px-6 pt-2 sm:pt-4',
+      )}
     >
       {isLanding ? (
         <motion.div
@@ -89,7 +89,7 @@ export default function Setup() {
           </div>
         </motion.div>
       ) : (
-        <div className="flex min-h-0 flex-1 flex-col pt-2">
+        <div className="flex min-h-0 min-w-0 w-full flex-1 flex-col overflow-y-auto overscroll-y-contain">
           <SetupWizard
             onLeaveToLanding={() => setPhase('landing')}
             {...(returnedConfig != null ? { initialConfig: returnedConfig } : {})}

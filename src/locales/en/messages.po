@@ -30,6 +30,10 @@ msgstr "{0}m"
 msgid "{0}s"
 msgstr "{0}s"
 
+#: src/components/review/ReviewCard.tsx
+msgid "{selectedName} — no alternatives to swap"
+msgstr "{selectedName} — no alternatives to swap"
+
 #. placeholder {0}: opt.reps
 #: src/components/review/ReviewCard.tsx
 msgid "×{0} reps"
@@ -493,8 +497,8 @@ msgid "Nines and tens dominate. A low card is a gift from the deck."
 msgstr "Nines and tens dominate. A low card is a gift from the deck."
 
 #: src/components/review/ReviewCard.tsx
-msgid "No alternatives"
-msgstr "No alternatives"
+#~ msgid "No alternatives"
+#~ msgstr "No alternatives"
 
 #: src/components/Deck.tsx
 msgid "No cards left in the deck"
@@ -625,6 +629,10 @@ msgstr "Same deck-to-workout flow—open below for the full rules list when you 
 msgid "Saving…"
 msgstr "Saving…"
 
+#: src/routes/Review.tsx
+msgid "Select a card to swap"
+msgstr "Select a card to swap"
+
 #: src/components/Timer.tsx
 msgid "Session"
 msgstr "Session"
@@ -699,10 +707,13 @@ msgstr "Start workout"
 msgid "Step {0} of {1}: {title}"
 msgstr "Step {0} of {1}: {title}"
 
-#. placeholder {0}: tExercise(slot.selected as ExerciseId)
 #: src/components/review/ReviewCard.tsx
-msgid "Swap {0}"
-msgstr "Swap {0}"
+#~ msgid "Swap {0}"
+#~ msgstr "Swap {0}"
+
+#: src/components/review/ReviewCard.tsx
+msgid "Swap {selectedName}"
+msgstr "Swap {selectedName}"
 
 #: src/routes/Play.tsx
 #~ msgid "Sweat Deck"
@@ -729,8 +740,8 @@ msgstr "Switch to French"
 #~ msgstr "Take a breath. Your clock is on hold—resume when you are ready."
 
 #: src/routes/Review.tsx
-msgid "Tap a card to swap"
-msgstr "Tap a card to swap"
+#~ msgid "Tap a card to swap"
+#~ msgstr "Tap a card to swap"
 
 #: src/components/ExercisePanel.tsx
 msgid "Tap the stack to draw your first card."

@@ -58,7 +58,7 @@ export function ShuffleTransition({ onComplete }: Props) {
           />
         ))}
       </div>
-      <p className="text-center text-sm font-medium text-muted-foreground">
+      <p className="max-w-[min(100%,20rem)] text-center text-pretty text-sm font-medium leading-relaxed break-words text-muted-foreground">
         <Trans>Shuffling the deck…</Trans>
       </p>
     </motion.div>

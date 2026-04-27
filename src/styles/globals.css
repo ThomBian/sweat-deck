@@ -58,7 +58,10 @@
 html,
 body,
 #root {
-  height: 100%;
+  /* min-height lets content extend past the viewport so the page can scroll; fixed
+     height: 100% trapped tall routes (e.g. review + fixed footer) with no scroll */
+  min-height: 100%;
+  min-height: 100dvh;
   background: var(--color-deck-bg);
   color: var(--color-deck-fg);
   overscroll-behavior: none;
