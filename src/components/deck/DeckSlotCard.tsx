@@ -193,7 +193,7 @@ export function DeckSlotCard({ config, slot, onPick, onPrescriptionChange }: Pro
 
   const cardBody =
     isFaceSlot && prescriptionType && !isEmpty ? (
-      <div className={cardSurface}>
+      <div className={cn(cardSurface, 'gap-3 pb-4')}>
         {statusCorner}
         <motion.button
           ref={toggleRef}
@@ -204,7 +204,7 @@ export function DeckSlotCard({ config, slot, onPick, onPrescriptionChange }: Pro
           aria-label={hasAlts ? t`Swap ${selectedName}` : t`Search or change ${selectedName}`}
           onClick={handleCardActivate}
           className={cn(
-            'flex min-w-0 items-start gap-2 text-left touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 rounded-sm',
+            'flex min-w-0 items-start gap-2.5 text-left touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 rounded-sm',
             !isOverridden ? 'hover:opacity-80' : 'hover:opacity-90',
           )}
           {...(!reduceMotion ? { whileTap: { scale: 0.985 } } : {})}
@@ -213,11 +213,13 @@ export function DeckSlotCard({ config, slot, onPick, onPrescriptionChange }: Pro
           <span className="font-display text-xl font-bold leading-none">{glyph}</span>
           <span className="min-w-0 text-sm font-semibold leading-snug break-words">{selectedName}</span>
         </motion.button>
-        <PrescriptionStepper
-          value={prescriptionValue}
-          type={prescriptionType}
-          onChange={(v) => onPrescriptionChange?.(prescriptionType, v)}
-        />
+        <div className="mt-0.5 border-t border-border/35 pt-3">
+          <PrescriptionStepper
+            value={prescriptionValue}
+            type={prescriptionType}
+            onChange={(v) => onPrescriptionChange?.(prescriptionType, v)}
+          />
+        </div>
       </div>
     ) : (
       <motion.button
@@ -252,7 +254,7 @@ export function DeckSlotCard({ config, slot, onPick, onPrescriptionChange }: Pro
   return (
     <div
       ref={sectionRef}
-      className="relative flex min-w-0 w-full scroll-mt-4 flex-col gap-3 sm:scroll-mt-5"
+      className="relative flex min-w-0 w-full scroll-mt-4 flex-col gap-3 sm:scroll-mt-5 sm:gap-4"
     >
       {cardBody}
 

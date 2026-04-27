@@ -101,7 +101,7 @@ export function PrescriptionStepper({ value, type, onChange }: Props) {
   return (
     <div
       role="group"
-      className="flex min-w-0 items-center justify-between gap-4 md:gap-2"
+      className="flex min-w-0 items-stretch justify-between gap-3 sm:gap-3 md:gap-2.5"
       aria-labelledby={valueId}
     >
       <motion.button
@@ -124,7 +124,7 @@ export function PrescriptionStepper({ value, type, onChange }: Props) {
 
       <span
         id={valueId}
-        className="min-w-0 max-w-[min(100%,12rem)] flex-1 [overflow-wrap:anywhere] break-words text-center text-base font-semibold tabular-nums md:text-sm"
+        className="flex min-h-12 min-w-0 max-w-[min(100%,13rem)] flex-1 items-center justify-center self-center rounded-lg bg-muted/30 px-2 py-1.5 text-center text-base font-semibold tabular-nums [overflow-wrap:anywhere] break-words md:min-h-11 md:text-sm"
       >
         {labelText}
       </span>
