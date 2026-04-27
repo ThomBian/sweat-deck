@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { DeckGlyphPulse } from '@/components/DeckGlyphPulse';
 import { LocaleToggle } from '@/components/LocaleToggle';
 import { DURATION, EASE_OUT } from '@/lib/motion';
-import { MAIN_PAD, SHELL_SETUP } from '@/lib/layout';
+import { MAIN_PAD, SCROLL_PAD_FIXED_FOOTER_SETUP, SHELL_SETUP } from '@/lib/layout';
 import { cn } from '@/lib/utils';
 
 const helpButtonClassName =
@@ -89,7 +89,12 @@ export default function Setup() {
           </div>
         </motion.div>
       ) : (
-        <div className="flex min-h-0 min-w-0 w-full flex-1 flex-col overflow-x-clip overflow-y-auto overscroll-y-contain">
+        <div
+          className={cn(
+            'flex min-h-0 min-w-0 w-full flex-1 flex-col overflow-x-clip overflow-y-auto overscroll-y-contain',
+            SCROLL_PAD_FIXED_FOOTER_SETUP,
+          )}
+        >
           <SetupWizard
             onLeaveToLanding={() => setPhase('landing')}
             {...(returnedConfig != null ? { initialConfig: returnedConfig } : {})}

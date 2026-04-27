@@ -14,6 +14,8 @@ import { ThemeStep } from '@/components/setup/ThemeStep';
 import { CardioStep } from '@/components/setup/CardioStep';
 import { TimeStep } from '@/components/setup/TimeStep';
 import { DURATION, EASE_OUT } from '@/lib/motion';
+import { SCROLL_CLEAR_FIXED_FOOTER_SETUP } from '@/lib/layout';
+import { cn } from '@/lib/utils';
 
 type Props = { onLeaveToLanding?: () => void; initialConfig?: SetupConfig };
 
@@ -111,7 +113,14 @@ export default function SetupWizard({ onLeaveToLanding, initialConfig }: Props) 
 
   return (
     <>
-      <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-6 pb-28">
+      <div
+        className={cn(
+          /* No flex-1: column must size to its content so the outer overflow-y-auto
+             can scroll the full list above the fixed footer. */
+          'flex w-full min-w-0 flex-col gap-6',
+          SCROLL_CLEAR_FIXED_FOOTER_SETUP,
+        )}
+      >
       <p className="sr-only" aria-live="polite">
         <Trans>
           Step {step + 1} of {steps.length}: {title}
@@ -199,7 +208,7 @@ export default function SetupWizard({ onLeaveToLanding, initialConfig }: Props) 
       </AnimatePresence>
       </div>
 
-      <footer className="fixed bottom-0 left-0 right-0 z-50 border-t border-border/40 bg-background/90 px-4 py-4 backdrop-blur-md sm:px-6">
+      <footer className="fixed bottom-0 left-0 right-0 z-50 border-t border-border/40 bg-background/90 px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] backdrop-blur-md sm:px-6">
         <div className="mx-auto flex min-w-0 max-w-lg items-center justify-between gap-3">
           {step > 0 ? (
             <motion.div

@@ -38,3 +38,19 @@ export const SHELL_HISTORY = [
   'via-background',
   'to-muted/25',
 ].join(' ');
+
+/**
+ * Setup wizard: scrollable column must end above the fixed Back/Next bar on all
+ * viewports (tall options + safe-area). Use on the inner column; put
+ * `SCROLL_PAD_FIXED_FOOTER_SETUP` on the same `overflow-y-auto` root.
+ * Do not use `flex-1` on that column — it can fight intrinsic height in flex+scroll.
+ */
+export const SCROLL_CLEAR_FIXED_FOOTER_SETUP = [
+  'max-md:pb-[max(12rem,calc(env(safe-area-inset-bottom)+7.5rem))]',
+  'md:pb-[max(10rem,calc(env(safe-area-inset-bottom)+6.5rem))]',
+].join(' ');
+
+export const SCROLL_PAD_FIXED_FOOTER_SETUP = [
+  'max-md:scroll-pb-[max(12rem,calc(env(safe-area-inset-bottom)+7.5rem))]',
+  'md:scroll-pb-[max(9rem,calc(env(safe-area-inset-bottom)+5.5rem))]',
+].join(' ');
