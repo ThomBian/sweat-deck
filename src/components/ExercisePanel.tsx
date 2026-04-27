@@ -79,7 +79,7 @@ const formatDetail = (ex: Exercise): ReactNode | null => {
       </span>
     );
   }
-  if (ex.durationSec !== undefined) return t`${ex.durationSec}s`;
+  if (ex.durationSec !== undefined) return null;
   if (ex.distanceM !== undefined) return t`${ex.distanceM}m`;
   return null;
 };

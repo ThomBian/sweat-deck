@@ -23,9 +23,7 @@ msgstr "{0, plural, one {# rep} other {# reps}}"
 msgid "{0}m"
 msgstr "{0}m"
 
-#. placeholder {0}: ex.durationSec
 #. placeholder {0}: opt.durationSec
-#: src/components/ExercisePanel.tsx
 #: src/components/review/ReviewCard.tsx
 msgid "{0}s"
 msgstr "{0}s"
@@ -746,6 +744,10 @@ msgstr "Switch to French"
 #: src/components/ExercisePanel.tsx
 msgid "Tap the stack to draw your first card."
 msgstr "Tap the stack to draw your first card."
+
+#: src/components/ExerciseCountdown.tsx
+msgid "Tap to start"
+msgstr "Tap to start"
 
 #: src/routes/Onboarding.tsx
 msgid "That's the gist—short enough to remember between sets."

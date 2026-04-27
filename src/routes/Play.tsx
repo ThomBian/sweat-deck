@@ -7,6 +7,7 @@ import { CircleStop, Pause, Play as PlayIcon } from 'lucide-react';
 import { useGameStore } from '@/store/gameStore';
 import { Deck } from '@/components/Deck';
 import { ExercisePanel } from '@/components/ExercisePanel';
+import { ExerciseCountdown } from '@/components/ExerciseCountdown';
 import { Timer } from '@/components/Timer';
 import { Button } from '@/components/ui/button';
 import { EASE_OUT } from '@/lib/motion';
@@ -25,6 +26,7 @@ export default function Play() {
   const startedAt = useGameStore((s) => s.startedAt);
   const deck = useGameStore((s) => s.deck);
   const current = useGameStore((s) => s.current);
+  const drawn = useGameStore((s) => s.drawn);
   const drawNext = useGameStore((s) => s.drawNext);
   const finish = useGameStore((s) => s.finish);
   const pause = useGameStore((s) => s.pause);
@@ -165,6 +167,13 @@ export default function Play() {
       >
         <Deck remaining={deck.length} onDraw={drawNext} drawDisabled={!!pausedAt} />
         <ExercisePanel exercise={current} />
+        {current?.durationSec != null && (
+          <ExerciseCountdown
+            key={drawn.length}
+            durationSec={current.durationSec}
+            isRest={current.id === 'water-break'}
+          />
+        )}
       </motion.section>
       {pausedAt ? (
         <div
