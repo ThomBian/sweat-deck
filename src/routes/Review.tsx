@@ -115,40 +115,8 @@ export default function Review() {
         </div>
 
         <footer className="fixed bottom-0 left-0 right-0 z-50 border-t border-border/40 bg-background/90 px-3 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))] backdrop-blur-md sm:px-6 sm:pt-4">
-          {/* Below md: full-width stack — matches single-column deck; avoids cramped three-abreast on phones and small tablets */}
+          {/* Below md: primary first, then Back + Reset — avoids a rare action between nav and CTA */}
           <div className="mx-auto flex min-w-0 max-w-lg flex-col gap-2 md:hidden">
-            <motion.div
-              whileTap={{ scale: reduceMotion || footerLocked ? 1 : 0.98 }}
-              transition={{ duration: DURATION.fast, ease: EASE_OUT }}
-            >
-              <Button
-                type="button"
-                variant="outline"
-                className="min-h-11 w-full touch-manipulation whitespace-normal px-3 py-2.5 text-center leading-snug"
-                disabled={footerLocked}
-                onClick={() => navigate('/setup', { state: { config } })}
-              >
-                <span className="min-w-0 text-pretty break-words">
-                  <Trans>Back</Trans>
-                </span>
-              </Button>
-            </motion.div>
-            <motion.div
-              whileTap={{ scale: reduceMotion || footerLocked || !hasOverrides ? 1 : 0.98 }}
-              transition={{ duration: DURATION.fast, ease: EASE_OUT }}
-            >
-              <Button
-                type="button"
-                variant="ghost"
-                className="min-h-11 w-full touch-manipulation whitespace-normal px-3 py-2.5 text-center leading-snug text-muted-foreground"
-                disabled={footerLocked || !hasOverrides}
-                onClick={() => resetOverrides()}
-              >
-                <span className="min-w-0 text-pretty break-words">
-                  <Trans>Reset swaps</Trans>
-                </span>
-              </Button>
-            </motion.div>
             <motion.div
               whileHover={{ scale: reduceMotion || footerLocked ? 1 : 1.02 }}
               whileTap={{ scale: reduceMotion || footerLocked ? 1 : 0.98 }}
@@ -165,28 +133,63 @@ export default function Review() {
                 </span>
               </Button>
             </motion.div>
+            <div className="flex w-full min-w-0 gap-2">
+              <motion.div
+                className="min-w-0 flex-1"
+                whileTap={{ scale: reduceMotion || footerLocked ? 1 : 0.98 }}
+                transition={{ duration: DURATION.fast, ease: EASE_OUT }}
+              >
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="min-h-11 w-full touch-manipulation whitespace-normal px-3 py-2.5 text-center leading-snug"
+                  disabled={footerLocked}
+                  onClick={() => navigate('/setup', { state: { config } })}
+                >
+                  <span className="min-w-0 text-pretty break-words">
+                    <Trans>Back</Trans>
+                  </span>
+                </Button>
+              </motion.div>
+              <motion.div
+                className="min-w-0 flex-1"
+                whileTap={{ scale: reduceMotion || footerLocked || !hasOverrides ? 1 : 0.98 }}
+                transition={{ duration: DURATION.fast, ease: EASE_OUT }}
+              >
+                <Button
+                  type="button"
+                  variant="ghost"
+                  className="min-h-11 w-full touch-manipulation whitespace-normal px-3 py-2.5 text-center leading-snug text-muted-foreground"
+                  disabled={footerLocked || !hasOverrides}
+                  onClick={() => resetOverrides()}
+                >
+                  <span className="min-w-0 text-pretty break-words">
+                    <Trans>Reset swaps</Trans>
+                  </span>
+                </Button>
+              </motion.div>
+            </div>
           </div>
 
           <div className="mx-auto hidden min-w-0 max-w-lg md:flex md:flex-wrap md:items-center md:justify-between md:gap-3 lg:gap-4">
-            <motion.div
-              className="min-w-0 shrink"
-              whileTap={{ scale: reduceMotion || footerLocked ? 1 : 0.98 }}
-              transition={{ duration: DURATION.fast, ease: EASE_OUT }}
-            >
-              <Button
-                type="button"
-                variant="outline"
-                className="min-h-11 min-w-0 touch-manipulation md:max-w-[min(100%,12rem)]"
-                disabled={footerLocked}
-                onClick={() => navigate('/setup', { state: { config } })}
+            <div className="flex min-w-0 items-center gap-2 md:gap-3">
+              <motion.div
+                className="min-w-0 shrink"
+                whileTap={{ scale: reduceMotion || footerLocked ? 1 : 0.98 }}
+                transition={{ duration: DURATION.fast, ease: EASE_OUT }}
               >
-                <span className="truncate">
-                  <Trans>Back</Trans>
-                </span>
-              </Button>
-            </motion.div>
-
-            <div className="flex min-w-0 flex-1 basis-[12rem] flex-wrap items-center justify-end gap-2 md:flex-none md:basis-auto md:gap-3">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="min-h-11 min-w-0 touch-manipulation md:max-w-[min(100%,12rem)]"
+                  disabled={footerLocked}
+                  onClick={() => navigate('/setup', { state: { config } })}
+                >
+                  <span className="truncate">
+                    <Trans>Back</Trans>
+                  </span>
+                </Button>
+              </motion.div>
               <motion.div
                 className="min-w-0 shrink"
                 whileTap={{ scale: reduceMotion || footerLocked || !hasOverrides ? 1 : 0.98 }}
@@ -204,24 +207,24 @@ export default function Review() {
                   </span>
                 </Button>
               </motion.div>
-              <motion.div
-                className="min-w-0 shrink"
-                whileHover={{ scale: reduceMotion || footerLocked ? 1 : 1.02 }}
-                whileTap={{ scale: reduceMotion || footerLocked ? 1 : 0.98 }}
-                transition={{ duration: DURATION.fast, ease: EASE_OUT }}
-              >
-                <Button
-                  type="button"
-                  className="min-h-11 min-w-0 touch-manipulation"
-                  disabled={footerLocked}
-                  onClick={() => void handleStart()}
-                >
-                  <span className="truncate">
-                    <Trans>Start workout</Trans>
-                  </span>
-                </Button>
-              </motion.div>
             </div>
+            <motion.div
+              className="min-w-0 shrink"
+              whileHover={{ scale: reduceMotion || footerLocked ? 1 : 1.02 }}
+              whileTap={{ scale: reduceMotion || footerLocked ? 1 : 0.98 }}
+              transition={{ duration: DURATION.fast, ease: EASE_OUT }}
+            >
+              <Button
+                type="button"
+                className="min-h-11 min-w-0 touch-manipulation"
+                disabled={footerLocked}
+                onClick={() => void handleStart()}
+              >
+                <span className="truncate">
+                  <Trans>Start workout</Trans>
+                </span>
+              </Button>
+            </motion.div>
           </div>
         </footer>
       </main>
