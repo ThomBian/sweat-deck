@@ -46,7 +46,7 @@ describe('resolve', () => {
 
 describe('resolve with overrides', () => {
   it('applies a number-card override and preserves reps from card value', () => {
-    const overrides: PlanOverrides = { 'suit:hearts': 'pike-pushups' };
+    const overrides: PlanOverrides = { 'suit:hearts': { id: 'pike-pushups' } };
     const ex = resolve({
       card: { type: 'number', suit: 'hearts', value: 9 },
       config: baseConfig,
@@ -57,7 +57,7 @@ describe('resolve with overrides', () => {
   });
 
   it('applies a number-card override even when id is not in the slot options', () => {
-    const overrides: PlanOverrides = { 'suit:hearts': 'bench-press' };
+    const overrides: PlanOverrides = { 'suit:hearts': { id: 'bench-press' } };
     const ex = resolve({
       card: { type: 'number', suit: 'hearts', value: 5 },
       config: baseConfig,
@@ -68,7 +68,7 @@ describe('resolve with overrides', () => {
   });
 
   it('applies a face-card override with its own prescription', () => {
-    const overrides: PlanOverrides = { 'face:J': 'hollow-body-hold' };
+    const overrides: PlanOverrides = { 'face:J': { id: 'hollow-body-hold' } };
     const ex = resolve({
       card: { type: 'face', suit: 'clubs', rank: 'J' },
       config: baseConfig,
@@ -80,7 +80,7 @@ describe('resolve with overrides', () => {
   });
 
   it('applies a face-card free-pick with the slot default prescription', () => {
-    const overrides: PlanOverrides = { 'face:J': 'bench-press' };
+    const overrides: PlanOverrides = { 'face:J': { id: 'bench-press' } };
     const ex = resolve({
       card: { type: 'face', suit: 'clubs', rank: 'J' },
       config: baseConfig,
@@ -92,7 +92,7 @@ describe('resolve with overrides', () => {
   });
 
   it('face free-pick movement never inherits distance from a cardio king default', () => {
-    const overrides: PlanOverrides = { 'face:K': 'pullups' };
+    const overrides: PlanOverrides = { 'face:K': { id: 'pullups' } };
     const ex = resolve({
       card: { type: 'face', suit: 'clubs', rank: 'K' },
       config: { ...baseConfig, cardio: true },
@@ -104,7 +104,7 @@ describe('resolve with overrides', () => {
   });
 
   it('ignores overrides for aces', () => {
-    const overrides: PlanOverrides = { 'suit:hearts': 'pike-pushups' };
+    const overrides: PlanOverrides = { 'suit:hearts': { id: 'pike-pushups' } };
     const ex = resolve({
       card: { type: 'ace', suit: 'hearts' },
       config: baseConfig,
@@ -114,12 +114,51 @@ describe('resolve with overrides', () => {
   });
 
   it('ignores overrides for jokers', () => {
-    const overrides: PlanOverrides = { 'face:J': 'hollow-body-hold' };
+    const overrides: PlanOverrides = { 'face:J': { id: 'hollow-body-hold' } };
     const ex = resolve({
       card: { type: 'joker', id: 1 },
       config: baseConfig,
       overrides,
     });
     expect(ex.id).toBe('max-effort-leg-burnout');
+  });
+
+  it('reps override on face J applies over default', () => {
+    const overrides: PlanOverrides = { 'face:J': { reps: 30 } };
+    const ex = resolve({
+      card: { type: 'face', suit: 'clubs', rank: 'J' },
+      config: baseConfig,
+      overrides,
+    });
+    expect(ex.id).toBe('burpees');
+    expect(ex.reps).toBe(30);
+  });
+
+  it('durationSec override on face J with id override applies over exercise default', () => {
+    const overrides: PlanOverrides = { 'face:J': { id: 'hollow-body-hold', durationSec: 90 } };
+    const ex = resolve({
+      card: { type: 'face', suit: 'clubs', rank: 'J' },
+      config: baseConfig,
+      overrides,
+    });
+    expect(ex.id).toBe('hollow-body-hold');
+    expect(ex.durationSec).toBe(90);
+  });
+
+  it('distanceM override on face K cardio applies over default', () => {
+    const overrides: PlanOverrides = { 'face:K': { distanceM: 1000 } };
+    const ex = resolve({
+      card: { type: 'face', suit: 'clubs', rank: 'K' },
+      config: { ...baseConfig, cardio: true },
+      overrides,
+    });
+    expect(ex.distanceM).toBe(1000);
+  });
+
+  it('number card override id still uses card value for reps', () => {
+    const overrides: PlanOverrides = { 'suit:hearts': { id: 'pike-pushups' } };
+    const ex = resolve({ card: { type: 'number', suit: 'hearts', value: 7 }, config: baseConfig, overrides });
+    expect(ex.id).toBe('pike-pushups');
+    expect(ex.reps).toBe(7);
   });
 });
