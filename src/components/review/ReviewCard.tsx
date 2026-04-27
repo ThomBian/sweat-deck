@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { t } from '@lingui/core/macro';
 import { Trans } from '@lingui/react/macro';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
@@ -43,13 +43,39 @@ export function ReviewCard({ config, slot, onPick }: Props) {
   const [searchOpen, setSearchOpen] = useState(false);
   const reduceMotion = useReducedMotion();
   const toggleRef = useRef<HTMLButtonElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const hasAlts = slot.options.length > 1;
+
+  const scrollSectionIntoView = useCallback(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    el.scrollIntoView({
+      behavior: reduceMotion ? 'auto' : 'smooth',
+      block: 'start',
+    });
+  }, [reduceMotion]);
+
+  /** Keep the active swap UI in view: search sheet opens immediately; alt list after expand. */
+  useEffect(() => {
+    if (!open && !searchOpen) return;
+
+    if (searchOpen) {
+      const id = requestAnimationFrame(() => scrollSectionIntoView());
+      return () => cancelAnimationFrame(id);
+    }
+
+    if (open && hasAlts) {
+      const ms = reduceMotion ? 0 : Math.round(DURATION.pageOut * 1000);
+      const t = window.setTimeout(scrollSectionIntoView, ms);
+      return () => clearTimeout(t);
+    }
+  }, [open, searchOpen, hasAlts, reduceMotion, scrollSectionIntoView]);
 
   const isOverridden = slot.selected !== slot.defaultExercise.id;
   const suitMatch = slot.key.match(/^suit:(.+)$/);
   const faceMatch = slot.key.match(/^face:(.+)$/);
   const glyph = suitMatch ? SUIT_GLYPH[suitMatch[1]!] : faceMatch?.[1] ?? '';
   const suitColor = suitMatch ? SUIT_COLOR[suitMatch[1]!] : undefined;
-  const hasAlts = slot.options.length > 1;
   const selectedOpt = (() => {
     const fromOptions = slot.options.find((o) => o.id === slot.selected);
     if (fromOptions) return fromOptions;
@@ -118,7 +144,10 @@ export function ReviewCard({ config, slot, onPick }: Props) {
   );
 
   return (
-    <div className="relative flex min-w-0 w-full flex-col gap-3">
+    <div
+      ref={sectionRef}
+      className="relative flex min-w-0 w-full scroll-mt-4 flex-col gap-3 sm:scroll-mt-5"
+    >
       <motion.button
         ref={toggleRef}
         type="button"
