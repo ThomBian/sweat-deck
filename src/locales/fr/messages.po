@@ -142,8 +142,8 @@ msgid "Assign an exercise to every card yourself."
 msgstr ""
 
 #: src/routes/DeckBuilder.tsx
-msgid "Assign an exercise to every card."
-msgstr ""
+#~ msgid "Assign an exercise to every card."
+#~ msgstr ""
 
 #: src/components/deck/DeckSlotCard.tsx
 msgid "Assign exercise"
@@ -206,7 +206,6 @@ msgstr ""
 msgid "Broad Jumps"
 msgstr "Sauts en longueur"
 
-#: src/routes/DeckBuilder.tsx
 #: src/routes/Setup.tsx
 msgid "Build your deck"
 msgstr ""
@@ -1067,13 +1066,17 @@ msgstr ""
 #~ msgid "Take a breath. Your clock is on hold—resume when you are ready."
 #~ msgstr "Respirez. Le chrono est en pause — reprenez quand vous voulez."
 
+#: src/routes/DeckBuilder.tsx
+msgid "Tap a card to pick or change each exercise."
+msgstr ""
+
 #: src/routes/Review.tsx
 #~ msgid "Tap a card to swap"
 #~ msgstr "Touchez une carte pour la remplacer"
 
 #: src/routes/DeckBuilder.tsx
-msgid "Tap a card to swap or search the full list."
-msgstr "Touchez une carte pour échanger ou parcourir toute la liste."
+#~ msgid "Tap a card to swap or search the full list."
+#~ msgstr "Touchez une carte pour échanger ou parcourir toute la liste."
 
 #: src/components/ExercisePanel.tsx
 msgid "Tap the stack to draw your first card."

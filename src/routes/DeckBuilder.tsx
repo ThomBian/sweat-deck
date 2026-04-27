@@ -35,15 +35,13 @@ export default function DeckBuilder() {
       ? { mode: 'manual' as const }
       : { mode: 'guided' as const, config: config! };
 
-  return <DeckBuilderInner mode={mode} config={config} composerInput={composerInput} />;
+  return <DeckBuilderInner config={config} composerInput={composerInput} />;
 }
 
 function DeckBuilderInner({
-  mode,
   config,
   composerInput,
 }: {
-  mode: 'guided' | 'manual';
   config: SetupConfig | undefined;
   composerInput: { mode: 'guided'; config: SetupConfig } | { mode: 'manual' };
 }) {
@@ -52,9 +50,9 @@ function DeckBuilderInner({
   const { slots, isReady, setSlot, handleStart, footerLocked, showShuffle, hasOverrides, resetOverrides } =
     useDeckComposer(composerInput);
 
-  const heading = mode === 'manual' ? t`Build your deck` : t`Review your deck`;
-  const subheading =
-    mode === 'manual' ? t`Assign an exercise to every card.` : t`Tap a card to swap or search the full list.`;
+  /** Same title + lede in guided and manual — slot cards show empty/filled; behavior differs (e.g. Start disabled). */
+  const heading = t`Review your deck`;
+  const subheading = t`Tap a card to pick or change each exercise.`;
 
   return (
     <Fragment>
