@@ -398,6 +398,10 @@ msgstr "Activer le mode cardio favorisera les mouvements à haute intensité."
 msgid "Exercise slots"
 msgstr "Emplacements d’exercices"
 
+#: src/components/review/ExerciseSearchSheet.tsx
+msgid "Face card"
+msgstr "Carte figure"
+
 #: src/routes/Onboarding.tsx
 msgid "Face cards are fixed high-intensity challenges."
 msgstr "Les figures sont des défis d’intensité fixe."
@@ -594,6 +598,10 @@ msgstr ""
 msgid "Leg Press"
 msgstr ""
 
+#: src/components/review/ExerciseSearchSheet.tsx
+msgid "Legs"
+msgstr "Jambes"
+
 #: src/routes/Index.tsx
 msgid "Loading"
 msgstr "Chargement"
@@ -625,6 +633,10 @@ msgstr "Man-makers"
 #: src/i18n/exercises.ts
 #~ msgid "Max-Effort Leg Burnout"
 #~ msgstr "Brûlure des jambes max"
+
+#: src/components/review/ExerciseSearchSheet.tsx
+msgid "Mixed"
+msgstr "Mixte"
 
 #: src/i18n/labels.ts
 #~ msgid "More volume, fewer breathers. Expect 6s, 7s, 8s as your normal."
@@ -686,6 +698,10 @@ msgstr "Sans limite"
 msgid "Nordic Curls"
 msgstr ""
 
+#: src/components/review/ExerciseSearchSheet.tsx
+msgid "Number card"
+msgstr "Carte numérotée"
+
 #: src/routes/Onboarding.tsx
 msgid "Number cards use the face value as your rep count."
 msgstr "Les cartes numérotées : la valeur = votre nombre de répétitions."
@@ -742,13 +758,25 @@ msgstr "Planche"
 msgid "Plank to Push-up"
 msgstr "Planche avec pompe"
 
+#: src/components/review/ExerciseSearchSheet.tsx
+msgid "Posterior"
+msgstr "Chaîne postérieure"
+
 #: src/i18n/exercises.ts
 msgid "Preacher Curls"
 msgstr ""
 
+#: src/components/review/ExerciseSearchSheet.tsx
+msgid "Pull"
+msgstr "Tirage"
+
 #: src/i18n/exercises.ts
 msgid "Pull-ups"
 msgstr "Tractions"
+
+#: src/components/review/ExerciseSearchSheet.tsx
+msgid "Push"
+msgstr "Poussée"
 
 #: src/i18n/exercises.ts
 msgid "Push-ups"

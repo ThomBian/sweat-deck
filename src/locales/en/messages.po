@@ -398,6 +398,10 @@ msgstr "Enabling cardio mode favors high-intensity movements."
 msgid "Exercise slots"
 msgstr "Exercise slots"
 
+#: src/components/review/ExerciseSearchSheet.tsx
+msgid "Face card"
+msgstr "Face card"
+
 #: src/routes/Onboarding.tsx
 msgid "Face cards are fixed high-intensity challenges."
 msgstr "Face cards are fixed high-intensity challenges."
@@ -594,6 +598,10 @@ msgstr "Leg Extensions"
 msgid "Leg Press"
 msgstr "Leg Press"
 
+#: src/components/review/ExerciseSearchSheet.tsx
+msgid "Legs"
+msgstr "Legs"
+
 #: src/routes/Index.tsx
 msgid "Loading"
 msgstr "Loading"
@@ -625,6 +633,10 @@ msgstr "Man-Makers"
 #: src/i18n/exercises.ts
 #~ msgid "Max-Effort Leg Burnout"
 #~ msgstr "Max-Effort Leg Burnout"
+
+#: src/components/review/ExerciseSearchSheet.tsx
+msgid "Mixed"
+msgstr "Mixed"
 
 #: src/i18n/labels.ts
 #~ msgid "More volume, fewer breathers. Expect 6s, 7s, 8s as your normal."
@@ -686,6 +698,10 @@ msgstr "No limit"
 msgid "Nordic Curls"
 msgstr "Nordic Curls"
 
+#: src/components/review/ExerciseSearchSheet.tsx
+msgid "Number card"
+msgstr "Number card"
+
 #: src/routes/Onboarding.tsx
 msgid "Number cards use the face value as your rep count."
 msgstr "Number cards use the face value as your rep count."
@@ -742,13 +758,25 @@ msgstr "Plank Hold"
 msgid "Plank to Push-up"
 msgstr "Plank to Push-up"
 
+#: src/components/review/ExerciseSearchSheet.tsx
+msgid "Posterior"
+msgstr "Posterior"
+
 #: src/i18n/exercises.ts
 msgid "Preacher Curls"
 msgstr "Preacher Curls"
 
+#: src/components/review/ExerciseSearchSheet.tsx
+msgid "Pull"
+msgstr "Pull"
+
 #: src/i18n/exercises.ts
 msgid "Pull-ups"
 msgstr "Pull-ups"
+
+#: src/components/review/ExerciseSearchSheet.tsx
+msgid "Push"
+msgstr "Push"
 
 #: src/i18n/exercises.ts
 msgid "Push-ups"

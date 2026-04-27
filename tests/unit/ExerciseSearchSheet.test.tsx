@@ -34,13 +34,21 @@ describe('ExerciseSearchSheet', () => {
     );
     expect(screen.getByText(/Recommended/i)).toBeInTheDocument();
     const recList = screen.getByRole('listbox', { name: /Recommended exercises/i });
-    expect(within(recList).getAllByRole('option').length).toBeGreaterThan(0);
+    const recOptions = within(recList).getAllByRole('option');
+    expect(recOptions.length).toBeGreaterThan(0);
+    expect(recOptions[0]).toHaveTextContent(/Number card/);
+    expect(recOptions[0]).toHaveTextContent(/Push/);
+    expect(recOptions[0]).toHaveTextContent(/Bodyweight/);
+    expect(recOptions[0].querySelector('.lucide-heart')).toBeTruthy();
 
     expect(screen.getByRole('heading', { name: /All exercises/i })).toBeInTheDocument();
     const allLists = screen.getAllByRole('listbox');
     const restList = allLists.find((el) => el.getAttribute('aria-labelledby')?.includes('exercise-sheet-all'));
     expect(restList).toBeTruthy();
-    expect(within(restList!).getAllByRole('option').length).toBeGreaterThan(0);
+    const restOptions = within(restList!).getAllByRole('option');
+    expect(restOptions.length).toBeGreaterThan(0);
+    expect(restOptions[0]).toHaveTextContent(/Number card|Face card/);
+    expect(restOptions[0].querySelector('.lucide-heart')).toBeFalsy();
   });
 
   it('calls onPick when an option is activated', async () => {

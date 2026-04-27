@@ -13,7 +13,11 @@ import type { SetupConfig } from '@/domain/config';
 import type { ExerciseId } from '@/domain/exercise';
 import { formatMSS } from '@/lib/formatTime';
 import { SetupOptionButton } from '@/components/setup/SetupOptionButton';
-import { Check } from 'lucide-react';
+import { tEquipment } from '@/i18n/labels';
+import type { Equipment } from '@/domain/config';
+import { Check, Heart } from 'lucide-react';
+
+const EQUIPMENT_META_ORDER: Equipment[] = ['bodyweight', 'weights', 'gym'];
 
 const SUIT_GLYPH: Record<string, string> = {
   hearts: '♥',
@@ -44,6 +48,34 @@ type Props = {
   /** When the slot is a face card, used to preview sensible reps/time/distance for search hits. */
   facePrescriptionCtx?: FacePrescriptionCtx;
 };
+
+function orderedEquipmentForMeta(equipment: Equipment[]): Equipment[] {
+  return [...equipment].sort(
+    (a, b) => EQUIPMENT_META_ORDER.indexOf(a) - EQUIPMENT_META_ORDER.indexOf(b),
+  );
+}
+
+function exerciseBodyKindLabel(entry: ExerciseEntry): string {
+  switch (entry.group) {
+    case 'push':
+      return t`Push`;
+    case 'pull':
+      return t`Pull`;
+    case 'legs':
+      return t`Legs`;
+    case 'posterior':
+      return t`Posterior`;
+    case 'challenge':
+      return t`Mixed`;
+  }
+}
+
+function exerciseMetaLine(entry: ExerciseEntry): string {
+  const cardKind = entry.group === 'challenge' ? t`Face card` : t`Number card`;
+  const bodyKind = exerciseBodyKindLabel(entry);
+  const equip = orderedEquipmentForMeta(entry.equipment).map(tEquipment);
+  return [cardKind, bodyKind, ...equip].join(' · ');
+}
 
 function rxLabel(slotKey: SlotKey, entry: ExerciseEntry, faceCtx?: FacePrescriptionCtx): string {
   if (slotKey.startsWith('face:')) {
@@ -220,6 +252,7 @@ export function ExerciseSearchSheet({
                         key={entry.id}
                         entry={entry}
                         selected={selected}
+                        showRecommendedHeart={recIds.has(entry.id)}
                         rx={rxLabel(slotKey, entry, facePrescriptionCtx)}
                         onPick={() => handlePick(entry.id)}
                       />
@@ -242,6 +275,7 @@ export function ExerciseSearchSheet({
                         key={entry.id}
                         entry={entry}
                         selected={selected}
+                        showRecommendedHeart={recIds.has(entry.id)}
                         rx={rxLabel(slotKey, entry, facePrescriptionCtx)}
                         onPick={() => handlePick(entry.id)}
                       />
@@ -259,6 +293,7 @@ export function ExerciseSearchSheet({
                       key={entry.id}
                       entry={entry}
                       selected={selected}
+                      showRecommendedHeart={recIds.has(entry.id)}
                       rx={rxLabel(slotKey, entry, facePrescriptionCtx)}
                       onPick={() => handlePick(entry.id)}
                     />
@@ -276,26 +311,41 @@ export function ExerciseSearchSheet({
 function ResultRow({
   entry,
   selected,
+  showRecommendedHeart,
   rx,
   onPick,
 }: {
   entry: ExerciseEntry;
   selected: ExerciseId;
+  showRecommendedHeart: boolean;
   rx: string;
   onPick: () => void;
 }) {
   const isSel = entry.id === selected;
+  const meta = exerciseMetaLine(entry);
   return (
     <div role="option" aria-selected={isSel} className="min-w-0">
       <SetupOptionButton selected={isSel} aria-pressed={isSel} onClick={onPick}>
-        <span className="flex min-w-0 items-center justify-between gap-2">
-          <span className="flex min-w-0 items-center gap-2">
-            {isSel ? <Check className="size-4 shrink-0 text-primary" strokeWidth={2.5} aria-hidden /> : null}
-            <span className="min-w-0 truncate">{tExercise(entry.id)}</span>
+        <span className="flex min-w-0 flex-col gap-0.5 text-left">
+          <span className="flex min-w-0 items-start justify-between gap-2">
+            <span className="flex min-w-0 items-center gap-1.5">
+              {showRecommendedHeart ? (
+                <Heart
+                  className="size-3.5 shrink-0 text-suit-hearts/55"
+                  strokeWidth={2}
+                  aria-hidden
+                />
+              ) : null}
+              {isSel ? <Check className="size-4 shrink-0 text-primary" strokeWidth={2.5} aria-hidden /> : null}
+              <span className="min-w-0 truncate">{tExercise(entry.id)}</span>
+            </span>
+            {rx ? (
+              <span className="min-w-0 max-w-[45%] shrink truncate text-right text-xs text-muted-foreground tabular-nums">
+                {rx}
+              </span>
+            ) : null}
           </span>
-          {rx ? (
-            <span className="min-w-0 max-w-[45%] shrink truncate text-right text-xs text-muted-foreground">{rx}</span>
-          ) : null}
+          <span className="line-clamp-2 text-[0.6875rem] leading-snug text-muted-foreground">{meta}</span>
         </span>
       </SetupOptionButton>
     </div>
