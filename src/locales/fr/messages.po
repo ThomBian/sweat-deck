@@ -1083,8 +1083,12 @@ msgstr "Rowing T-bar"
 #~ msgstr "Respirez. Le chrono est en pause — reprenez quand vous voulez."
 
 #: src/routes/DeckBuilder.tsx
-msgid "Tap a card to pick or change each exercise."
-msgstr "Touchez une carte pour choisir ou modifier chaque exercice."
+#~ msgid "Tap a card to pick or change each exercise."
+#~ msgstr "Touchez une carte pour choisir ou modifier chaque exercice."
+
+#: src/routes/DeckBuilder.tsx
+msgid "Tap a card to pick or change each exercise. On J, Q, and K, adjust reps, time, or distance below the name."
+msgstr "Touchez une carte pour choisir ou modifier chaque exercice. Sur les J, Q et K, ajustez les répétitions, la durée ou la distance sous le nom."
 
 #: src/routes/Review.tsx
 #~ msgid "Tap a card to swap"

@@ -60,7 +60,7 @@ function DeckBuilderInner({
 
   /** Same title + lede in guided and manual — slot cards show empty/filled; behavior differs (e.g. Start disabled). */
   const heading = t`Review your deck`;
-  const subheading = t`Tap a card to pick or change each exercise.`;
+  const subheading = t`Tap a card to pick or change each exercise. On J, Q, and K, adjust reps, time, or distance below the name.`;
 
   return (
     <Fragment>

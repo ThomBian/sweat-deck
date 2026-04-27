@@ -204,7 +204,7 @@ export function DeckSlotCard({ config, slot, onPick, onPrescriptionChange }: Pro
           aria-label={hasAlts ? t`Swap ${selectedName}` : t`Search or change ${selectedName}`}
           onClick={handleCardActivate}
           className={cn(
-            'flex min-w-0 items-start gap-2.5 text-left touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 rounded-sm',
+            'flex min-w-0 items-start gap-2.5 rounded-sm text-left touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
             !isOverridden ? 'hover:opacity-80' : 'hover:opacity-90',
           )}
           {...(!reduceMotion ? { whileTap: { scale: 0.985 } } : {})}
@@ -213,7 +213,7 @@ export function DeckSlotCard({ config, slot, onPick, onPrescriptionChange }: Pro
           <span className="font-display text-xl font-bold leading-none">{glyph}</span>
           <span className="min-w-0 text-sm font-semibold leading-snug break-words">{selectedName}</span>
         </motion.button>
-        <div className="mt-0.5 border-t border-border/35 pt-3">
+        <div className="mt-0.5 border-t border-border/30 pt-3">
           <PrescriptionStepper
             value={prescriptionValue}
             type={prescriptionType}
@@ -232,7 +232,7 @@ export function DeckSlotCard({ config, slot, onPick, onPrescriptionChange }: Pro
         onClick={handleCardActivate}
         className={cn(
           cardSurface,
-          'touch-manipulation focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50',
+          'touch-manipulation focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
           !isOverridden
             ? isEmpty
               ? 'hover:border-border/60 hover:bg-muted/35'

@@ -70,9 +70,10 @@ export function PrescriptionStepper({ value, type, onChange }: Props) {
   const tapTransition = { duration: DURATION.fast, ease: EASE_OUT };
 
   const stepperBtn = cn(
-    'flex size-12 shrink-0 items-center justify-center rounded-xl text-xl font-semibold md:size-11 md:text-lg',
-    'touch-manipulation select-none transition-colors duration-150',
+    'flex size-12 shrink-0 items-center justify-center rounded-xl text-xl font-semibold leading-none md:size-11 md:text-lg',
+    'touch-manipulation select-none transition-[color,background-color] duration-200 ease-out',
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
+    'disabled:pointer-events-none disabled:transition-none',
   );
 
   const minusMotion =
@@ -101,7 +102,7 @@ export function PrescriptionStepper({ value, type, onChange }: Props) {
   return (
     <div
       role="group"
-      className="flex min-w-0 items-stretch justify-between gap-3 sm:gap-3 md:gap-2.5"
+      className="flex min-w-0 items-stretch justify-between gap-3 md:gap-2.5"
       aria-labelledby={valueId}
     >
       <motion.button
@@ -112,8 +113,8 @@ export function PrescriptionStepper({ value, type, onChange }: Props) {
         className={cn(
           stepperBtn,
           atFloor
-            ? 'cursor-not-allowed text-muted-foreground/30'
-            : 'text-foreground/70 hover:bg-muted active:bg-muted/80',
+            ? 'cursor-not-allowed text-muted-foreground/35'
+            : 'text-foreground/80 hover:bg-muted/80 hover:text-foreground active:bg-muted',
         )}
         transition={tapTransition}
         {...minusMotion}
@@ -124,7 +125,7 @@ export function PrescriptionStepper({ value, type, onChange }: Props) {
 
       <span
         id={valueId}
-        className="flex min-h-12 min-w-0 max-w-[min(100%,13rem)] flex-1 items-center justify-center self-center rounded-lg bg-muted/30 px-2 py-1.5 text-center text-base font-semibold tabular-nums [overflow-wrap:anywhere] break-words md:min-h-11 md:text-sm"
+        className="flex min-h-12 min-w-0 max-w-[min(100%,13rem)] flex-1 items-center justify-center self-center rounded-lg bg-muted/30 px-2 py-1.5 text-center text-base font-semibold leading-snug tabular-nums tracking-tight text-foreground/90 [overflow-wrap:anywhere] break-words md:min-h-11 md:text-sm"
       >
         {labelText}
       </span>
@@ -137,8 +138,8 @@ export function PrescriptionStepper({ value, type, onChange }: Props) {
         className={cn(
           stepperBtn,
           atCeiling
-            ? 'cursor-not-allowed text-muted-foreground/30'
-            : 'text-foreground/70 hover:bg-muted active:bg-muted/80',
+            ? 'cursor-not-allowed text-muted-foreground/35'
+            : 'text-foreground/80 hover:bg-muted/80 hover:text-foreground active:bg-muted',
         )}
         transition={tapTransition}
         {...plusMotion}

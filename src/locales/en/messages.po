@@ -1083,8 +1083,12 @@ msgstr "T-Bar Rows"
 #~ msgstr "Take a breath. Your clock is on hold—resume when you are ready."
 
 #: src/routes/DeckBuilder.tsx
-msgid "Tap a card to pick or change each exercise."
-msgstr "Tap a card to pick or change each exercise."
+#~ msgid "Tap a card to pick or change each exercise."
+#~ msgstr "Tap a card to pick or change each exercise."
+
+#: src/routes/DeckBuilder.tsx
+msgid "Tap a card to pick or change each exercise. On J, Q, and K, adjust reps, time, or distance below the name."
+msgstr "Tap a card to pick or change each exercise. On J, Q, and K, adjust reps, time, or distance below the name."
 
 #: src/routes/Review.tsx
 #~ msgid "Tap a card to swap"
