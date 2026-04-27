@@ -63,7 +63,9 @@ describe('Setup landing — mode toggle', () => {
     const user = userEvent.setup();
     render(wrap(<Setup />));
     await user.click(screen.getByRole('button', { name: /manual/i }));
-    expect(screen.getByText(/assign an exercise to every card yourself/i)).toBeInTheDocument();
+    expect(
+      await screen.findByText(/assign an exercise to every card yourself/i, { timeout: 2000 }),
+    ).toBeInTheDocument();
   });
 
   it('"Go!" in Manual mode navigates to /deck with mode:manual', async () => {
