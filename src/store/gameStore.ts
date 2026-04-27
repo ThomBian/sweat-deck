@@ -4,7 +4,7 @@ import { type SetupConfig, DEFAULT_CONFIG, type Equipment, type Theme } from '@/
 import { build54, draw, drawNonAce, type DrawResult } from '@/domain/deck';
 import type { Difficulty } from '@/domain/difficulty';
 import { resolve, type Exercise, type ExerciseId } from '@/domain/exercise';
-import type { PlanOverrides, SlotKey } from '@/domain/plan';
+import type { PlanOverrides, SlotKey, SlotOverride } from '@/domain/plan';
 import { pickJokerEffect } from '@/domain/joker';
 import { createRng, type Rng } from '@/lib/rng';
 import { computeEffortSec, getLimitSecFromConfig, isDeckEffortOnlyCard } from '@/lib/sessionTimer';
@@ -59,7 +59,12 @@ type GameActions = {
   pause: (by: 'user' | 'visibility') => void;
   resume: () => void;
   reset: () => void;
-  setOverride: (key: SlotKey, id: ExerciseId) => void;
+  setOverride: (key: SlotKey, override: SlotOverride) => void;
+  mergePrescriptionOverride: (
+    key: SlotKey,
+    field: 'reps' | 'durationSec' | 'distanceM',
+    value: number,
+  ) => void;
   clearOverride: (key: SlotKey) => void;
   resetOverrides: () => void;
 };
@@ -239,7 +244,16 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
 
   reset: () => set(makeInitialState()),
 
-  setOverride: (key, id) => set((s) => ({ overrides: { ...s.overrides, [key]: id } })),
+  setOverride: (key, override) =>
+    set((s) => ({ overrides: { ...s.overrides, [key]: override } })),
+
+  mergePrescriptionOverride: (key, field, value) =>
+    set((s) => ({
+      overrides: {
+        ...s.overrides,
+        [key]: { ...s.overrides[key], [field]: value },
+      },
+    })),
 
   clearOverride: (key) =>
     set((s) => {

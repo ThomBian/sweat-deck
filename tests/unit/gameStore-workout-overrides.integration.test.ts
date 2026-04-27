@@ -19,7 +19,7 @@ beforeEach(() => {
 
 describe('workout uses review overrides (store + drawNext)', () => {
   it('applies suit:hearts number-card override for every hearts number draw', () => {
-    useGameStore.getState().setOverride('suit:hearts', 'pike-pushups');
+    useGameStore.getState().setOverride('suit:hearts', { id: 'pike-pushups' });
     useGameStore.getState().start(cfg);
 
     let heartsNumberCount = 0;
@@ -38,7 +38,7 @@ describe('workout uses review overrides (store + drawNext)', () => {
   });
 
   it('applies face:J override for every Jack face draw', () => {
-    useGameStore.getState().setOverride('face:J', 'hollow-body-hold');
+    useGameStore.getState().setOverride('face:J', { id: 'hollow-body-hold' });
     useGameStore.getState().start(cfg);
 
     let jackCount = 0;
@@ -58,7 +58,7 @@ describe('workout uses review overrides (store + drawNext)', () => {
   });
 
   it('applies out-of-catalog suit override through the full deck drain', () => {
-    useGameStore.getState().setOverride('suit:hearts', 'bench-press');
+    useGameStore.getState().setOverride('suit:hearts', { id: 'bench-press' });
     useGameStore.getState().start(cfg);
 
     while (useGameStore.getState().deck.length > 0) {
@@ -70,5 +70,49 @@ describe('workout uses review overrides (store + drawNext)', () => {
         expect(s.current?.reps).toBe(last.value);
       }
     }
+  });
+});
+
+describe('prescription overrides flow through start() → drawNext()', () => {
+  it('applies face:J durationSec prescription override', () => {
+    useGameStore.getState().setOverride('face:J', { id: 'hollow-body-hold' });
+    useGameStore.getState().mergePrescriptionOverride('face:J', 'durationSec', 90);
+    useGameStore.getState().start(cfg);
+
+    let jackCount = 0;
+    while (useGameStore.getState().deck.length > 0) {
+      useGameStore.getState().drawNext();
+      const s = useGameStore.getState();
+      const last = s.drawn.at(-1);
+      if (last?.type === 'face' && last.rank === 'J') {
+        jackCount += 1;
+        expect(s.current?.id).toBe('hollow-body-hold');
+        expect(s.current?.durationSec).toBe(90);
+      }
+    }
+    expect(jackCount).toBe(4);
+  });
+
+  it('prescription-only override (no id change) applies', () => {
+    useGameStore.getState().mergePrescriptionOverride('face:J', 'reps', 30);
+    useGameStore.getState().start(cfg);
+
+    while (useGameStore.getState().deck.length > 0) {
+      useGameStore.getState().drawNext();
+      const s = useGameStore.getState();
+      const last = s.drawn.at(-1);
+      if (last?.type === 'face' && last.rank === 'J') {
+        expect(s.current?.id).toBe('burpees');
+        expect(s.current?.reps).toBe(30);
+      }
+    }
+  });
+
+  it('setOverride (exercise swap) clears previous prescription override', () => {
+    useGameStore.getState().mergePrescriptionOverride('face:J', 'reps', 30);
+    useGameStore.getState().setOverride('face:J', { id: 'burpees' });
+    const overrides = useGameStore.getState().overrides;
+    expect(overrides['face:J']).toEqual({ id: 'burpees' });
+    expect((overrides['face:J'] as { reps?: number }).reps).toBeUndefined();
   });
 });
