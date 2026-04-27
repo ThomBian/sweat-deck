@@ -47,6 +47,8 @@ export function useLongPress({
 
   const onPointerDown = useCallback(
     (e: PointerEvent) => {
+      // Ignore non-primary button (e.g. middle click); `button` may be omitted in tests
+      if (e.button != null && e.button !== 0) return;
       e.preventDefault();
       onPressRef.current();
       holdTimerRef.current = setTimeout(() => {

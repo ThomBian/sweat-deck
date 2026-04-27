@@ -44,6 +44,10 @@ msgstr "{0}m"
 #~ msgid "{0}s"
 #~ msgstr "{0}s"
 
+#: src/components/deck/PrescriptionStepper.tsx
+msgid "{aligned}m"
+msgstr "{aligned}m"
+
 #: src/components/review/ReviewCard.tsx
 #~ msgid "{selectedName} — no alternatives to swap"
 #~ msgstr "{selectedName} — no alternatives to swap"
@@ -55,6 +59,10 @@ msgstr "{0}m"
 #: src/components/deck/ExercisePickerSheet.tsx
 msgid "×{0} reps"
 msgstr "×{0} reps"
+
+#: src/components/deck/PrescriptionStepper.tsx
+msgid "×{aligned} reps"
+msgstr "×{aligned} reps"
 
 #: src/components/deck/DeckSlotCard.tsx
 #: src/components/deck/ExercisePickerSheet.tsx
@@ -327,6 +335,10 @@ msgstr "Decline Bench Press"
 msgid "Decline Push-ups"
 msgstr "Decline Push-ups"
 
+#: src/components/deck/PrescriptionStepper.tsx
+msgid "Decrease"
+msgstr "Decrease"
+
 #: src/routes/Setup.tsx
 #~ msgid "Defaults are tuned for a quick start—change anything in a tap."
 #~ msgstr "Defaults are tuned for a quick start—change anything in a tap."
@@ -562,6 +574,10 @@ msgstr "Incline Bench Press"
 #: src/i18n/exercises.ts
 msgid "Incline Dumbbell Press"
 msgstr "Incline Dumbbell Press"
+
+#: src/components/deck/PrescriptionStepper.tsx
+msgid "Increase"
+msgstr "Increase"
 
 #: src/i18n/labels.ts
 msgid "Intensity goes up—8s, 9s, 10s are the new normal."

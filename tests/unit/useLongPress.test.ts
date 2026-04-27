@@ -11,9 +11,24 @@ describe('useLongPress', () => {
     const onPress = vi.fn();
     const { result } = renderHook(() => useLongPress({ onPress, onHold: vi.fn() }));
     act(() => {
-      result.current.onPointerDown({ preventDefault: vi.fn() } as unknown as PointerEvent);
+      result.current.onPointerDown({
+        preventDefault: vi.fn(),
+        button: 0,
+      } as unknown as PointerEvent);
     });
     expect(onPress).toHaveBeenCalledTimes(1);
+  });
+
+  it('ignores non-primary pointer button', () => {
+    const onPress = vi.fn();
+    const { result } = renderHook(() => useLongPress({ onPress, onHold: vi.fn() }));
+    act(() => {
+      result.current.onPointerDown({
+        preventDefault: vi.fn(),
+        button: 1,
+      } as unknown as PointerEvent);
+    });
+    expect(onPress).not.toHaveBeenCalled();
   });
 
   it('does not start hold before holdDelay', () => {

@@ -44,6 +44,10 @@ msgstr "{0} m"
 #~ msgid "{0}s"
 #~ msgstr "{0} s"
 
+#: src/components/deck/PrescriptionStepper.tsx
+msgid "{aligned}m"
+msgstr "{aligned} m"
+
 #: src/components/review/ReviewCard.tsx
 #~ msgid "{selectedName} — no alternatives to swap"
 #~ msgstr "{selectedName} — aucune variante à l’échange"
@@ -55,6 +59,10 @@ msgstr "{0} m"
 #: src/components/deck/ExercisePickerSheet.tsx
 msgid "×{0} reps"
 msgstr "×{0} rép."
+
+#: src/components/deck/PrescriptionStepper.tsx
+msgid "×{aligned} reps"
+msgstr "×{aligned} rép."
 
 #: src/components/deck/DeckSlotCard.tsx
 #: src/components/deck/ExercisePickerSheet.tsx
@@ -327,6 +335,10 @@ msgstr "Développé couché décliné"
 msgid "Decline Push-ups"
 msgstr "Pompes déclinées"
 
+#: src/components/deck/PrescriptionStepper.tsx
+msgid "Decrease"
+msgstr "Diminuer"
+
 #: src/routes/Setup.tsx
 #~ msgid "Defaults are tuned for a quick start—change anything in a tap."
 #~ msgstr "Des réglages par défaut faits pour démarrer vite — modifiez en un appui."
@@ -562,6 +574,10 @@ msgstr "Développé couché incliné"
 #: src/i18n/exercises.ts
 msgid "Incline Dumbbell Press"
 msgstr "Développé incliné haltères"
+
+#: src/components/deck/PrescriptionStepper.tsx
+msgid "Increase"
+msgstr "Augmenter"
 
 #: src/i18n/labels.ts
 msgid "Intensity goes up—8s, 9s, 10s are the new normal."
