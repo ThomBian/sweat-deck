@@ -47,7 +47,7 @@ export function SetupOptionButton({
       onClick={handleClick}
       aria-label={ariaLabel}
       className={cn(
-        'min-h-14 w-full min-w-0 touch-manipulation rounded-xl border px-4 py-3 text-left text-base font-medium break-words outline-none',
+        'min-h-14 w-full min-w-0 touch-manipulation rounded-xl border px-4 py-3 text-center text-base font-medium break-words outline-none',
         'transition-[border-color,background-color,color,box-shadow,transform] duration-200 ease-out',
         'focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50',
         selected

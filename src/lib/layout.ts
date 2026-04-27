@@ -21,6 +21,9 @@ export const SHELL_SETUP = [
   'to-card/40',
 ].join(' ');
 
+/** Setup landing + guided wizard: one reading column (deck, type, options, bar align). */
+export const SETUP_CONTENT = 'w-full min-w-0 max-w-md mx-auto';
+
 export const SHELL_PLAY = [
   'bg-gradient-to-b from-background',
   'via-muted/12',

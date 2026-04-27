@@ -13,7 +13,7 @@ import { ThemeStep } from '@/components/setup/ThemeStep';
 import { CardioStep } from '@/components/setup/CardioStep';
 import { TimeStep } from '@/components/setup/TimeStep';
 import { DURATION, EASE_OUT } from '@/lib/motion';
-import { SCROLL_CLEAR_FIXED_FOOTER_SETUP } from '@/lib/layout';
+import { SCROLL_CLEAR_FIXED_FOOTER_SETUP, SETUP_CONTENT } from '@/lib/layout';
 import { cn } from '@/lib/utils';
 
 type Props = { onLeaveToLanding?: () => void; initialConfig?: SetupConfig };
@@ -90,7 +90,13 @@ export default function SetupWizard({ onLeaveToLanding, initialConfig }: Props) 
 
   if (!loaded) {
     return (
-      <div className="flex min-h-0 min-w-0 flex-1 flex-col items-center justify-center gap-4 px-1 py-12" role="status">
+      <div
+        className={cn(
+          'flex min-h-0 min-w-0 flex-1 flex-col items-center justify-center gap-4 py-12',
+          SETUP_CONTENT,
+        )}
+        role="status"
+      >
         <p className="max-w-md text-center text-sm leading-relaxed break-words text-muted-foreground">
           {loadingLine}
         </p>
@@ -115,8 +121,9 @@ export default function SetupWizard({ onLeaveToLanding, initialConfig }: Props) 
         className={cn(
           /* No flex-1: column must size to its content so the outer overflow-y-auto
              can scroll the full list above the fixed footer. */
-          'flex w-full min-w-0 flex-col gap-6',
+          'flex w-full min-w-0 flex-col gap-6 text-center',
           SCROLL_CLEAR_FIXED_FOOTER_SETUP,
+          SETUP_CONTENT,
         )}
       >
       <p className="sr-only" aria-live="polite">
@@ -126,7 +133,10 @@ export default function SetupWizard({ onLeaveToLanding, initialConfig }: Props) 
       </p>
 
       {loadFailed ? (
-        <p className="text-xs leading-relaxed break-words text-muted-foreground" role="status">
+        <p
+          className="text-balance text-xs leading-relaxed break-words text-muted-foreground"
+          role="status"
+        >
           <Trans>Couldn&apos;t read your last setup. Showing defaults—you can change anything below.</Trans>
         </p>
       ) : null}
@@ -161,15 +171,16 @@ export default function SetupWizard({ onLeaveToLanding, initialConfig }: Props) 
           {...(!reduceMotion ? { exit: { opacity: 0, x: -22 } as const } : {})}
           transition={stepPanelTransition}
         >
-          <h1 className="min-w-0 font-display text-2xl font-semibold tracking-tight text-balance break-words sm:text-3xl">
-            {title}
-          </h1>
-
-          {step < stepNudges.length ? (
-            <p className="-mt-2 max-w-[65ch] text-pretty break-words text-sm font-medium leading-relaxed text-deck-reward">
-              {stepNudges[step]!}
-            </p>
-          ) : null}
+          <div className="flex min-w-0 flex-col gap-2 sm:gap-2.5">
+            <h1 className="min-w-0 font-display text-2xl font-semibold tracking-tight text-balance break-words sm:text-3xl">
+              {title}
+            </h1>
+            {step < stepNudges.length ? (
+              <p className="text-pretty break-words text-sm font-medium leading-relaxed text-deck-reward">
+                {stepNudges[step]!}
+              </p>
+            ) : null}
+          </div>
 
           {step === 0 && (
             <DifficultyStep
@@ -206,8 +217,8 @@ export default function SetupWizard({ onLeaveToLanding, initialConfig }: Props) 
       </AnimatePresence>
       </div>
 
-      <footer className="fixed bottom-0 left-0 right-0 z-50 border-t border-border/40 bg-background/90 px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] backdrop-blur-md sm:px-6">
-        <div className="mx-auto flex min-w-0 max-w-lg items-center justify-between gap-3">
+      <footer className="fixed bottom-0 left-0 right-0 z-50 border-t border-border/40 bg-background/90 px-5 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] backdrop-blur-md sm:px-6">
+        <div className={cn(SETUP_CONTENT, 'flex items-center justify-between gap-3')}>
           {step > 0 ? (
             <motion.div
               className="min-w-0 shrink"
