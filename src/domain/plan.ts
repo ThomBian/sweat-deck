@@ -70,7 +70,13 @@ export const buildPlan = ({
             ...(override.distanceM !== undefined && { distanceM: override.distanceM }),
           }
         : undefined;
-    return { key, defaultExercise, options, selected, prescriptionOverride };
+    return {
+      key,
+      defaultExercise,
+      options,
+      selected,
+      ...(prescriptionOverride !== undefined ? { prescriptionOverride } : {}),
+    };
   });
 
   return [...numberSlots, ...faceSlots];

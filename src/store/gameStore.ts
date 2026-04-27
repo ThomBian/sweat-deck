@@ -3,7 +3,7 @@ import type { Card } from '@/domain/card';
 import { type SetupConfig, DEFAULT_CONFIG, type Equipment, type Theme } from '@/domain/config';
 import { build54, draw, drawNonAce, type DrawResult } from '@/domain/deck';
 import type { Difficulty } from '@/domain/difficulty';
-import { resolve, type Exercise, type ExerciseId } from '@/domain/exercise';
+import { resolve, type Exercise } from '@/domain/exercise';
 import type { PlanOverrides, SlotKey, SlotOverride } from '@/domain/plan';
 import { pickJokerEffect } from '@/domain/joker';
 import { createRng, type Rng } from '@/lib/rng';
