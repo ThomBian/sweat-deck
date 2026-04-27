@@ -57,3 +57,15 @@ export const buildPlan = ({
 
   return [...numberSlots, ...faceSlots];
 };
+
+export const MANUAL_SLOT_KEYS: readonly SlotKey[] = [
+  'suit:hearts',
+  'suit:diamonds',
+  'suit:clubs',
+  'suit:spades',
+  'face:J',
+  'face:Q',
+  'face:K',
+];
+
+export const buildManualSlots = (): readonly SlotKey[] => MANUAL_SLOT_KEYS;
