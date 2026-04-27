@@ -135,46 +135,42 @@ export default function Review() {
           </motion.div>
         </div>
 
-        <footer className="fixed bottom-0 left-0 right-0 z-50 border-t border-border/40 bg-background/90 px-3 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))] backdrop-blur-md sm:px-6 sm:pt-4">
-          {/* Below md: Back + Start only; reset appears under the grid when swaps exist */}
-          <div className="mx-auto flex min-w-0 max-w-lg gap-2 md:hidden">
+        <footer className="fixed bottom-0 left-0 right-0 z-50 border-t border-border/40 bg-background/90 px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] backdrop-blur-md sm:px-6">
+          {/* Same footer rhythm as SetupWizard: min-h-11, justify-between, no oversized primary */}
+          <div className="mx-auto flex min-w-0 max-w-lg items-center justify-between gap-3 md:hidden">
             <motion.div
-              className="min-w-0 shrink-0"
+              className="min-w-0 shrink"
               whileTap={{ scale: reduceMotion || footerLocked ? 1 : 0.98 }}
               transition={{ duration: DURATION.fast, ease: EASE_OUT }}
             >
               <Button
                 type="button"
                 variant="outline"
-                className="min-h-11 touch-manipulation whitespace-normal px-3 py-2.5 leading-snug"
+                className="min-h-11 touch-manipulation"
                 disabled={footerLocked}
                 onClick={() => navigate('/setup', { state: { config } })}
               >
-                <span className="min-w-0 text-pretty break-words">
-                  <Trans>Back</Trans>
-                </span>
+                <Trans>Back</Trans>
               </Button>
             </motion.div>
             <motion.div
-              className="min-w-0 flex-1"
+              className="min-w-0 shrink"
               whileHover={{ scale: reduceMotion || footerLocked ? 1 : 1.02 }}
               whileTap={{ scale: reduceMotion || footerLocked ? 1 : 0.98 }}
               transition={{ duration: DURATION.fast, ease: EASE_OUT }}
             >
               <Button
                 type="button"
-                className="min-h-11 w-full touch-manipulation whitespace-normal px-3 py-2.5 text-center leading-snug"
+                className="min-h-11 touch-manipulation"
                 disabled={footerLocked}
                 onClick={() => void handleStart()}
               >
-                <span className="min-w-0 text-pretty break-words">
-                  <Trans>Start workout</Trans>
-                </span>
+                <Trans>Start workout</Trans>
               </Button>
             </motion.div>
           </div>
 
-          <div className="mx-auto hidden min-w-0 max-w-lg md:flex md:flex-wrap md:items-center md:justify-between md:gap-3 lg:gap-4">
+          <div className="mx-auto hidden min-w-0 max-w-lg md:flex md:flex-wrap md:items-center md:justify-between md:gap-3">
             <motion.div
               className="min-w-0 shrink"
               whileTap={{ scale: reduceMotion || footerLocked ? 1 : 0.98 }}
@@ -183,13 +179,11 @@ export default function Review() {
               <Button
                 type="button"
                 variant="outline"
-                className="min-h-11 min-w-0 touch-manipulation md:max-w-[min(100%,12rem)]"
+                className="min-h-11 touch-manipulation"
                 disabled={footerLocked}
                 onClick={() => navigate('/setup', { state: { config } })}
               >
-                <span className="truncate">
-                  <Trans>Back</Trans>
-                </span>
+                <Trans>Back</Trans>
               </Button>
             </motion.div>
             <motion.div
@@ -200,13 +194,11 @@ export default function Review() {
             >
               <Button
                 type="button"
-                className="min-h-11 min-w-0 touch-manipulation"
+                className="min-h-11 touch-manipulation"
                 disabled={footerLocked}
                 onClick={() => void handleStart()}
               >
-                <span className="truncate">
-                  <Trans>Start workout</Trans>
-                </span>
+                <Trans>Start workout</Trans>
               </Button>
             </motion.div>
           </div>
