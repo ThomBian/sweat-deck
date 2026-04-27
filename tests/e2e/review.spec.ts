@@ -43,9 +43,9 @@ test.describe('review route', () => {
     await expect(page).toHaveURL(/\/play$/, { timeout: 15_000 });
   });
 
-  test('"Reset swaps" is disabled when no overrides', async ({ page }) => {
+  test('"Reset swaps" is hidden when no overrides', async ({ page }) => {
     await completeWizardToReview(page);
-    await expect(page.getByRole('button', { name: 'Reset swaps' })).toBeDisabled();
+    await expect(page.getByRole('button', { name: 'Reset swaps' })).toHaveCount(0);
   });
 
   test('picking an alt enables "Reset swaps" and shows accent ring', async ({ page }) => {
@@ -73,13 +73,13 @@ test.describe('review route', () => {
     await expect(page.getByRole('button', { name: 'Reset swaps' })).toBeEnabled();
   });
 
-  test('"Reset swaps" clears the override and disables itself', async ({ page }) => {
+  test('"Reset swaps" clears the override and hides itself', async ({ page }) => {
     await completeWizardToReview(page);
     const heartCard = page.locator('[aria-label="Exercise slots"] > div').first().locator('> button').first();
     await heartCard.click();
     await page.getByRole('button', { name: /Pike Push-ups/i }).click();
     await page.getByRole('button', { name: 'Reset swaps' }).click();
-    await expect(page.getByRole('button', { name: 'Reset swaps' })).toBeDisabled();
+    await expect(page.getByRole('button', { name: 'Reset swaps' })).toHaveCount(0);
     await expect(heartCard).not.toHaveClass(/ring-primary/);
   });
 

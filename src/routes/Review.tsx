@@ -85,32 +85,13 @@ export default function Review() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: reduceMotion ? 0.1 : DURATION.pageIn, ease: EASE_OUT }}
           >
-            <header className="flex flex-col gap-3 sm:gap-4">
+            <header className="flex flex-col gap-2 sm:gap-3">
               <h1 className="min-w-0 font-display text-2xl font-semibold tracking-tight text-balance break-words sm:text-3xl">
                 <Trans>Review your deck</Trans>
               </h1>
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
-                <p className="max-w-[65ch] text-pretty break-words text-sm leading-relaxed text-muted-foreground [overflow-wrap:anywhere]">
-                  <Trans>Tap a card to swap or search the full list.</Trans>
-                </p>
-                <motion.div
-                  className="shrink-0 sm:-me-1 sm:self-start"
-                  whileTap={{ scale: reduceMotion || footerLocked || !hasOverrides ? 1 : 0.98 }}
-                  transition={{ duration: DURATION.fast, ease: EASE_OUT }}
-                >
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    className="min-h-10 w-full touch-manipulation px-3 text-muted-foreground sm:min-h-9 sm:w-auto"
-                    disabled={footerLocked || !hasOverrides}
-                    onClick={() => resetOverrides()}
-                  >
-                    <span className="text-pretty break-words sm:whitespace-nowrap">
-                      <Trans>Reset swaps</Trans>
-                    </span>
-                  </Button>
-                </motion.div>
-              </div>
+              <p className="max-w-[65ch] text-pretty break-words text-sm leading-relaxed text-muted-foreground [overflow-wrap:anywhere]">
+                <Trans>Tap a card to swap or search the full list.</Trans>
+              </p>
             </header>
 
             <div
@@ -130,11 +111,32 @@ export default function Review() {
                 />
               ))}
             </div>
+
+            {hasOverrides ? (
+              <div className="mt-1 border-t border-border/40 pt-4 sm:mt-2 sm:pt-5">
+                <motion.div
+                  whileTap={{ scale: reduceMotion || footerLocked ? 1 : 0.98 }}
+                  transition={{ duration: DURATION.fast, ease: EASE_OUT }}
+                >
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    className="min-h-11 w-full touch-manipulation justify-start px-3 text-left text-muted-foreground sm:w-auto sm:px-2"
+                    disabled={footerLocked}
+                    onClick={() => resetOverrides()}
+                  >
+                    <span className="text-pretty break-words">
+                      <Trans>Reset swaps</Trans>
+                    </span>
+                  </Button>
+                </motion.div>
+              </div>
+            ) : null}
           </motion.div>
         </div>
 
         <footer className="fixed bottom-0 left-0 right-0 z-50 border-t border-border/40 bg-background/90 px-3 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))] backdrop-blur-md sm:px-6 sm:pt-4">
-          {/* Below md: wayfinding + primary — reset lives in the header with the deck instructions */}
+          {/* Below md: Back + Start only; reset appears under the grid when swaps exist */}
           <div className="mx-auto flex min-w-0 max-w-lg gap-2 md:hidden">
             <motion.div
               className="min-w-0 shrink-0"
