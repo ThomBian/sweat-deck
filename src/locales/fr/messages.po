@@ -30,9 +30,11 @@ msgstr "{0, plural, one {# répétition} other {# répétitions}}"
 msgid "{0} of {1}"
 msgstr "{0} sur {1}"
 
+#. placeholder {0}: entry.defaultDistanceM
 #. placeholder {0}: ex.distanceM
 #. placeholder {0}: opt.distanceM
 #: src/components/ExercisePanel.tsx
+#: src/components/review/ExerciseSearchSheet.tsx
 #: src/components/review/ReviewCard.tsx
 msgid "{0}m"
 msgstr "{0} m"
@@ -46,11 +48,14 @@ msgstr "{0} m"
 msgid "{selectedName} — no alternatives to swap"
 msgstr "{selectedName} — aucune variante à l’échange"
 
+#. placeholder {0}: entry.defaultReps
 #. placeholder {0}: opt.reps
+#: src/components/review/ExerciseSearchSheet.tsx
 #: src/components/review/ReviewCard.tsx
 msgid "×{0} reps"
 msgstr "×{0} rép."
 
+#: src/components/review/ExerciseSearchSheet.tsx
 #: src/components/review/ReviewCard.tsx
 msgid "×N reps"
 msgstr "×N rép."
@@ -219,6 +224,10 @@ msgstr "Mode Cardio ?"
 #: src/routes/Summary.tsx
 msgid "Cards drawn"
 msgstr "Cartes tirées"
+
+#: src/components/review/ExerciseSearchSheet.tsx
+msgid "Challenge"
+msgstr "Défi"
 
 #: src/i18n/exercises.ts
 msgid "Chest Fly"
@@ -752,6 +761,14 @@ msgstr "Rappel rapide"
 msgid "Rack Pulls"
 msgstr ""
 
+#: src/components/review/ExerciseSearchSheet.tsx
+msgid "Recommended"
+msgstr "Recommandés"
+
+#: src/components/review/ExerciseSearchSheet.tsx
+msgid "Recommended exercises"
+msgstr "Exercices recommandés"
+
 #: src/i18n/exercises.ts
 msgid "Renegade Rows"
 msgstr "Tirage renegade"
@@ -808,6 +825,18 @@ msgstr "Même principe : le paquet mène l’entraînement—ouvrez la section c
 #: src/routes/Onboarding.tsx
 msgid "Saving…"
 msgstr "Enregistrement…"
+
+#: src/components/review/ReviewCard.tsx
+msgid "Search all exercises"
+msgstr "Rechercher tous les exercices"
+
+#: src/components/review/ExerciseSearchSheet.tsx
+msgid "Search exercises…"
+msgstr "Rechercher des exercices…"
+
+#: src/components/review/ExerciseSearchSheet.tsx
+msgid "Search results"
+msgstr "Résultats de recherche"
 
 #: src/routes/Review.tsx
 msgid "Select a card to swap"

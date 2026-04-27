@@ -151,7 +151,7 @@ export default function SetupWizard({ onLeaveToLanding, initialConfig }: Props) 
           className="flex flex-col gap-6"
           initial={reduceMotion ? false : { opacity: 0, x: 28 }}
           animate={{ opacity: 1, x: 0 }}
-          exit={reduceMotion ? undefined : { opacity: 0, x: -22 }}
+          {...(!reduceMotion ? { exit: { opacity: 0, x: -22 } as const } : {})}
           transition={stepPanelTransition}
         >
           <h1 className="min-w-0 font-display text-2xl font-semibold tracking-tight text-balance break-words sm:text-3xl">

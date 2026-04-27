@@ -102,7 +102,12 @@ export default function Review() {
               aria-label={t`Exercise slots`}
             >
               {plan.map((slot) => (
-                <ReviewCard key={slot.key} slot={slot} onPick={(id) => handlePick(slot.key, id)} />
+                <ReviewCard
+                  key={slot.key}
+                  config={config}
+                  slot={slot}
+                  onPick={(id) => handlePick(slot.key, id)}
+                />
               ))}
             </div>
           </motion.div>

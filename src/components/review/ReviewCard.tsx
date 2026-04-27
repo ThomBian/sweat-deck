@@ -1,12 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import { t } from '@lingui/core/macro';
+import { Trans } from '@lingui/react/macro';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Lock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { tExercise } from '@/i18n/exercises';
 import { SetupOptionButton } from '@/components/setup/SetupOptionButton';
+import { Button } from '@/components/ui/button';
+import { ExerciseSearchSheet } from '@/components/review/ExerciseSearchSheet';
 import type { PlanSlot } from '@/domain/plan';
 import type { ExerciseId } from '@/domain/exercise';
+import type { SetupConfig } from '@/domain/config';
 import { formatMSS } from '@/lib/formatTime';
 import { DURATION, EASE_OUT } from '@/lib/motion';
 
@@ -31,10 +35,11 @@ function prescriptionLabel(opt: PlanSlot['options'][number]): string {
   return '';
 }
 
-type Props = { slot: PlanSlot; onPick: (id: ExerciseId) => void };
+type Props = { config: SetupConfig; slot: PlanSlot; onPick: (id: ExerciseId) => void };
 
-export function ReviewCard({ slot, onPick }: Props) {
+export function ReviewCard({ config, slot, onPick }: Props) {
   const [open, setOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const reduceMotion = useReducedMotion();
   const toggleRef = useRef<HTMLButtonElement>(null);
 
@@ -44,7 +49,9 @@ export function ReviewCard({ slot, onPick }: Props) {
   const glyph = suitMatch ? SUIT_GLYPH[suitMatch[1]!] : faceMatch?.[1] ?? '';
   const suitColor = suitMatch ? SUIT_COLOR[suitMatch[1]!] : undefined;
   const hasAlts = slot.options.length > 1;
-  const selectedOpt = slot.options.find((o) => o.id === slot.selected) ?? slot.defaultExercise;
+  const selectedOpt =
+    slot.options.find((o) => o.id === slot.selected) ??
+    ({ ...slot.defaultExercise, id: slot.selected } as PlanSlot['options'][number]);
   const selectedName = tExercise(slot.selected as ExerciseId);
   const lockedLabel = t`${selectedName} — no alternatives to swap`;
   const altPanelId = `review-alts-${slot.key.replaceAll(':', '-')}`;
@@ -126,9 +133,19 @@ export function ReviewCard({ slot, onPick }: Props) {
           {cardMain}
         </motion.button>
       ) : (
-        <div role="group" aria-label={lockedLabel} className={cn(cardSurface, 'cursor-default')}>
-          {cardMain}
-        </div>
+        <>
+          <div role="group" aria-label={lockedLabel} className={cn(cardSurface, 'cursor-default')}>
+            {cardMain}
+          </div>
+          <Button
+            type="button"
+            variant="ghost"
+            className="min-h-10 w-full touch-manipulation text-muted-foreground"
+            onClick={() => setSearchOpen(true)}
+          >
+            <Trans>Search all exercises</Trans>
+          </Button>
+        </>
       )}
 
       <AnimatePresence>
@@ -158,9 +175,29 @@ export function ReviewCard({ slot, onPick }: Props) {
                 </span>
               </SetupOptionButton>
             ))}
+            <Button
+              type="button"
+              variant="ghost"
+              className="min-h-10 w-full touch-manipulation text-muted-foreground"
+              onClick={() => setSearchOpen(true)}
+            >
+              <Trans>Search all exercises</Trans>
+            </Button>
           </motion.div>
         ) : null}
       </AnimatePresence>
+
+      <ExerciseSearchSheet
+        open={searchOpen}
+        onOpenChange={setSearchOpen}
+        slotKey={slot.key}
+        config={config}
+        selected={slot.selected}
+        onPick={(id) => {
+          onPick(id);
+          setOpen(false);
+        }}
+      />
     </div>
   );
 }

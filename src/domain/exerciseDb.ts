@@ -122,21 +122,17 @@ export function recommendedFor(args: { slotKey: SlotKey; config: SetupConfig }):
   const rank = slotKey.slice(5) as FaceRank;
   const src = config.cardio ? FACE_CHALLENGES_CARDIO[rank] : FACE_CHALLENGES[rank][config.equipment];
   const out: ExerciseEntry[] = [];
-  out.push(
-    row(src.id as ExerciseId, {
-      defaultReps: src.reps,
-      defaultDurationSec: src.durationSec,
-      defaultDistanceM: src.distanceM,
-    }),
-  );
+  const defaultPatch: Partial<ExerciseEntry> = {};
+  if (src.reps !== undefined) defaultPatch.defaultReps = src.reps;
+  if (src.durationSec !== undefined) defaultPatch.defaultDurationSec = src.durationSec;
+  if (src.distanceM !== undefined) defaultPatch.defaultDistanceM = src.distanceM;
+  out.push(row(src.id as ExerciseId, defaultPatch));
   for (const a of src.alts ?? []) {
-    out.push(
-      row(a.id as ExerciseId, {
-        defaultReps: a.reps,
-        defaultDurationSec: a.durationSec,
-        defaultDistanceM: a.distanceM,
-      }),
-    );
+    const altPatch: Partial<ExerciseEntry> = {};
+    if (a.reps !== undefined) altPatch.defaultReps = a.reps;
+    if (a.durationSec !== undefined) altPatch.defaultDurationSec = a.durationSec;
+    if (a.distanceM !== undefined) altPatch.defaultDistanceM = a.distanceM;
+    out.push(row(a.id as ExerciseId, altPatch));
   }
   return out;
 }
