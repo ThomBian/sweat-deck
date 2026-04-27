@@ -17,14 +17,27 @@ msgid "{0, plural, one {# rep} other {# reps}}"
 msgstr "{0, plural, one {# rep} other {# reps}}"
 
 #. placeholder {0}: ex.distanceM
+#. placeholder {0}: opt.distanceM
 #: src/components/ExercisePanel.tsx
+#: src/components/review/ReviewCard.tsx
 msgid "{0}m"
 msgstr "{0}m"
 
 #. placeholder {0}: ex.durationSec
+#. placeholder {0}: opt.durationSec
 #: src/components/ExercisePanel.tsx
+#: src/components/review/ReviewCard.tsx
 msgid "{0}s"
 msgstr "{0}s"
+
+#. placeholder {0}: opt.reps
+#: src/components/review/ReviewCard.tsx
+msgid "×{0} reps"
+msgstr "×{0} reps"
+
+#: src/components/review/ReviewCard.tsx
+msgid "×N reps"
+msgstr "×N reps"
 
 #: src/i18n/exercises.ts
 msgid "100m Sprint"
@@ -82,11 +95,16 @@ msgstr "Advanced"
 msgid "All rules (full list)"
 msgstr "All rules (full list)"
 
+#: src/components/review/ReviewCard.tsx
+msgid "Alternative exercises for this slot"
+msgstr "Alternative exercises for this slot"
+
 #: src/routes/Setup.tsx
 msgid "Applies to the whole app—screens, cards, and prompts."
 msgstr "Applies to the whole app—screens, cards, and prompts."
 
 #: src/components/SetupWizard.tsx
+#: src/routes/Review.tsx
 msgid "Back"
 msgstr "Back"
 
@@ -183,16 +201,16 @@ msgid "Couldn't read your last setup. Showing defaults—you can change anything
 msgstr "Couldn't read your last setup. Showing defaults—you can change anything below."
 
 #: src/components/SetupWizard.tsx
-msgid "Couldn't save setup. Check device storage, then try again."
-msgstr "Couldn't save setup. Check device storage, then try again."
+#~ msgid "Couldn't save setup. Check device storage, then try again."
+#~ msgstr "Couldn't save setup. Check device storage, then try again."
 
 #: src/routes/Onboarding.tsx
 msgid "Couldn't save your progress to this device. Check storage permissions or try again."
 msgstr "Couldn't save your progress to this device. Check storage permissions or try again."
 
 #: src/components/SetupWizard.tsx
-msgid "Deal the workout"
-msgstr "Deal the workout"
+#~ msgid "Deal the workout"
+#~ msgstr "Deal the workout"
 
 #: src/routes/Setup.tsx
 #~ msgid "Defaults are tuned for a quick start—change anything in a tap."
@@ -261,6 +279,10 @@ msgstr "Elapsed"
 #: src/components/SetupWizard.tsx
 msgid "Enabling cardio mode favors high-intensity movements."
 msgstr "Enabling cardio mode favors high-intensity movements."
+
+#: src/routes/Review.tsx
+msgid "Exercise slots"
+msgstr "Exercise slots"
 
 #: src/routes/Onboarding.tsx
 msgid "Face cards are fixed high-intensity challenges."
@@ -470,6 +492,10 @@ msgstr "Next"
 msgid "Nines and tens dominate. A low card is a gift from the deck."
 msgstr "Nines and tens dominate. A low card is a gift from the deck."
 
+#: src/components/review/ReviewCard.tsx
+msgid "No alternatives"
+msgstr "No alternatives"
+
 #: src/components/Deck.tsx
 msgid "No cards left in the deck"
 msgstr "No cards left in the deck"
@@ -554,6 +580,10 @@ msgstr "Renegade Rows"
 msgid "Replay tutorial"
 msgstr "Replay tutorial"
 
+#: src/routes/Review.tsx
+msgid "Reset swaps"
+msgstr "Reset swaps"
+
 #: src/routes/Summary.tsx
 #~ msgid "Respect—deck served"
 #~ msgstr "Respect—deck served"
@@ -565,6 +595,11 @@ msgstr "Respect. Work logged."
 #: src/routes/Play.tsx
 msgid "Resume"
 msgstr "Resume"
+
+#: src/components/SetupWizard.tsx
+#: src/routes/Review.tsx
+msgid "Review your deck"
+msgstr "Review your deck"
 
 #: src/i18n/exercises.ts
 msgid "Romanian Deadlifts"
@@ -586,7 +621,6 @@ msgstr "Row"
 msgid "Same deck-to-workout flow—open below for the full rules list when you need it."
 msgstr "Same deck-to-workout flow—open below for the full rules list when you need it."
 
-#: src/components/SetupWizard.tsx
 #: src/routes/Onboarding.tsx
 msgid "Saving…"
 msgstr "Saving…"
@@ -655,11 +689,20 @@ msgstr "Start a new training"
 msgid "Start somewhere—you started today."
 msgstr "Start somewhere—you started today."
 
+#: src/routes/Review.tsx
+msgid "Start workout"
+msgstr "Start workout"
+
 #. placeholder {0}: step + 1
 #. placeholder {1}: steps.length
 #: src/components/SetupWizard.tsx
 msgid "Step {0} of {1}: {title}"
 msgstr "Step {0} of {1}: {title}"
+
+#. placeholder {0}: tExercise(slot.selected as ExerciseId)
+#: src/components/review/ReviewCard.tsx
+msgid "Swap {0}"
+msgstr "Swap {0}"
 
 #: src/routes/Play.tsx
 #~ msgid "Sweat Deck"
@@ -684,6 +727,10 @@ msgstr "Switch to French"
 #: src/routes/Play.tsx
 #~ msgid "Take a breath. Your clock is on hold—resume when you are ready."
 #~ msgstr "Take a breath. Your clock is on hold—resume when you are ready."
+
+#: src/routes/Review.tsx
+msgid "Tap a card to swap"
+msgstr "Tap a card to swap"
 
 #: src/components/ExercisePanel.tsx
 msgid "Tap the stack to draw your first card."

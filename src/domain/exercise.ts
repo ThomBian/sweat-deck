@@ -41,7 +41,11 @@ export const resolve = ({ card, config, overrides }: ResolveArgs): Exercise => {
       const altEntry = (src.alts ?? []).find((a) => a.id === ov);
       if (altEntry) {
         const { id, reps, durationSec, distanceM } = altEntry;
-        return { id: id as ExerciseId, reps, durationSec, distanceM };
+        const ex: Exercise = { id: id as ExerciseId };
+        if (reps !== undefined) ex.reps = reps;
+        if (durationSec !== undefined) ex.durationSec = durationSec;
+        if (distanceM !== undefined) ex.distanceM = distanceM;
+        return ex;
       }
     }
     return { ...srcRest, id: src.id as ExerciseId };

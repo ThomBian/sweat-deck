@@ -4,6 +4,7 @@ import { AnimatedLayout } from '@/components/AnimatedLayout';
 import Index from './routes/Index';
 import Onboarding from './routes/Onboarding';
 import Setup from './routes/Setup';
+import Review from './routes/Review';
 import Play from './routes/Play';
 import Summary from './routes/Summary';
 import History from './routes/History';
@@ -19,6 +20,7 @@ export default function App() {
           <Route path="/" element={<Index />} />
           <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/setup" element={<Setup />} />
+          <Route path="/review" element={<Review />} />
           <Route path="/play" element={<Play />} />
           <Route path="/summary" element={<Summary />} />
           <Route path="/history" element={<History />} />

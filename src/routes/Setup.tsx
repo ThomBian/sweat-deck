@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import { t } from '@lingui/core/macro';
 import { Trans } from '@lingui/react/macro';
 import { HelpCircle } from 'lucide-react';
+import type { SetupConfig } from '@/domain/config';
 import SetupWizard from '@/components/SetupWizard';
 import { Button } from '@/components/ui/button';
 import { DeckGlyphPulse } from '@/components/DeckGlyphPulse';
@@ -15,7 +16,9 @@ const helpButtonClassName =
   'inline-flex size-11 shrink-0 touch-manipulation items-center justify-center rounded-lg border border-border/50 bg-card/60 text-muted-foreground transition-colors hover:bg-card hover:text-foreground active:bg-card/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
 
 export default function Setup() {
-  const [phase, setPhase] = useState<'landing' | 'wizard'>('landing');
+  const location = useLocation();
+  const returnedConfig = (location.state as { config?: SetupConfig } | null)?.config;
+  const [phase, setPhase] = useState<'landing' | 'wizard'>(() => (returnedConfig ? 'wizard' : 'landing'));
   const reduceMotion = useReducedMotion();
   const pageT = reduceMotion ? 0.1 : DURATION.pageIn;
 
@@ -87,7 +90,10 @@ export default function Setup() {
         </motion.div>
       ) : (
         <div className="flex min-h-0 flex-1 flex-col pt-2">
-          <SetupWizard onLeaveToLanding={() => setPhase('landing')} />
+          <SetupWizard
+            onLeaveToLanding={() => setPhase('landing')}
+            {...(returnedConfig != null ? { initialConfig: returnedConfig } : {})}
+          />
         </div>
       )}
     </main>
