@@ -15,27 +15,26 @@ Flat registry of all exercises. Each entry:
 ```ts
 type ExerciseEntry = {
   id: ExerciseId;
-  family: 'push' | 'pull' | 'legs' | 'posterior' | 'challenge';
-  equipment: Equipment[]; // which equipment levels include this exercise
+  group: 'push' | 'pull' | 'legs' | 'posterior' | 'challenge'; // display grouping only
+  equipment: Equipment[]; // which equipment levels list this exercise
   defaultReps?: number;
   defaultDurationSec?: number;
   defaultDistanceM?: number;
 };
 ```
 
-Family is derived from the suit the exercise appears under in `NUMBER_MOVEMENTS`:
-- `suit:hearts` → `push`
-- `suit:diamonds` → `pull`
-- `suit:clubs` → `legs`
-- `suit:spades` → `posterior`
-- `FACE_CHALLENGES` / `FACE_CHALLENGES_CARDIO` → `challenge`
+`group` is a display-only label used to organise the "All exercises" section. It is **not** used for recommendations.
 
 Equipment tags come from which Equipment keys list the exercise in `NUMBER_MOVEMENTS`.
 
 Exports:
 - `ALL_EXERCISES: ExerciseEntry[]` — full flat list
-- `exerciseFamily(slotKey: SlotKey): ExerciseEntry['family']` — maps a slot key to its family
-- `recommendedFor({ slotKey, config }): ExerciseEntry[]` — union of curated alts + DB entries matching family + equipment
+- `recommendedFor({ slotKey, config }): ExerciseEntry[]` — theme-aware recommendations (see below)
+
+**`recommendedFor` logic:**
+- For `suit:X` slots: collect all exercises that appear in `NUMBER_MOVEMENTS[config.theme][X]` across **all equipment levels**. This naturally respects the theme — e.g. for Upper Body, clubs and spades surface upper-body movements, not legs.
+- For `face:X` slots: collect exercises from `FACE_CHALLENGES[X]` across all equipment levels + `FACE_CHALLENGES_CARDIO[X]`.
+- Deduplicate, then sort: exercises compatible with `config.equipment` first.
 
 ### Plan / resolve relaxation
 
@@ -102,9 +101,7 @@ type Props = {
 - Tapping a result calls `onPick(id)` and closes sheet.
 - Swipe down or Escape closes sheet without picking.
 
-**Recommended set** = union of:
-1. Slot's curated alts (from `buildPlan` options)
-2. All DB entries where `family` matches slot family AND `equipment` includes `config.equipment`
+**Recommended set** = `recommendedFor({ slotKey, config })` — derived from `NUMBER_MOVEMENTS[config.theme][suit]` across all equipment levels, so it always respects the active theme (Upper Body, Lower Body, Full Body).
 
 ---
 
