@@ -12,6 +12,7 @@ import { faceFreePickPrescription } from '@/domain/exerciseDb';
 import type { PlanSlot } from '@/domain/plan';
 import type { ExerciseId } from '@/domain/exercise';
 import type { SetupConfig } from '@/domain/config';
+import type { ComposerSlot } from '@/hooks/useDeckComposer';
 import { formatMSS } from '@/lib/formatTime';
 import { slotHeaderParts } from '@/lib/reviewSlotContext';
 import { DURATION, EASE_OUT } from '@/lib/motion';
@@ -37,7 +38,7 @@ function prescriptionLabel(opt: PlanSlot['options'][number]): string {
   return '';
 }
 
-type Props = { config: SetupConfig; slot: PlanSlot; onPick: (id: ExerciseId) => void };
+type Props = { config: SetupConfig; slot: ComposerSlot; onPick: (id: ExerciseId) => void };
 
 export function DeckSlotCard({ config, slot, onPick }: Props) {
   const [open, setOpen] = useState(false);
@@ -72,12 +73,16 @@ export function DeckSlotCard({ config, slot, onPick }: Props) {
     }
   }, [open, searchOpen, hasAlts, reduceMotion, scrollSectionIntoView]);
 
-  const isOverridden = slot.selected !== slot.defaultExercise.id;
+  const isOverridden =
+    slot.selected !== undefined &&
+    slot.defaultExercise !== undefined &&
+    slot.selected !== slot.defaultExercise.id;
   const suitMatch = slot.key.match(/^suit:(.+)$/);
   const faceMatch = slot.key.match(/^face:(.+)$/);
   const glyph = suitMatch ? SUIT_GLYPH[suitMatch[1]!] : faceMatch?.[1] ?? '';
   const suitColor = suitMatch ? SUIT_COLOR[suitMatch[1]!] : undefined;
   const selectedOpt = (() => {
+    if (!slot.selected) return undefined;
     const fromOptions = slot.options.find((o) => o.id === slot.selected);
     if (fromOptions) return fromOptions;
     const face = slot.key.match(/^face:(.+)$/);
@@ -85,19 +90,21 @@ export function DeckSlotCard({ config, slot, onPick }: Props) {
       const rank = face[1] as FaceRank;
       const d = slot.defaultExercise;
       const defaultSrc: { reps?: number; durationSec?: number; distanceM?: number } = {};
-      if (d.reps !== undefined) defaultSrc.reps = d.reps;
-      if (d.durationSec !== undefined) defaultSrc.durationSec = d.durationSec;
-      if (d.distanceM !== undefined) defaultSrc.distanceM = d.distanceM;
+      if (d?.reps !== undefined) defaultSrc.reps = d.reps;
+      if (d?.durationSec !== undefined) defaultSrc.durationSec = d.durationSec;
+      if (d?.distanceM !== undefined) defaultSrc.distanceM = d.distanceM;
       const rx = faceFreePickPrescription(slot.selected, defaultSrc, rank);
       return { id: slot.selected, ...rx } as PlanSlot['options'][number];
     }
-    return { ...slot.defaultExercise, id: slot.selected } as PlanSlot['options'][number];
+    return slot.defaultExercise
+      ? ({ ...slot.defaultExercise, id: slot.selected } as PlanSlot['options'][number])
+      : undefined;
   })();
-  const selectedName = tExercise(slot.selected as ExerciseId);
+  const selectedName = slot.selected ? tExercise(slot.selected) : t`Assign exercise`;
   const slotParts = slotHeaderParts(slot.key);
   const swapContextHeadingId = `review-swap-h-${slot.key.replaceAll(':', '-')}`;
   const altPanelId = `review-alts-${slot.key.replaceAll(':', '-')}`;
-  const rxLabel = prescriptionLabel(selectedOpt);
+  const rxLabel = selectedOpt ? prescriptionLabel(selectedOpt) : '';
 
   useEffect(() => {
     if (!hasAlts || !open) return;
@@ -121,12 +128,15 @@ export function DeckSlotCard({ config, slot, onPick }: Props) {
     else setSearchOpen(true);
   };
 
+  const isEmpty = slot.selected === undefined;
   const cardSurface = cn(
     'relative flex min-h-14 min-w-0 w-full flex-col gap-2.5 rounded-xl border py-3 ps-4 pe-10 text-left text-base font-medium break-words outline-none',
     'transition-[border-color,background-color,color,box-shadow,transform] duration-200 ease-out',
-    isOverridden
-      ? 'border-primary bg-primary/15 ring-2 ring-primary/40'
-      : 'border-border/50 bg-card/60',
+    isEmpty
+      ? 'border-dashed border-border/50 bg-muted/20 text-muted-foreground'
+      : isOverridden
+        ? 'border-primary bg-primary/15 ring-2 ring-primary/40'
+        : 'border-border/50 bg-card/60',
   );
 
   const statusCorner = isOverridden ? (
@@ -236,14 +246,14 @@ export function DeckSlotCard({ config, slot, onPick }: Props) {
         onOpenChange={setSearchOpen}
         slotKey={slot.key}
         config={config}
-        selected={slot.selected}
+        {...(slot.selected !== undefined ? { selected: slot.selected } : {})}
         {...(slot.key.startsWith('face:')
           ? (() => {
               const d = slot.defaultExercise;
               const defaultSrc: { reps?: number; durationSec?: number; distanceM?: number } = {};
-              if (d.reps !== undefined) defaultSrc.reps = d.reps;
-              if (d.durationSec !== undefined) defaultSrc.durationSec = d.durationSec;
-              if (d.distanceM !== undefined) defaultSrc.distanceM = d.distanceM;
+              if (d?.reps !== undefined) defaultSrc.reps = d.reps;
+              if (d?.durationSec !== undefined) defaultSrc.durationSec = d.durationSec;
+              if (d?.distanceM !== undefined) defaultSrc.distanceM = d.distanceM;
               return {
                 facePrescriptionCtx: { rank: slot.key.slice(5) as FaceRank, defaultSrc },
               };

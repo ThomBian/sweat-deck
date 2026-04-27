@@ -30,7 +30,7 @@ type Props = {
   onOpenChange: (open: boolean) => void;
   slotKey: SlotKey;
   config: SetupConfig;
-  selected: ExerciseId;
+  selected?: ExerciseId;
   onPick: (id: ExerciseId) => void;
   /** When the slot is a face card, used to preview sensible reps/time/distance for search hits. */
   facePrescriptionCtx?: FacePrescriptionCtx;
@@ -188,10 +188,14 @@ export function ExercisePickerSheet({
                   )}
                 </Dialog.Title>
                 <Dialog.Description className="px-0.5 pt-1.5 text-sm leading-relaxed text-muted-foreground">
-                  <Trans>
-                    Current move:{' '}
-                    <span className="font-medium text-foreground">{tExercise(selected)}</span>
-                  </Trans>
+                  {selected ? (
+                    <Trans>
+                      Current move:{' '}
+                      <span className="font-medium text-foreground">{tExercise(selected)}</span>
+                    </Trans>
+                  ) : (
+                    <Trans>Pick an exercise for this card.</Trans>
+                  )}
                 </Dialog.Description>
               </div>
             </div>
@@ -296,12 +300,12 @@ function ResultRow({
   onPick,
 }: {
   entry: ExerciseEntry;
-  selected: ExerciseId;
+  selected: ExerciseId | undefined;
   showRecommendedHeart: boolean;
   rx: string;
   onPick: () => void;
 }) {
-  const isSel = entry.id === selected;
+  const isSel = selected !== undefined && entry.id === selected;
   const meta = exerciseMetaLine(entry);
   return (
     <div role="option" aria-selected={isSel} className="min-w-0">
