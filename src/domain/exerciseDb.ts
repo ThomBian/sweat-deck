@@ -100,6 +100,89 @@ export const ALL_EXERCISES: ExerciseEntry[] = (() => {
   return [...movements, ...faces];
 })();
 
+function pickExplicitRx(x: { reps?: number; durationSec?: number; distanceM?: number }): {
+  reps?: number;
+  durationSec?: number;
+  distanceM?: number;
+} {
+  const o: { reps?: number; durationSec?: number; distanceM?: number } = {};
+  if (x.reps !== undefined) o.reps = x.reps;
+  if (x.durationSec !== undefined) o.durationSec = x.durationSec;
+  if (x.distanceM !== undefined) o.distanceM = x.distanceM;
+  return o;
+}
+
+/** First matching prescription for a face-challenge id anywhere in J/Q/K tables (non-alt picks from search). */
+export function catalogPrescriptionForFaceChallengeId(
+  id: ExerciseId,
+): { reps?: number; durationSec?: number; distanceM?: number } | null {
+  const entry = ALL_EXERCISES.find((e) => e.id === id);
+  if (!entry || entry.group !== 'challenge') return null;
+
+  for (const rank of FACE_ORDER) {
+    for (const eq of EQUIPMENTS) {
+      const ch = FACE_CHALLENGES[rank][eq];
+      if (ch.id === id) return pickExplicitRx(ch);
+      for (const a of ch.alts ?? []) {
+        if (a.id === id) return pickExplicitRx(a);
+      }
+    }
+    const c = FACE_CHALLENGES_CARDIO[rank];
+    if (c.id === id) return pickExplicitRx(c);
+    for (const a of c.alts ?? []) {
+      if (a.id === id) return pickExplicitRx(a);
+    }
+  }
+  return null;
+}
+
+/**
+ * Prescription when the user picks an exercise outside the slot's curated alts.
+ * Movements never inherit distance/time from an unrelated default (e.g. 500m row → pull-ups).
+ */
+export function faceFreePickPrescription(
+  pickedId: ExerciseId,
+  defaultSrc: { reps?: number; durationSec?: number; distanceM?: number },
+  rank: FaceRank,
+): { reps?: number; durationSec?: number; distanceM?: number } {
+  const entry = ALL_EXERCISES.find((e) => e.id === pickedId);
+  const isMovement = entry != null && entry.group !== 'challenge';
+
+  const rankFallbackReps: Record<FaceRank, number> = { J: 15, Q: 15, K: 20 };
+
+  if (isMovement) {
+    const out: { reps?: number; durationSec?: number; distanceM?: number } = {};
+    if (defaultSrc.reps != null) {
+      out.reps = defaultSrc.reps;
+      return out;
+    }
+    if (defaultSrc.durationSec != null) {
+      out.reps = Math.min(40, Math.max(8, Math.round(defaultSrc.durationSec / 5)));
+      return out;
+    }
+    if (defaultSrc.distanceM != null) {
+      out.reps = rankFallbackReps[rank];
+      return out;
+    }
+    out.reps = rankFallbackReps[rank];
+    return out;
+  }
+
+  const catalog = catalogPrescriptionForFaceChallengeId(pickedId);
+  if (
+    catalog &&
+    (catalog.reps !== undefined || catalog.durationSec !== undefined || catalog.distanceM !== undefined)
+  ) {
+    return catalog;
+  }
+
+  const out: { reps?: number; durationSec?: number; distanceM?: number } = {};
+  if (defaultSrc.reps !== undefined) out.reps = defaultSrc.reps;
+  if (defaultSrc.durationSec !== undefined) out.durationSec = defaultSrc.durationSec;
+  if (defaultSrc.distanceM !== undefined) out.distanceM = defaultSrc.distanceM;
+  return out;
+}
+
 export function recommendedFor(args: { slotKey: SlotKey; config: SetupConfig }): ExerciseEntry[] {
   const { slotKey, config } = args;
   const byId = new Map(ALL_EXERCISES.map((e) => [e.id, e]));

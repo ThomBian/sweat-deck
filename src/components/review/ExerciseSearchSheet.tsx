@@ -6,7 +6,8 @@ import { Trans } from '@lingui/react/macro';
 import { useLingui } from '@lingui/react';
 import { cn } from '@/lib/utils';
 import { tExercise } from '@/i18n/exercises';
-import { recommendedFor, ALL_EXERCISES, type ExerciseEntry } from '@/domain/exerciseDb';
+import type { FaceRank } from '@/domain/card';
+import { faceFreePickPrescription, recommendedFor, ALL_EXERCISES, type ExerciseEntry } from '@/domain/exerciseDb';
 import type { SlotKey } from '@/domain/plan';
 import type { SetupConfig } from '@/domain/config';
 import type { ExerciseId } from '@/domain/exercise';
@@ -28,6 +29,11 @@ const SUIT_FAMILY: Record<string, string> = {
   spades: 'Posterior',
 };
 
+export type FacePrescriptionCtx = {
+  rank: FaceRank;
+  defaultSrc: { reps?: number; durationSec?: number; distanceM?: number };
+};
+
 type Props = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -35,13 +41,21 @@ type Props = {
   config: SetupConfig;
   selected: ExerciseId;
   onPick: (id: ExerciseId) => void;
+  /** When the slot is a face card, used to preview sensible reps/time/distance for search hits. */
+  facePrescriptionCtx?: FacePrescriptionCtx;
 };
 
-function rxLabel(slotKey: SlotKey, entry: ExerciseEntry): string {
+function rxLabel(slotKey: SlotKey, entry: ExerciseEntry, faceCtx?: FacePrescriptionCtx): string {
   if (slotKey.startsWith('face:')) {
     if (entry.defaultReps !== undefined) return t`×${entry.defaultReps} reps`;
     if (entry.defaultDurationSec !== undefined) return formatMSS(entry.defaultDurationSec);
     if (entry.defaultDistanceM !== undefined) return t`${entry.defaultDistanceM}m`;
+    if (faceCtx) {
+      const rx = faceFreePickPrescription(entry.id, faceCtx.defaultSrc, faceCtx.rank);
+      if (rx.reps !== undefined) return t`×${rx.reps} reps`;
+      if (rx.durationSec !== undefined) return formatMSS(rx.durationSec);
+      if (rx.distanceM !== undefined) return t`${rx.distanceM}m`;
+    }
     return '';
   }
   return t`×N reps`;
@@ -61,7 +75,15 @@ function headerParts(slotKey: SlotKey): { glyph: string; family: string } {
 const DISMISS_OFFSET_PX = 72;
 const DISMISS_VELOCITY = 420;
 
-export function ExerciseSearchSheet({ open, onOpenChange, slotKey, config, selected, onPick }: Props) {
+export function ExerciseSearchSheet({
+  open,
+  onOpenChange,
+  slotKey,
+  config,
+  selected,
+  onPick,
+  facePrescriptionCtx,
+}: Props) {
   const { i18n } = useLingui();
   const reduceMotion = useReducedMotion();
   const dragControls = useDragControls();
@@ -130,8 +152,11 @@ export function ExerciseSearchSheet({ open, onOpenChange, slotKey, config, selec
                 void dragControls.start(e);
               }}
             >
-              <div className="flex shrink-0 cursor-grab justify-center active:cursor-grabbing" aria-hidden>
-                <span className="mt-3 mb-2 h-1 w-10 shrink-0 rounded-full bg-muted-foreground/20" />
+              <div
+                className="flex min-h-11 shrink-0 cursor-grab items-center justify-center pt-2 active:cursor-grabbing"
+                aria-hidden
+              >
+                <span className="mb-1 h-1 w-10 shrink-0 rounded-full bg-muted-foreground/20" />
               </div>
 
               <div className="px-5 sm:px-6">
@@ -179,27 +204,27 @@ export function ExerciseSearchSheet({ open, onOpenChange, slotKey, config, selec
                         key={entry.id}
                         entry={entry}
                         selected={selected}
-                        rx={rxLabel(slotKey, entry)}
+                        rx={rxLabel(slotKey, entry, facePrescriptionCtx)}
                         onPick={() => handlePick(entry.id)}
                       />
                     ))}
-                  </div>
                 </div>
-              ) : (
-                <div
-                  role="listbox"
-                  aria-label={t`Search results`}
-                  className="flex flex-col gap-2.5 px-5 py-5 pb-6 sm:px-6"
-                >
-                  {filteredSorted.map((entry) => (
-                    <ResultRow
-                      key={entry.id}
-                      entry={entry}
-                      selected={selected}
-                      rx={rxLabel(slotKey, entry)}
-                      onPick={() => handlePick(entry.id)}
-                    />
-                  ))}
+              </div>
+            ) : (
+              <div
+                role="listbox"
+                aria-label={t`Search results`}
+                className="flex flex-col gap-2.5 px-5 py-5 pb-6 sm:px-6"
+              >
+                {filteredSorted.map((entry) => (
+                  <ResultRow
+                    key={entry.id}
+                    entry={entry}
+                    selected={selected}
+                    rx={rxLabel(slotKey, entry, facePrescriptionCtx)}
+                    onPick={() => handlePick(entry.id)}
+                  />
+                ))}
                 </div>
               )}
             </div>

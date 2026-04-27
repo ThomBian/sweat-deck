@@ -8,6 +8,8 @@ import { tExercise } from '@/i18n/exercises';
 import { SetupOptionButton } from '@/components/setup/SetupOptionButton';
 import { Button } from '@/components/ui/button';
 import { ExerciseSearchSheet } from '@/components/review/ExerciseSearchSheet';
+import type { FaceRank } from '@/domain/card';
+import { faceFreePickPrescription } from '@/domain/exerciseDb';
 import type { PlanSlot } from '@/domain/plan';
 import type { ExerciseId } from '@/domain/exercise';
 import type { SetupConfig } from '@/domain/config';
@@ -49,9 +51,22 @@ export function ReviewCard({ config, slot, onPick }: Props) {
   const glyph = suitMatch ? SUIT_GLYPH[suitMatch[1]!] : faceMatch?.[1] ?? '';
   const suitColor = suitMatch ? SUIT_COLOR[suitMatch[1]!] : undefined;
   const hasAlts = slot.options.length > 1;
-  const selectedOpt =
-    slot.options.find((o) => o.id === slot.selected) ??
-    ({ ...slot.defaultExercise, id: slot.selected } as PlanSlot['options'][number]);
+  const selectedOpt = (() => {
+    const fromOptions = slot.options.find((o) => o.id === slot.selected);
+    if (fromOptions) return fromOptions;
+    const face = slot.key.match(/^face:(.+)$/);
+    if (face) {
+      const rank = face[1] as FaceRank;
+      const d = slot.defaultExercise;
+      const defaultSrc: { reps?: number; durationSec?: number; distanceM?: number } = {};
+      if (d.reps !== undefined) defaultSrc.reps = d.reps;
+      if (d.durationSec !== undefined) defaultSrc.durationSec = d.durationSec;
+      if (d.distanceM !== undefined) defaultSrc.distanceM = d.distanceM;
+      const rx = faceFreePickPrescription(slot.selected, defaultSrc, rank);
+      return { id: slot.selected, ...rx } as PlanSlot['options'][number];
+    }
+    return { ...slot.defaultExercise, id: slot.selected } as PlanSlot['options'][number];
+  })();
   const selectedName = tExercise(slot.selected as ExerciseId);
   const lockedLabel = t`${selectedName} — no alternatives to swap`;
   const altPanelId = `review-alts-${slot.key.replaceAll(':', '-')}`;
@@ -193,6 +208,18 @@ export function ReviewCard({ config, slot, onPick }: Props) {
         slotKey={slot.key}
         config={config}
         selected={slot.selected}
+        {...(slot.key.startsWith('face:')
+          ? (() => {
+              const d = slot.defaultExercise;
+              const defaultSrc: { reps?: number; durationSec?: number; distanceM?: number } = {};
+              if (d.reps !== undefined) defaultSrc.reps = d.reps;
+              if (d.durationSec !== undefined) defaultSrc.durationSec = d.durationSec;
+              if (d.distanceM !== undefined) defaultSrc.distanceM = d.distanceM;
+              return {
+                facePrescriptionCtx: { rank: slot.key.slice(5) as FaceRank, defaultSrc },
+              };
+            })()
+          : {})}
         onPick={(id) => {
           onPick(id);
           setOpen(false);

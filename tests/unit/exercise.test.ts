@@ -91,6 +91,18 @@ describe('resolve with overrides', () => {
     expect(ex.durationSec).toBeUndefined();
   });
 
+  it('face free-pick movement never inherits distance from a cardio king default', () => {
+    const overrides: PlanOverrides = { 'face:K': 'pullups' };
+    const ex = resolve({
+      card: { type: 'face', suit: 'clubs', rank: 'K' },
+      config: { ...baseConfig, cardio: true },
+      overrides,
+    });
+    expect(ex.id).toBe('pullups');
+    expect(ex.reps).toBe(20);
+    expect(ex.distanceM).toBeUndefined();
+  });
+
   it('ignores overrides for aces', () => {
     const overrides: PlanOverrides = { 'suit:hearts': 'pike-pushups' };
     const ex = resolve({

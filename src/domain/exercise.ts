@@ -1,5 +1,6 @@
 import type { Card } from './card';
 import type { SetupConfig } from './config';
+import { faceFreePickPrescription } from './exerciseDb';
 import { NUMBER_MOVEMENTS, FACE_CHALLENGES, FACE_CHALLENGES_CARDIO } from './mappings';
 import type { MovementId, FaceChallengeId } from './mappings';
 import type { PlanOverrides } from './plan';
@@ -46,10 +47,15 @@ export const resolve = ({ card, config, overrides }: ResolveArgs): Exercise => {
         if (distanceM !== undefined) ex.distanceM = distanceM;
         return ex;
       }
+      const defaultSrc: { reps?: number; durationSec?: number; distanceM?: number } = {};
+      if (src.reps !== undefined) defaultSrc.reps = src.reps;
+      if (src.durationSec !== undefined) defaultSrc.durationSec = src.durationSec;
+      if (src.distanceM !== undefined) defaultSrc.distanceM = src.distanceM;
+      const rx = faceFreePickPrescription(ov as ExerciseId, defaultSrc, card.rank);
       const ex: Exercise = { id: ov as ExerciseId };
-      if (src.reps !== undefined) ex.reps = src.reps;
-      if (src.durationSec !== undefined) ex.durationSec = src.durationSec;
-      if (src.distanceM !== undefined) ex.distanceM = src.distanceM;
+      if (rx.reps !== undefined) ex.reps = rx.reps;
+      if (rx.durationSec !== undefined) ex.durationSec = rx.durationSec;
+      if (rx.distanceM !== undefined) ex.distanceM = rx.distanceM;
       return ex;
     }
     return { ...srcRest, id: src.id as ExerciseId };
