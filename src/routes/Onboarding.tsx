@@ -6,7 +6,6 @@ import { Trans } from '@lingui/react/macro';
 import { ChevronDown } from 'lucide-react';
 import { useHasOnboarded } from '@/hooks/useHasOnboarded';
 import { Button } from '@/components/ui/button';
-import { DeckGlyphPulse } from '@/components/DeckGlyphPulse';
 import { DURATION, EASE_OUT } from '@/lib/motion';
 import { MAIN_PAD, SHELL_ONBOARD } from '@/lib/layout';
 
@@ -108,10 +107,6 @@ export default function Onboarding() {
         initial="hidden"
         animate="show"
       >
-        <motion.div variants={block}>
-          <DeckGlyphPulse className="mb-5 sm:mb-6" />
-        </motion.div>
-
         <motion.p variants={block} className="ui-kicker tracking-[0.18em]">
           {replay ? <Trans>Quick refresher</Trans> : <Trans>How it works</Trans>}
         </motion.p>

@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { t } from '@lingui/core/macro';
 import { useHasOnboarded } from '@/hooks/useHasOnboarded';
-import { DeckGlyphPulse } from '@/components/DeckGlyphPulse';
 import { MAIN_PAD } from '@/lib/layout';
 
 export default function Index() {
@@ -18,11 +17,10 @@ export default function Index() {
     return (
       <main
         id="main-content"
-        className={`flex min-h-dvh flex-col items-center justify-center gap-3 ${MAIN_PAD}`}
+        className={`flex min-h-dvh flex-col items-center justify-center ${MAIN_PAD}`}
         role="status"
         aria-live="polite"
       >
-        <DeckGlyphPulse />
         <span className="sr-only">{t`Loading`}</span>
       </main>
     );

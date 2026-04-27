@@ -7,7 +7,6 @@ import { usePersistedConfig } from '@/hooks/usePersistedConfig';
 import { saveLastConfig } from '@/store/db';
 import { DEFAULT_CONFIG, type SetupConfig } from '@/domain/config';
 import { Button } from '@/components/ui/button';
-import { DeckGlyphPulse } from '@/components/DeckGlyphPulse';
 import { DifficultyStep } from '@/components/setup/DifficultyStep';
 import { EquipmentStep } from '@/components/setup/EquipmentStep';
 import { ThemeStep } from '@/components/setup/ThemeStep';
@@ -92,7 +91,6 @@ export default function SetupWizard({ onLeaveToLanding, initialConfig }: Props) 
   if (!loaded) {
     return (
       <div className="flex min-h-0 min-w-0 flex-1 flex-col items-center justify-center gap-4 px-1 py-12" role="status">
-        <DeckGlyphPulse />
         <p className="max-w-md text-center text-sm leading-relaxed break-words text-muted-foreground">
           {loadingLine}
         </p>

@@ -7,7 +7,6 @@ import { HelpCircle } from 'lucide-react';
 import type { SetupConfig } from '@/domain/config';
 import SetupWizard from '@/components/SetupWizard';
 import { Button } from '@/components/ui/button';
-import { DeckGlyphPulse } from '@/components/DeckGlyphPulse';
 import { LocaleToggle } from '@/components/LocaleToggle';
 import { DURATION, EASE_OUT } from '@/lib/motion';
 import { getLandingVariants } from '@/lib/landingMotion';
@@ -67,9 +66,6 @@ export default function Setup() {
 
           <div className="flex min-h-0 flex-1 flex-col justify-center py-6 sm:py-10 md:py-12">
             <div className="min-w-0 text-left">
-              <motion.div variants={landingV.item} className="mb-6 md:mb-8">
-                <DeckGlyphPulse />
-              </motion.div>
               <motion.h1
                 variants={landingV.item}
                 className="[overflow-wrap:anywhere] text-balance break-words md:tracking-tight"
