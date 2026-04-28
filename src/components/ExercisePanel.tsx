@@ -113,7 +113,12 @@ const lastTwoExercises = ({
   for (let i = drawn.length - 2; i >= 0 && picked.length < 2; i--) {
     const card = drawn[i]!;
     if (card.type !== 'number' && card.type !== 'face') continue;
-    picked.push({ card, exercise: resolve({ card, config, overrides }) });
+    picked.push({
+      card,
+      exercise: resolve(
+        overrides !== undefined ? { card, config, overrides } : { card, config },
+      ),
+    });
   }
   if (picked.length < 2) return null;
   return [picked[1]!, picked[0]!];
