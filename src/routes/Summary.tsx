@@ -1,6 +1,9 @@
+import { Fragment, useEffect, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Trans } from '@lingui/react/macro';
+import { SaveDeckSheet } from '@/components/SaveDeckSheet';
+import { listSavedDecks } from '@/store/db';
 import { useGameStore } from '@/store/gameStore';
 import { Button } from '@/components/ui/button';
 import { DURATION, EASE_OUT } from '@/lib/motion';
@@ -19,7 +22,21 @@ export default function Summary() {
   const endReason = useGameStore((s) => s.endReason);
   const completedDeck = useGameStore((s) => s.completedDeck);
   const reset = useGameStore((s) => s.reset);
+  const overrides = useGameStore((s) => s.overrides);
+  const savedDeckId = useGameStore((s) => s.savedDeckId);
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const [savedDeckName, setSavedDeckName] = useState<string | undefined>(undefined);
   const reduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (savedDeckId == null) {
+      setSavedDeckName(undefined);
+      return;
+    }
+    void listSavedDecks().then((rows) => {
+      setSavedDeckName(rows.find((r) => r.id === savedDeckId)?.name);
+    });
+  }, [savedDeckId]);
   const limit = getLimitSecFromConfig(config);
   const endedInOvertime = limit != null && elapsedSec > limit;
   const kudo = tSummaryKudoFor({
@@ -34,6 +51,7 @@ export default function Summary() {
   const statY = reduceMotion ? 0 : 6;
 
   return (
+    <Fragment>
     <main
       id="main-content"
       className={`flex min-h-dvh flex-col items-center justify-center gap-8 ${SHELL_SUMMARY} ${MAIN_PAD}`}
@@ -93,6 +111,21 @@ export default function Summary() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
+        transition={{ duration: tMotion, delay: reduceMotion ? 0 : 0.18, ease: EASE_OUT }}
+        className="w-full max-w-sm sm:w-auto"
+      >
+        <Button
+          type="button"
+          variant="outline"
+          className="w-full min-h-11 sm:w-auto"
+          onClick={() => setSheetOpen(true)}
+        >
+          {savedDeckId != null ? <Trans>Update saved deck</Trans> : <Trans>Save deck</Trans>}
+        </Button>
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
         transition={{ duration: tMotion, delay: reduceMotion ? 0 : 0.2, ease: EASE_OUT }}
       >
         <motion.div
@@ -112,5 +145,14 @@ export default function Summary() {
         </motion.div>
       </motion.div>
     </main>
+    <SaveDeckSheet
+      open={sheetOpen}
+      onClose={() => setSheetOpen(false)}
+      config={config}
+      overrides={overrides}
+      {...(savedDeckId != null ? { savedDeckId } : {})}
+      {...(savedDeckName != null ? { initialName: savedDeckName } : {})}
+    />
+    </Fragment>
   );
 }

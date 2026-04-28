@@ -159,12 +159,17 @@ msgstr "Assign exercise"
 
 #: src/components/SetupWizard.tsx
 #: src/routes/DeckBuilder.tsx
+#: src/routes/SavedDecks.tsx
 msgid "Back"
 msgstr "Back"
 
 #: src/i18n/exercises.ts
 msgid "Back Squats"
 msgstr "Back Squats"
+
+#: src/routes/SavedDecks.tsx
+msgid "Back to setup"
+msgstr "Back to setup"
 
 #: src/i18n/exercises.ts
 msgid "Barbell Curls"
@@ -247,6 +252,7 @@ msgid "Calf Raises"
 msgstr "Calf Raises"
 
 #: src/components/SaveDeckSheet.tsx
+#: src/routes/SavedDecks.tsx
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -302,6 +308,10 @@ msgstr "Clubs"
 msgid "Combine the last 2 exercises — 10 reps each"
 msgstr "Combine the last 2 exercises — 10 reps each"
 
+#: src/routes/SavedDecks.tsx
+msgid "Confirm delete"
+msgstr "Confirm delete"
+
 #: src/routes/Setup.tsx
 #~ msgid "Continue"
 #~ msgstr "Continue"
@@ -350,6 +360,11 @@ msgstr "Decrease"
 #: src/routes/Setup.tsx
 #~ msgid "Defaults are tuned for a quick start—change anything in a tap."
 #~ msgstr "Defaults are tuned for a quick start—change anything in a tap."
+
+#. placeholder {0}: deck.name
+#: src/routes/SavedDecks.tsx
+msgid "Delete {0}"
+msgstr "Delete {0}"
 
 #: src/i18n/exercises.ts
 msgid "Devil Press"
@@ -759,6 +774,10 @@ msgstr "No limit"
 #~ msgid "No program builder. Just five choices, then the cards."
 #~ msgstr "No program builder. Just five choices, then the cards."
 
+#: src/routes/SavedDecks.tsx
+msgid "No saved decks yet. Finish a workout and save your deck to replay it."
+msgstr "No saved decks yet. Finish a workout and save your deck to replay it."
+
 #: src/i18n/exercises.ts
 msgid "Nordic Curls"
 msgstr "Nordic Curls"
@@ -802,6 +821,10 @@ msgstr "Pause"
 #: src/routes/Play.tsx
 msgid "Paused"
 msgstr "Paused"
+
+#: src/routes/Setup.tsx
+msgid "Pick a saved deck and go."
+msgstr "Pick a saved deck and go."
 
 #: src/components/deck/ExercisePickerSheet.tsx
 msgid "Pick an exercise for this card."
@@ -876,6 +899,10 @@ msgid "Renegade Rows"
 msgstr "Renegade Rows"
 
 #: src/routes/Setup.tsx
+msgid "Replay"
+msgstr "Replay"
+
+#: src/routes/Setup.tsx
 msgid "Replay tutorial"
 msgstr "Replay tutorial"
 
@@ -930,8 +957,13 @@ msgstr "Save"
 
 #: src/components/SaveDeckSheet.tsx
 #: src/routes/DeckBuilder.tsx
+#: src/routes/Summary.tsx
 msgid "Save deck"
 msgstr "Save deck"
+
+#: src/routes/SavedDecks.tsx
+msgid "Saved decks"
+msgstr "Saved decks"
 
 #: src/routes/Onboarding.tsx
 msgid "Saving…"
@@ -1201,6 +1233,7 @@ msgstr "Update"
 
 #: src/components/SaveDeckSheet.tsx
 #: src/routes/DeckBuilder.tsx
+#: src/routes/Summary.tsx
 msgid "Update saved deck"
 msgstr "Update saved deck"
 
