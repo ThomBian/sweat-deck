@@ -97,16 +97,16 @@ export default function Summary() {
             </Trans>
           </p>
 
-          <div className="mt-4 grid w-full max-w-md grid-cols-2 gap-3 sm:gap-3.5">
+          <div className="mt-4 flex w-full max-w-md flex-col gap-3 sm:gap-3.5">
             <Button
               type="button"
               variant="outline"
-              className="min-h-11 min-w-0 shrink touch-manipulation"
+              className="min-h-11 w-full min-w-0 shrink touch-manipulation"
               onClick={() => setSheetOpen(true)}
             >
               <span className="truncate">{savedDeckId != null ? <Trans>Update saved deck</Trans> : <Trans>Save deck</Trans>}</span>
             </Button>
-            <Button type="button" className="min-h-11 min-w-0 shrink touch-manipulation" onClick={finish}>
+            <Button type="button" className="min-h-11 w-full min-w-0 shrink touch-manipulation" onClick={finish}>
               <span className="truncate">
                 <Trans>Finish</Trans>
               </span>

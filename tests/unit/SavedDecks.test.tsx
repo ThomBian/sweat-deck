@@ -40,7 +40,7 @@ beforeEach(async () => {
 describe('SavedDecks route', () => {
   it('renders empty state when no decks', async () => {
     render(wrap(<SavedDecks />));
-    expect(await screen.findByText(/No saved decks yet/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Save a deck from the finish screen/i)).toBeInTheDocument();
   });
 
   it('renders rows newest first with name', async () => {
@@ -61,7 +61,7 @@ describe('SavedDecks route', () => {
     });
     const user = userEvent.setup();
     render(wrap(<SavedDecks />));
-    await user.click(await screen.findByRole('button', { name: 'Push Day', exact: true }));
+    await user.click(await screen.findByRole('button', { name: 'Open Push Day' }));
     await waitFor(() => expect(useGameStore.getState().savedDeckId).toBe(id));
     expect(mockNavigate).toHaveBeenCalledWith('/deck', {
       state: {
@@ -80,6 +80,6 @@ describe('SavedDecks route', () => {
     render(wrap(<SavedDecks />));
     await user.click(await screen.findByRole('button', { name: /Delete Tmp/ }));
     await user.click(await screen.findByRole('button', { name: 'Confirm delete' }));
-    expect(await screen.findByText(/No saved decks yet/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Save a deck from the finish screen/i)).toBeInTheDocument();
   });
 });

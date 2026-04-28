@@ -170,11 +170,12 @@ function DeckBuilderInner({
               ))}
             </div>
 
-            <div className="mt-2 border-t border-border/40 pt-5 sm:pt-6">
+            <div className="mt-2 flex flex-col items-center gap-3 border-t border-border/40 pt-5 text-center sm:gap-3.5 sm:pt-6">
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: reduceMotion ? 0.1 : DURATION.fast, ease: EASE_OUT }}
+                className="w-full sm:w-auto"
               >
                 <Button
                   type="button"
@@ -195,64 +196,64 @@ function DeckBuilderInner({
                   )}
                 </Button>
               </motion.div>
+              {hasOverrides ? (
+                <motion.div
+                  className="flex w-full min-w-0 justify-center"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: reduceMotion ? 0.1 : DURATION.fast, ease: EASE_OUT }}
+                  whileTap={{ scale: reduceMotion || footerLocked ? 1 : 0.98 }}
+                >
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    className="h-auto min-h-10 w-full touch-manipulation justify-center px-2 text-center text-muted-foreground hover:text-foreground sm:w-auto"
+                    disabled={footerLocked}
+                    onClick={() => resetOverrides()}
+                  >
+                    <span className="text-pretty break-words text-sm font-normal">
+                      <Trans>Reset swaps</Trans>
+                    </span>
+                  </Button>
+                </motion.div>
+              ) : null}
             </div>
           </motion.div>
         </div>
 
         <footer className="fixed bottom-0 left-0 right-0 z-50 border-t border-border/40 bg-background/90 px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] backdrop-blur-md sm:px-6">
-          <div className="mx-auto flex min-w-0 max-w-lg flex-col gap-3">
-            {hasOverrides ? (
-              <motion.div
-                className="flex min-w-0"
-                whileTap={{ scale: reduceMotion || footerLocked ? 1 : 0.98 }}
-                transition={{ duration: DURATION.fast, ease: EASE_OUT }}
+          <div className="mx-auto flex min-w-0 max-w-lg items-center justify-between gap-3">
+            <motion.div
+              className="min-w-0 shrink"
+              whileTap={{ scale: reduceMotion || footerLocked ? 1 : 0.98 }}
+              transition={{ duration: DURATION.fast, ease: EASE_OUT }}
+            >
+              <Button
+                type="button"
+                variant="outline"
+                className="min-h-11 touch-manipulation"
+                disabled={footerLocked}
+                onClick={handleBack}
               >
-                <Button
-                  type="button"
-                  variant="ghost"
-                  className="h-auto min-h-10 touch-manipulation px-2 text-left text-muted-foreground hover:text-foreground"
-                  disabled={footerLocked}
-                  onClick={() => resetOverrides()}
-                >
-                  <span className="text-pretty break-words text-sm font-normal">
-                    <Trans>Reset swaps</Trans>
-                  </span>
-                </Button>
-              </motion.div>
-            ) : null}
-            <div className="flex min-w-0 items-center justify-between gap-3">
-              <motion.div
-                className="min-w-0 shrink"
-                whileTap={{ scale: reduceMotion || footerLocked ? 1 : 0.98 }}
-                transition={{ duration: DURATION.fast, ease: EASE_OUT }}
-              >
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="min-h-11 touch-manipulation"
-                  disabled={footerLocked}
-                  onClick={handleBack}
-                >
-                  <Trans>Back</Trans>
-                </Button>
-              </motion.div>
+                <Trans>Back</Trans>
+              </Button>
+            </motion.div>
 
-              <motion.div
-                className="min-w-0 shrink"
-                whileHover={{ scale: reduceMotion || footerLocked || !isReady ? 1 : 1.02 }}
-                whileTap={{ scale: reduceMotion || footerLocked || !isReady ? 1 : 0.98 }}
-                transition={{ duration: DURATION.fast, ease: EASE_OUT }}
+            <motion.div
+              className="min-w-0 shrink"
+              whileHover={{ scale: reduceMotion || footerLocked || !isReady ? 1 : 1.02 }}
+              whileTap={{ scale: reduceMotion || footerLocked || !isReady ? 1 : 0.98 }}
+              transition={{ duration: DURATION.fast, ease: EASE_OUT }}
+            >
+              <Button
+                type="button"
+                className="min-h-11 touch-manipulation"
+                disabled={footerLocked || !isReady}
+                onClick={() => void handleStart()}
               >
-                <Button
-                  type="button"
-                  className="min-h-11 touch-manipulation"
-                  disabled={footerLocked || !isReady}
-                  onClick={() => void handleStart()}
-                >
-                  <Trans>Start workout</Trans>
-                </Button>
-              </motion.div>
-            </div>
+                <Trans>Start workout</Trans>
+              </Button>
+            </motion.div>
           </div>
         </footer>
       </main>

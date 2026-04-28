@@ -254,7 +254,7 @@ msgstr "Élévations mollets"
 #: src/components/SaveDeckSheet.tsx
 #: src/routes/SavedDecks.tsx
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #: src/components/SetupWizard.tsx
 msgid "Cardio mode?"
@@ -310,7 +310,7 @@ msgstr "Combinez les 2 derniers exercices — 10 répétitions chacun"
 
 #: src/routes/SavedDecks.tsx
 msgid "Confirm delete"
-msgstr ""
+msgstr "Confirmer la suppression"
 
 #: src/routes/Setup.tsx
 #~ msgid "Continue"
@@ -343,7 +343,7 @@ msgstr "Mouvement actuel : <0>{0}</0>"
 
 #: src/components/SaveDeckSheet.tsx
 msgid "Deck name"
-msgstr ""
+msgstr "Nom du paquet"
 
 #: src/i18n/exercises.ts
 msgid "Decline Bench Press"
@@ -364,7 +364,7 @@ msgstr "Diminuer"
 #. placeholder {0}: deck.name
 #: src/routes/SavedDecks.tsx
 msgid "Delete {0}"
-msgstr ""
+msgstr "Supprimer {0}"
 
 #: src/i18n/exercises.ts
 msgid "Devil Press"
@@ -522,6 +522,10 @@ msgstr "L’équipement change les mouvements proposés pour chaque couleur."
 #: src/i18n/exercises.ts
 msgid "Glute Bridges"
 msgstr "Pont"
+
+#: src/routes/SavedDecks.tsx
+#~ msgid "Go to setup"
+#~ msgstr "Aller à l’accueil"
 
 #: src/routes/Setup.tsx
 msgid "Go!"
@@ -681,9 +685,10 @@ msgstr "Configurez votre paquet pas à pas — ou passez en manuel et attribuez 
 
 #: src/routes/Summary.tsx
 msgid "Liked the workout? <0>Save it</0> — replays later with one tap."
-msgstr ""
+msgstr "Ça vous a plu ? <0>Enregistrer le paquet</0> — rejouez plus tard en un tap."
 
 #: src/routes/Index.tsx
+#: src/routes/SavedDecks.tsx
 msgid "Loading"
 msgstr "Chargement"
 
@@ -753,7 +758,7 @@ msgstr "Souvent : 9–10 · Rares : 2"
 
 #: src/components/SaveDeckSheet.tsx
 msgid "Name your deck so you can find it when you replay."
-msgstr ""
+msgstr "Nommez votre paquet pour le retrouver lorsque vous le rejouerez."
 
 #: src/components/SetupWizard.tsx
 msgid "Next"
@@ -784,12 +789,16 @@ msgstr "Sans limite"
 #~ msgstr "Pas de constructeur de programme. Cinq choix, puis les cartes."
 
 #: src/routes/SavedDecks.tsx
-msgid "No saved decks yet. Finish a workout and save your deck to replay it."
-msgstr ""
+#~ msgid "No saved decks yet. Finish a workout and save your deck to replay it."
+#~ msgstr "Pas encore de paquets enregistrés. Terminez une séance et enregistrez votre paquet pour le rejouer."
 
 #: src/i18n/exercises.ts
 msgid "Nordic Curls"
 msgstr "Nordic hamstring curl"
+
+#: src/routes/SavedDecks.tsx
+#~ msgid "Nothing saved yet"
+#~ msgstr "Rien pour l’instant"
 
 #: src/components/deck/ExercisePickerSheet.tsx
 msgid "Number card"
@@ -806,6 +815,11 @@ msgstr "Désactivé"
 #: src/components/setup/CardioStep.tsx
 msgid "On"
 msgstr "Activé"
+
+#. placeholder {0}: deck.name
+#: src/routes/SavedDecks.tsx
+msgid "Open {0}"
+msgstr "Ouvrir {0}"
 
 #: src/i18n/exercises.ts
 msgid "Overhead Press"
@@ -833,7 +847,7 @@ msgstr "En pause"
 
 #: src/routes/Setup.tsx
 msgid "Pick a saved deck and go."
-msgstr ""
+msgstr "Choisissez un paquet enregistré et c’est parti."
 
 #: src/components/deck/ExercisePickerSheet.tsx
 msgid "Pick an exercise for this card."
@@ -909,7 +923,11 @@ msgstr "Tirage renegade"
 
 #: src/routes/Setup.tsx
 msgid "Replay"
-msgstr ""
+msgstr "Rejouer"
+
+#: src/routes/SavedDecks.tsx
+#~ msgid "Replay library"
+#~ msgstr "Paquets rejouables"
 
 #: src/routes/Setup.tsx
 msgid "Replay tutorial"
@@ -917,7 +935,7 @@ msgstr "Revoir le tutoriel"
 
 #: src/routes/DeckBuilder.tsx
 msgid "Reset swaps"
-msgstr "Réinitialiser les échanges"
+msgstr "Réinitialiser"
 
 #: src/routes/Summary.tsx
 #~ msgid "Respect—deck served"
@@ -962,21 +980,25 @@ msgstr "Même principe : le paquet mène l’entraînement—ouvrez la section c
 
 #: src/components/SaveDeckSheet.tsx
 msgid "Save"
-msgstr ""
+msgstr "Enregistrer"
+
+#: src/routes/SavedDecks.tsx
+msgid "Save a deck from the finish screen, deck review, or builder—then replay it from Setup’s Replay tab."
+msgstr "Enregistrez depuis la fin de séance, la vérif ou le créateur du paquet—puis rejouez depuis l’accueil (Rejouer)."
 
 #: src/components/SaveDeckSheet.tsx
 #: src/routes/DeckBuilder.tsx
 #: src/routes/Summary.tsx
 msgid "Save deck"
-msgstr ""
+msgstr "Enregistrer le paquet"
 
 #: src/routes/DeckBuilder.tsx
 msgid "Saved"
-msgstr ""
+msgstr "Enregistré"
 
 #: src/routes/SavedDecks.tsx
 msgid "Saved decks"
-msgstr ""
+msgstr "Paquets enregistrés"
 
 #: src/routes/Onboarding.tsx
 msgid "Saving…"
@@ -1160,6 +1182,10 @@ msgstr "Touchez une carte pour choisir ou modifier chaque exercice. Sur les J, Q
 #~ msgid "Tap a card to swap or search the full list."
 #~ msgstr "Touchez une carte pour échanger ou parcourir toute la liste."
 
+#: src/routes/SavedDecks.tsx
+#~ msgid "Tap a deck to open your lineup and continue to your workout."
+#~ msgstr "Touchez un paquet pour ouvrir votre série et passer à l’entraînement."
+
 #: src/components/ExercisePanel.tsx
 msgid "Tap the stack to draw your first card."
 msgstr "Touchez le paquet pour tirer votre première carte."
@@ -1228,6 +1254,10 @@ msgstr "Limite de temps ?"
 #~ msgid "Time remaining in session"
 #~ msgstr "Temps restant sur la séance"
 
+#: src/routes/SavedDecks.tsx
+#~ msgid "Tip: you can also save while building your deck—same button."
+#~ msgstr "Astuce : même bouton depuis la préparation du paquet."
+
 #: src/i18n/exercises.ts
 msgid "Tricep Dips"
 msgstr "Dips pour triceps"
@@ -1242,13 +1272,13 @@ msgstr "Réessayer"
 
 #: src/components/SaveDeckSheet.tsx
 msgid "Update"
-msgstr ""
+msgstr "Mettre à jour"
 
 #: src/components/SaveDeckSheet.tsx
 #: src/routes/DeckBuilder.tsx
 #: src/routes/Summary.tsx
 msgid "Update saved deck"
-msgstr ""
+msgstr "Mettre à jour le paquet"
 
 #: src/i18n/labels.ts
 msgid "Upper"
@@ -1305,6 +1335,10 @@ msgstr "Quel équipement ?"
 #: src/components/SetupWizard.tsx
 #~ msgid "When this is on, face cards can pull from your cardio pick."
 #~ msgstr "Si c’est activé, les figures peuvent piocher dans votre choix cardio."
+
+#: src/routes/SavedDecks.tsx
+#~ msgid "When you finish a session or review your deck, tap Save deck and name it. Your lineup stays on this device—then open Setup, choose Replay, and pick it anytime."
+#~ msgstr "En fin de séance ou depuis la vérif du paquet, touchez Enregistrer le paquet et donnez un nom à votre série. Elle reste sur cet appareil : ouvrez l’accueil, passez dans Rejouer, puis choisissez—quand vous voulez."
 
 #: src/routes/Onboarding.tsx
 msgid "When you tap draw, the deck does the programming."

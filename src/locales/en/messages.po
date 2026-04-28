@@ -523,6 +523,10 @@ msgstr "Gear changes which moves you see for each suit."
 msgid "Glute Bridges"
 msgstr "Glute Bridges"
 
+#: src/routes/SavedDecks.tsx
+#~ msgid "Go to setup"
+#~ msgstr "Go to setup"
+
 #: src/routes/Setup.tsx
 msgid "Go!"
 msgstr "Go!"
@@ -684,6 +688,7 @@ msgid "Liked the workout? <0>Save it</0> — replays later with one tap."
 msgstr "Liked the workout? <0>Save it</0> — replays later with one tap."
 
 #: src/routes/Index.tsx
+#: src/routes/SavedDecks.tsx
 msgid "Loading"
 msgstr "Loading"
 
@@ -784,12 +789,16 @@ msgstr "No limit"
 #~ msgstr "No program builder. Just five choices, then the cards."
 
 #: src/routes/SavedDecks.tsx
-msgid "No saved decks yet. Finish a workout and save your deck to replay it."
-msgstr "No saved decks yet. Finish a workout and save your deck to replay it."
+#~ msgid "No saved decks yet. Finish a workout and save your deck to replay it."
+#~ msgstr "No saved decks yet. Finish a workout and save your deck to replay it."
 
 #: src/i18n/exercises.ts
 msgid "Nordic Curls"
 msgstr "Nordic Curls"
+
+#: src/routes/SavedDecks.tsx
+#~ msgid "Nothing saved yet"
+#~ msgstr "Nothing saved yet"
 
 #: src/components/deck/ExercisePickerSheet.tsx
 msgid "Number card"
@@ -806,6 +815,11 @@ msgstr "Off"
 #: src/components/setup/CardioStep.tsx
 msgid "On"
 msgstr "On"
+
+#. placeholder {0}: deck.name
+#: src/routes/SavedDecks.tsx
+msgid "Open {0}"
+msgstr "Open {0}"
 
 #: src/i18n/exercises.ts
 msgid "Overhead Press"
@@ -911,6 +925,10 @@ msgstr "Renegade Rows"
 msgid "Replay"
 msgstr "Replay"
 
+#: src/routes/SavedDecks.tsx
+#~ msgid "Replay library"
+#~ msgstr "Replay library"
+
 #: src/routes/Setup.tsx
 msgid "Replay tutorial"
 msgstr "Replay tutorial"
@@ -963,6 +981,10 @@ msgstr "Same deck-to-workout flow—open below for the full rules list when you 
 #: src/components/SaveDeckSheet.tsx
 msgid "Save"
 msgstr "Save"
+
+#: src/routes/SavedDecks.tsx
+msgid "Save a deck from the finish screen, deck review, or builder—then replay it from Setup’s Replay tab."
+msgstr "Save a deck from the finish screen, deck review, or builder—then replay it from Setup’s Replay tab."
 
 #: src/components/SaveDeckSheet.tsx
 #: src/routes/DeckBuilder.tsx
@@ -1160,6 +1182,10 @@ msgstr "Tap a card to pick or change each exercise. On J, Q, and K, adjust reps,
 #~ msgid "Tap a card to swap or search the full list."
 #~ msgstr "Tap a card to swap or search the full list."
 
+#: src/routes/SavedDecks.tsx
+#~ msgid "Tap a deck to open your lineup and continue to your workout."
+#~ msgstr "Tap a deck to open your lineup and continue to your workout."
+
 #: src/components/ExercisePanel.tsx
 msgid "Tap the stack to draw your first card."
 msgstr "Tap the stack to draw your first card."
@@ -1227,6 +1253,10 @@ msgstr "Time limit?"
 #: src/components/Timer.tsx
 #~ msgid "Time remaining in session"
 #~ msgstr "Time remaining in session"
+
+#: src/routes/SavedDecks.tsx
+#~ msgid "Tip: you can also save while building your deck—same button."
+#~ msgstr "Tip: you can also save while building your deck—same button."
 
 #: src/i18n/exercises.ts
 msgid "Tricep Dips"
@@ -1305,6 +1335,10 @@ msgstr "What equipment?"
 #: src/components/SetupWizard.tsx
 #~ msgid "When this is on, face cards can pull from your cardio pick."
 #~ msgstr "When this is on, face cards can pull from your cardio pick."
+
+#: src/routes/SavedDecks.tsx
+#~ msgid "When you finish a session or review your deck, tap Save deck and name it. Your lineup stays on this device—then open Setup, choose Replay, and pick it anytime."
+#~ msgstr "When you finish a session or review your deck, tap Save deck and name it. Your lineup stays on this device—then open Setup, choose Replay, and pick it anytime."
 
 #: src/routes/Onboarding.tsx
 msgid "When you tap draw, the deck does the programming."
