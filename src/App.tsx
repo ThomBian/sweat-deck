@@ -8,6 +8,7 @@ import DeckBuilder from './routes/DeckBuilder';
 import Play from './routes/Play';
 import Summary from './routes/Summary';
 import History from './routes/History';
+import SavedDecks from './routes/SavedDecks';
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
           <Route path="/" element={<Index />} />
           <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/setup" element={<Setup />} />
+          <Route path="/saved-decks" element={<SavedDecks />} />
           <Route path="/deck" element={<DeckBuilder />} />
           <Route path="/play" element={<Play />} />
           <Route path="/summary" element={<Summary />} />

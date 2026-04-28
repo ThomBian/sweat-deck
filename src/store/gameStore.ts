@@ -47,6 +47,7 @@ type GameState = {
   lastRestAtElapsedSec: number;
   rng: Rng;
   overrides: PlanOverrides;
+  savedDeckId: number | null;
 };
 
 type FinishOpts = { reason: EndReason; completedDeck: boolean };
@@ -67,6 +68,7 @@ type GameActions = {
   ) => void;
   clearOverride: (key: SlotKey) => void;
   resetOverrides: () => void;
+  setSavedDeckId: (id: number | null) => void;
 };
 
 const makeInitialState = (): GameState => ({
@@ -85,6 +87,7 @@ const makeInitialState = (): GameState => ({
   lastRestAtElapsedSec: 0,
   rng: createRng(Date.now()),
   overrides: {},
+  savedDeckId: null,
 });
 
 const exerciseFromCard = (
@@ -104,7 +107,7 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
   start: (config) => {
     if (!validateConfig(config)) return;
     void saveLastConfig(config);
-    const currentOverrides = get().overrides;
+    const { overrides: currentOverrides, savedDeckId: currentSavedDeckId } = get();
     set({
       ...makeInitialState(),
       config,
@@ -112,6 +115,7 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
       startedAt: Date.now(),
       rng: createRng(Date.now()),
       overrides: currentOverrides,
+      savedDeckId: currentSavedDeckId,
     });
   },
 
@@ -263,4 +267,6 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
     }),
 
   resetOverrides: () => set({ overrides: {} }),
+
+  setSavedDeckId: (id) => set({ savedDeckId: id }),
 }));

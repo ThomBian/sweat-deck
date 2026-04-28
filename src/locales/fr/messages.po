@@ -159,12 +159,17 @@ msgstr "Attribuer un exercice"
 
 #: src/components/SetupWizard.tsx
 #: src/routes/DeckBuilder.tsx
+#: src/routes/SavedDecks.tsx
 msgid "Back"
 msgstr "Retour"
 
 #: src/i18n/exercises.ts
 msgid "Back Squats"
 msgstr "Squats arrière"
+
+#: src/routes/SavedDecks.tsx
+#~ msgid "Back to setup"
+#~ msgstr ""
 
 #: src/i18n/exercises.ts
 msgid "Barbell Curls"
@@ -246,6 +251,11 @@ msgstr "Tirage horizontal"
 msgid "Calf Raises"
 msgstr "Élévations mollets"
 
+#: src/components/SaveDeckSheet.tsx
+#: src/routes/SavedDecks.tsx
+msgid "Cancel"
+msgstr ""
+
 #: src/components/SetupWizard.tsx
 msgid "Cardio mode?"
 msgstr "Mode Cardio ?"
@@ -298,6 +308,10 @@ msgstr "Trèfles"
 msgid "Combine the last 2 exercises — 10 reps each"
 msgstr "Combinez les 2 derniers exercices — 10 répétitions chacun"
 
+#: src/routes/SavedDecks.tsx
+msgid "Confirm delete"
+msgstr ""
+
 #: src/routes/Setup.tsx
 #~ msgid "Continue"
 #~ msgstr "Continuer"
@@ -327,6 +341,10 @@ msgstr "Mouvement actuel : <0>{0}</0>"
 #~ msgid "Deal the workout"
 #~ msgstr "Lancer l’entraînement"
 
+#: src/components/SaveDeckSheet.tsx
+msgid "Deck name"
+msgstr ""
+
 #: src/i18n/exercises.ts
 msgid "Decline Bench Press"
 msgstr "Développé couché décliné"
@@ -342,6 +360,11 @@ msgstr "Diminuer"
 #: src/routes/Setup.tsx
 #~ msgid "Defaults are tuned for a quick start—change anything in a tap."
 #~ msgstr "Des réglages par défaut faits pour démarrer vite — modifiez en un appui."
+
+#. placeholder {0}: deck.name
+#: src/routes/SavedDecks.tsx
+msgid "Delete {0}"
+msgstr ""
 
 #: src/i18n/exercises.ts
 msgid "Devil Press"
@@ -723,6 +746,10 @@ msgstr "Souvent : 8–10 · Rares : 2–3"
 msgid "Most: 9–10 · Rare: 2"
 msgstr "Souvent : 9–10 · Rares : 2"
 
+#: src/components/SaveDeckSheet.tsx
+msgid "Name your deck so you can find it when you replay."
+msgstr ""
+
 #: src/components/SetupWizard.tsx
 msgid "Next"
 msgstr "Suivant"
@@ -750,6 +777,10 @@ msgstr "Sans limite"
 #: src/routes/Setup.tsx
 #~ msgid "No program builder. Just five choices, then the cards."
 #~ msgstr "Pas de constructeur de programme. Cinq choix, puis les cartes."
+
+#: src/routes/SavedDecks.tsx
+msgid "No saved decks yet. Finish a workout and save your deck to replay it."
+msgstr ""
 
 #: src/i18n/exercises.ts
 msgid "Nordic Curls"
@@ -794,6 +825,10 @@ msgstr "Pause"
 #: src/routes/Play.tsx
 msgid "Paused"
 msgstr "En pause"
+
+#: src/routes/Setup.tsx
+msgid "Pick a saved deck and go."
+msgstr ""
 
 #: src/components/deck/ExercisePickerSheet.tsx
 msgid "Pick an exercise for this card."
@@ -868,6 +903,10 @@ msgid "Renegade Rows"
 msgstr "Tirage renegade"
 
 #: src/routes/Setup.tsx
+msgid "Replay"
+msgstr ""
+
+#: src/routes/Setup.tsx
 msgid "Replay tutorial"
 msgstr "Revoir le tutoriel"
 
@@ -915,6 +954,24 @@ msgstr "Rameur"
 #: src/routes/Onboarding.tsx
 msgid "Same deck-to-workout flow—open below for the full rules list when you need it."
 msgstr "Même principe : le paquet mène l’entraînement—ouvrez la section ci-dessous pour la liste complète des règles, quand vous en avez besoin."
+
+#: src/components/SaveDeckSheet.tsx
+msgid "Save"
+msgstr ""
+
+#: src/components/SaveDeckSheet.tsx
+#: src/routes/DeckBuilder.tsx
+#: src/routes/Summary.tsx
+msgid "Save deck"
+msgstr ""
+
+#: src/routes/DeckBuilder.tsx
+msgid "Saved"
+msgstr ""
+
+#: src/routes/SavedDecks.tsx
+msgid "Saved decks"
+msgstr ""
 
 #: src/routes/Onboarding.tsx
 msgid "Saving…"
@@ -1177,6 +1234,16 @@ msgstr "Barre aux triceps (poulie)"
 #: src/routes/Onboarding.tsx
 msgid "Try again"
 msgstr "Réessayer"
+
+#: src/components/SaveDeckSheet.tsx
+msgid "Update"
+msgstr ""
+
+#: src/components/SaveDeckSheet.tsx
+#: src/routes/DeckBuilder.tsx
+#: src/routes/Summary.tsx
+msgid "Update saved deck"
+msgstr ""
 
 #: src/i18n/labels.ts
 msgid "Upper"
