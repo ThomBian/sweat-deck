@@ -1,8 +1,8 @@
 # Double Up — show the last 2 cards
 
 **Date:** 2026-04-28
-**Scope:** UI only — `ExercisePanel` joker branch
-**Files touched:** 1 component, 1 test file
+**Scope:** UI (`ExercisePanel` joker branch) + draw-rule constraint (block jokers before draw 10)
+**Files touched:** `ExercisePanel.tsx`, `gameStore.ts` (draw rule), tests for both
 
 ## Problem
 
@@ -16,7 +16,7 @@ Surface the last two exercises directly in the panel so the user can read what t
 
 - No changes to other jokers (Combo Breaker, Sudden Death).
 - No changes to the top Deck row layout.
-- No changes to the game store, domain logic, or joker resolution.
+- No changes to joker *resolution* logic (`pickJokerEffect` unchanged).
 - No new component API.
 
 ## Design
@@ -55,9 +55,18 @@ resolve({ card, config, overrides })
 ```
 This is deterministic for non-joker cards (no RNG), so re-resolving on render is safe and stateless. `config` and `overrides` are read from `useGameStore`.
 
-### Constraint that removes the empty-state edge case
+### Draw-rule constraint (new) — block jokers before draw 10
 
-The game already prevents jokers from being drawn before draw 10 *(per product decision)*. Therefore when the Double Up branch fires, `drawn.length >= 11` and at least 2 prior cards are number/face (aces are blocked before draw 15). No fallback rendering is needed.
+To guarantee at least 2 prior real-exercise cards exist whenever Double Up fires, the draw logic must block jokers before draw 10. This mirrors the existing ace-blocking pattern in `gameStore.drawNext` (`mustBlockAce = drawnCount < 15`).
+
+**Implementation in `gameStore.drawNext`:**
+- After the initial `draw(...)` call, if `result.card.type === 'joker'` AND `drawnCount < 10`, attempt to swap it out — pick a non-joker card from the combined `[card, ...remaining]` pool, leaving the joker in the remaining deck.
+- Add a small helper `drawNonJoker({ remaining, difficulty, rng })` parallel to the existing `drawNonAce` in `src/domain/deck.ts`. Or generalize: a single `drawExcluding({ remaining, difficulty, rng, excludeTypes })` helper that both ace-block and joker-block paths call. Decide during planning.
+- If the pool contains *only* jokers (impossible in a real session before draw 10 — the deck has 52 non-joker cards out of 54), fall through and let the joker draw.
+
+**Result:** when the Double Up branch in `ExercisePanel` fires, `drawn.length >= 11`. Combined with the existing ace-block (no aces before draw 15), the prior 2 cards in history are always number/face — no empty-state, no ace-skip needed in the UI lookup.
+
+The UI lookup logic is therefore simplified: take the last 2 entries of `drawn` (excluding the joker just drawn), resolve each via `resolve(...)`, render. The "skip aces / skip earlier jokers" walk-back is no longer required for correctness, though keeping it as a defensive measure is cheap.
 
 ### `CardFace` sizing
 
@@ -69,17 +78,23 @@ The game already prevents jokers from being drawn before draw 10 *(per product d
 
 ## Files
 
-- **`src/components/ExercisePanel.tsx`** — replace lines 38–56 (the existing joker branch) with the new layout. Add a small inline helper (or a tiny utility) that returns the last two non-ace, non-joker cards from `drawn` and their resolved exercises.
+- **`src/store/gameStore.ts`** — `drawNext`: after the initial draw, swap jokers drawn before `drawnCount === 10` for a non-joker card from the same pool, mirroring the ace-block pattern.
+- **`src/domain/deck.ts`** — add `drawNonJoker` (or a generalized `drawExcluding`) helper.
+- **`src/components/ExercisePanel.tsx`** — replace lines 38–56 (the existing joker branch) with the new layout. Inline helper to take the last two cards from `drawn` and resolve them via `resolve(...)`.
 - **`src/components/ExercisePanel.test.tsx`** *(create if absent)* — see Testing.
+- **Tests for the draw rule** — extend the existing `tests/unit` deck/store tests to assert no joker appears before draw 10.
 
 ## Testing
 
-Unit tests with the game store seeded:
+**Draw rule (`gameStore` / `deck`):**
+1. With a seeded RNG that would otherwise draw a joker first, the first 10 draws contain no joker.
+2. After draw 10, jokers are eligible again.
+3. Existing ace-block behavior is unchanged.
 
+**ExercisePanel (UI):**
 1. Renders both mini cards with correct exercise names when Double Up is drawn after a sequence of number/face cards.
-2. Skips an intervening Ace: history `[6♥, A♣, 8♠, JOKER]` → minis show `6♥` (Push-ups) and `8♠` (Squats), not the Ace.
-3. Skips an earlier joker if one exists in history.
-4. Heading "Double Up" and the "10 reps each" line are present.
+2. Heading "Double Up" and the "10 reps each" line are present.
+3. The joker `CardFace` is **not** duplicated inside the panel (it lives in the Deck row only).
 
 ## Risks
 
