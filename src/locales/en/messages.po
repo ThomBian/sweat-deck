@@ -246,6 +246,10 @@ msgstr "Cable Rows"
 msgid "Calf Raises"
 msgstr "Calf Raises"
 
+#: src/components/SaveDeckSheet.tsx
+msgid "Cancel"
+msgstr "Cancel"
+
 #: src/components/SetupWizard.tsx
 msgid "Cardio mode?"
 msgstr "Cardio mode?"
@@ -326,6 +330,10 @@ msgstr "Current move: <0>{0}</0>"
 #: src/components/SetupWizard.tsx
 #~ msgid "Deal the workout"
 #~ msgstr "Deal the workout"
+
+#: src/components/SaveDeckSheet.tsx
+msgid "Deck name"
+msgstr "Deck name"
 
 #: src/i18n/exercises.ts
 msgid "Decline Bench Press"
@@ -916,6 +924,14 @@ msgstr "Row"
 msgid "Same deck-to-workout flow—open below for the full rules list when you need it."
 msgstr "Same deck-to-workout flow—open below for the full rules list when you need it."
 
+#: src/components/SaveDeckSheet.tsx
+msgid "Save"
+msgstr "Save"
+
+#: src/components/SaveDeckSheet.tsx
+msgid "Save deck"
+msgstr "Save deck"
+
 #: src/routes/Onboarding.tsx
 msgid "Saving…"
 msgstr "Saving…"
@@ -1177,6 +1193,14 @@ msgstr "Tricep Pushdown"
 #: src/routes/Onboarding.tsx
 msgid "Try again"
 msgstr "Try again"
+
+#: src/components/SaveDeckSheet.tsx
+msgid "Update"
+msgstr "Update"
+
+#: src/components/SaveDeckSheet.tsx
+msgid "Update saved deck"
+msgstr "Update saved deck"
 
 #: src/i18n/labels.ts
 msgid "Upper"

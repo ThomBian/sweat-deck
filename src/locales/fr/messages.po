@@ -246,6 +246,10 @@ msgstr "Tirage horizontal"
 msgid "Calf Raises"
 msgstr "Élévations mollets"
 
+#: src/components/SaveDeckSheet.tsx
+msgid "Cancel"
+msgstr ""
+
 #: src/components/SetupWizard.tsx
 msgid "Cardio mode?"
 msgstr "Mode Cardio ?"
@@ -326,6 +330,10 @@ msgstr "Mouvement actuel : <0>{0}</0>"
 #: src/components/SetupWizard.tsx
 #~ msgid "Deal the workout"
 #~ msgstr "Lancer l’entraînement"
+
+#: src/components/SaveDeckSheet.tsx
+msgid "Deck name"
+msgstr ""
 
 #: src/i18n/exercises.ts
 msgid "Decline Bench Press"
@@ -916,6 +924,14 @@ msgstr "Rameur"
 msgid "Same deck-to-workout flow—open below for the full rules list when you need it."
 msgstr "Même principe : le paquet mène l’entraînement—ouvrez la section ci-dessous pour la liste complète des règles, quand vous en avez besoin."
 
+#: src/components/SaveDeckSheet.tsx
+msgid "Save"
+msgstr ""
+
+#: src/components/SaveDeckSheet.tsx
+msgid "Save deck"
+msgstr ""
+
 #: src/routes/Onboarding.tsx
 msgid "Saving…"
 msgstr "Enregistrement…"
@@ -1177,6 +1193,14 @@ msgstr "Barre aux triceps (poulie)"
 #: src/routes/Onboarding.tsx
 msgid "Try again"
 msgstr "Réessayer"
+
+#: src/components/SaveDeckSheet.tsx
+msgid "Update"
+msgstr ""
+
+#: src/components/SaveDeckSheet.tsx
+msgid "Update saved deck"
+msgstr ""
 
 #: src/i18n/labels.ts
 msgid "Upper"
