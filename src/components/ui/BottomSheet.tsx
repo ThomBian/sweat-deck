@@ -21,7 +21,7 @@ type BottomSheetProps = {
  * Shared bottom sheet shell (drag handle, backdrop, dismiss physics) — matches {@link ExercisePickerSheet}.
  */
 export function BottomSheet({ open, onOpenChange, children }: BottomSheetProps) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReducedMotion() ?? false;
   const dragControls = useDragControls();
 
   return (

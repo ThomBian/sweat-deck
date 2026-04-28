@@ -6,11 +6,10 @@ import { SaveDeckSheet } from '@/components/SaveDeckSheet';
 import { listSavedDecks } from '@/store/db';
 import { useGameStore } from '@/store/gameStore';
 import { Button } from '@/components/ui/button';
-import { DURATION, EASE_OUT } from '@/lib/motion';
-import { MAIN_PAD, SHELL_SUMMARY } from '@/lib/layout';
+import { EASE_OUT } from '@/lib/motion';
+import { MAIN_PAD, SETUP_CONTENT, SHELL_SUMMARY } from '@/lib/layout';
 import { tSummaryKudoFor } from '@/lib/summaryKudos';
-import { DIFFICULTY_TONE, DIFFICULTY_TONE_PILL } from '@/domain/difficultyMeta';
-import { tDifficulty, tDifficultyDescription } from '@/i18n/labels';
+import { tDifficulty } from '@/i18n/labels';
 import { getLimitSecFromConfig } from '@/lib/sessionTimer';
 import { cn } from '@/lib/utils';
 
@@ -37,6 +36,7 @@ export default function Summary() {
       setSavedDeckName(rows.find((r) => r.id === savedDeckId)?.name);
     });
   }, [savedDeckId]);
+
   const limit = getLimitSecFromConfig(config);
   const endedInOvertime = limit != null && elapsedSec > limit;
   const kudo = tSummaryKudoFor({
@@ -45,114 +45,83 @@ export default function Summary() {
     completedDeck,
     endedInOvertime,
   });
-  const diffTone = DIFFICULTY_TONE[config.difficulty];
 
   const tMotion = reduceMotion ? 0.1 : 0.28;
-  const statY = reduceMotion ? 0 : 6;
+  const timeStr = `${Math.floor(elapsedSec / 60)}:${String(elapsedSec % 60).padStart(2, '0')}`;
+
+  const finish = () => {
+    reset();
+    navigate('/setup');
+  };
 
   return (
     <Fragment>
-    <main
-      id="main-content"
-      className={`flex min-h-dvh flex-col items-center justify-center gap-8 ${SHELL_SUMMARY} ${MAIN_PAD}`}
-    >
-      <motion.div
-        className="flex max-w-md flex-col items-center gap-2.5 text-center sm:gap-3"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: tMotion, ease: EASE_OUT, delay: reduceMotion ? 0 : 0.04 }}
-      >
-        <p className="ui-kicker text-pretty tracking-[0.18em]">{kudo}</p>
-        <h1 className="text-balance">
-          <Trans>Workout complete</Trans>
-        </h1>
-      </motion.div>
-      <p
-        className={cn(
-          'max-w-sm rounded-lg border px-3 py-2 text-center text-sm',
-          DIFFICULTY_TONE_PILL[diffTone],
-        )}
-      >
-        <span className="font-display font-semibold text-foreground">
-          {tDifficulty(config.difficulty)}
-        </span>
-        <span className="mt-1 block text-muted-foreground">
-          {tDifficultyDescription(config.difficulty)}
-        </span>
-      </p>
-      <dl className="grid w-full max-w-sm grid-cols-2 gap-x-6 gap-y-4 text-center">
+      <main id="main-content" className={cn('flex min-h-dvh flex-col justify-center', SHELL_SUMMARY, MAIN_PAD)}>
         <motion.div
-          className="rounded-lg border border-border/55 bg-card/85 px-4 py-3.5"
-          initial={{ opacity: 0, y: statY, scale: reduceMotion ? 1 : 0.99 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: tMotion, delay: reduceMotion ? 0 : 0.08, ease: EASE_OUT }}
+          className={cn(SETUP_CONTENT, 'flex flex-col items-center text-center')}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: tMotion, ease: EASE_OUT }}
         >
-          <dt className="ui-label-caps">
-            <Trans>Cards drawn</Trans>
-          </dt>
-          <dd className="text-deck-reward mt-2 font-sans text-3xl font-bold tabular-nums leading-none sm:text-4xl">
-            {drawn.length}
-          </dd>
+          <header className="flex w-full flex-col items-center gap-2 sm:gap-2.5">
+            <p className="ui-kicker max-w-[min(100%,38ch)] text-pretty tracking-[0.18em]">{kudo}</p>
+            <h1 className="text-balance">
+              <Trans>Workout complete</Trans>
+            </h1>
+            <p className="text-sm leading-snug text-muted-foreground">{tDifficulty(config.difficulty)}</p>
+          </header>
+
+          <dl className="mt-10 grid w-full max-w-sm grid-cols-2 gap-x-8 sm:mt-12 sm:gap-x-10">
+            <div className="min-w-0 text-center">
+              <dt className="ui-label-caps">
+                <Trans>Cards drawn</Trans>
+              </dt>
+              <dd className="text-deck-reward mt-2 font-sans text-3xl font-bold tabular-nums leading-none sm:text-4xl">
+                {drawn.length}
+              </dd>
+            </div>
+            <div className="min-w-0 text-center">
+              <dt className="ui-label-caps">
+                <Trans>Elapsed</Trans>
+              </dt>
+              <dd className="text-deck-reward mt-2 font-sans text-3xl font-bold tabular-nums leading-none sm:text-4xl">
+                {timeStr}
+              </dd>
+            </div>
+          </dl>
+
+          <p className="mt-10 max-w-[min(100%,34ch)] text-pretty text-sm leading-relaxed text-muted-foreground sm:mt-12">
+            <Trans>
+              Liked the workout? <span className="font-medium text-deck-reward">Save it</span> — replays later
+              with one tap.
+            </Trans>
+          </p>
+
+          <div className="mt-4 grid w-full max-w-md grid-cols-2 gap-3 sm:gap-3.5">
+            <Button
+              type="button"
+              variant="outline"
+              className="min-h-11 min-w-0 shrink touch-manipulation"
+              onClick={() => setSheetOpen(true)}
+            >
+              <span className="truncate">{savedDeckId != null ? <Trans>Update saved deck</Trans> : <Trans>Save deck</Trans>}</span>
+            </Button>
+            <Button type="button" className="min-h-11 min-w-0 shrink touch-manipulation" onClick={finish}>
+              <span className="truncate">
+                <Trans>Finish</Trans>
+              </span>
+            </Button>
+          </div>
         </motion.div>
-        <motion.div
-          className="rounded-lg border border-border/55 bg-card/85 px-4 py-3.5"
-          initial={{ opacity: 0, y: statY, scale: reduceMotion ? 1 : 0.99 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: tMotion, delay: reduceMotion ? 0 : 0.14, ease: EASE_OUT }}
-        >
-          <dt className="ui-label-caps">
-            <Trans>Elapsed</Trans>
-          </dt>
-          <dd className="text-deck-reward mt-2 font-sans text-3xl font-bold tabular-nums leading-none sm:text-4xl">
-            {Math.floor(elapsedSec / 60)}:{String(elapsedSec % 60).padStart(2, '0')}
-          </dd>
-        </motion.div>
-      </dl>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: tMotion, delay: reduceMotion ? 0 : 0.18, ease: EASE_OUT }}
-        className="w-full max-w-sm sm:w-auto"
-      >
-        <Button
-          type="button"
-          variant="outline"
-          className="w-full min-h-11 sm:w-auto"
-          onClick={() => setSheetOpen(true)}
-        >
-          {savedDeckId != null ? <Trans>Update saved deck</Trans> : <Trans>Save deck</Trans>}
-        </Button>
-      </motion.div>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: tMotion, delay: reduceMotion ? 0 : 0.2, ease: EASE_OUT }}
-      >
-        <motion.div
-          whileHover={reduceMotion ? { scale: 1 } : { scale: 1.02 }}
-          whileTap={reduceMotion ? { scale: 1 } : { scale: 0.98 }}
-          transition={{ duration: DURATION.fast, ease: EASE_OUT }}
-        >
-          <Button
-            onClick={() => {
-              reset();
-              navigate('/');
-            }}
-            className="w-full min-h-11 min-w-32 max-w-sm px-8 sm:w-auto"
-          >
-            <Trans>Done</Trans>
-          </Button>
-        </motion.div>
-      </motion.div>
-    </main>
-    <SaveDeckSheet
-      open={sheetOpen}
-      onClose={() => setSheetOpen(false)}
-      config={config}
-      overrides={overrides}
-      {...(savedDeckId != null ? { savedDeckId } : {})}
-      {...(savedDeckName != null ? { initialName: savedDeckName } : {})}
-    />
+      </main>
+      <SaveDeckSheet
+        open={sheetOpen}
+        onClose={() => setSheetOpen(false)}
+        config={config}
+        overrides={overrides}
+        {...(savedDeckId != null ? { savedDeckId } : {})}
+        {...(savedDeckName != null ? { initialName: savedDeckName } : {})}
+      />
     </Fragment>
   );
 }

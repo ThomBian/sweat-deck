@@ -395,8 +395,8 @@ msgstr "Dips"
 #~ msgstr "À toi"
 
 #: src/routes/Summary.tsx
-msgid "Done"
-msgstr "Terminé"
+#~ msgid "Done"
+#~ msgstr "Terminé"
 
 #: src/i18n/exercises.ts
 msgid "Double up"
@@ -487,6 +487,7 @@ msgid "Finding your last setup in the stack…"
 msgstr "Recherche de votre dernière config dans le paquet…"
 
 #: src/routes/Play.tsx
+#: src/routes/Summary.tsx
 msgid "Finish"
 msgstr "Terminer"
 
@@ -677,6 +678,10 @@ msgstr "Jambes"
 #: src/routes/Setup.tsx
 msgid "Let us configure your deck step by step — or go manual and assign every card yourself."
 msgstr "Configurez votre paquet pas à pas — ou passez en manuel et attribuez chaque carte vous-même."
+
+#: src/routes/Summary.tsx
+msgid "Liked the workout? <0>Save it</0> — replays later with one tap."
+msgstr ""
 
 #: src/routes/Index.tsx
 msgid "Loading"
