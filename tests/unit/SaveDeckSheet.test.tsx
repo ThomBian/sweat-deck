@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import 'fake-indexeddb/auto';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { I18nProvider } from '@lingui/react';
 import { i18n } from '@/i18n';
@@ -30,7 +30,8 @@ describe('SaveDeckSheet', () => {
     render(
       wrap(<SaveDeckSheet open onClose={() => {}} config={cfg} overrides={{}} />),
     );
-    expect(screen.getByRole('button', { name: 'Save' })).toBeDisabled();
+    const dialog = screen.getByRole('dialog');
+    expect(within(dialog).getByRole('button', { name: 'Save', exact: true })).toBeDisabled();
   });
 
   it('on confirm in create mode: calls saveDeck, sets savedDeckId, closes', async () => {
@@ -43,7 +44,7 @@ describe('SaveDeckSheet', () => {
     );
 
     await user.type(screen.getByLabelText('Deck name'), 'Push Day');
-    await user.click(screen.getByRole('button', { name: 'Save' }));
+    await user.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Save', exact: true }));
 
     await waitFor(() =>
       expect(saveSpy).toHaveBeenCalledWith({ name: 'Push Day', config: cfg, overrides: {} }),
@@ -72,11 +73,12 @@ describe('SaveDeckSheet', () => {
 
     const input = screen.getByLabelText('Deck name') as HTMLInputElement;
     expect(input.value).toBe('Old Name');
-    expect(screen.getByRole('button', { name: 'Update' })).toBeInTheDocument();
+    const dlg = screen.getByRole('dialog');
+    expect(within(dlg).getByRole('button', { name: 'Update' })).toBeInTheDocument();
 
     await user.clear(input);
     await user.type(input, 'New Name');
-    await user.click(screen.getByRole('button', { name: 'Update' }));
+    await user.click(within(dlg).getByRole('button', { name: 'Update' }));
 
     await waitFor(() =>
       expect(updateSpy).toHaveBeenCalledWith(7, {

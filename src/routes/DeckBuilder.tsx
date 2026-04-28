@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Bookmark, BookmarkCheck } from 'lucide-react';
+import { BookmarkCheck } from 'lucide-react';
 import { t } from '@lingui/core/macro';
 import { Trans } from '@lingui/react/macro';
 import { DEFAULT_CONFIG, type SetupConfig } from '@/domain/config';
@@ -150,6 +150,30 @@ function DeckBuilderInner({
               <p className="max-w-[65ch] text-pretty text-balance break-words text-sm leading-relaxed text-muted-foreground [overflow-wrap:anywhere]">
                 {subheading}
               </p>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: reduceMotion ? 0.1 : DURATION.fast, ease: EASE_OUT, delay: reduceMotion ? 0 : 0.06 }}
+              >
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="min-h-11 w-full touch-manipulation sm:w-auto"
+                  disabled={footerLocked || !isReady}
+                  onClick={() => setSheetOpen(true)}
+                >
+                  {savedFlash ? (
+                    <span className="inline-flex items-center gap-2">
+                      <BookmarkCheck className="size-4 shrink-0 text-primary" aria-hidden />
+                      <Trans>Saved</Trans>
+                    </span>
+                  ) : savedDeckId != null ? (
+                    <Trans>Update saved deck</Trans>
+                  ) : (
+                    <Trans>Save deck</Trans>
+                  )}
+                </Button>
+              </motion.div>
             </header>
 
             <div
@@ -210,22 +234,6 @@ function DeckBuilderInner({
                 <Trans>Back</Trans>
               </Button>
             </motion.div>
-
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon"
-              aria-label={savedDeckId != null ? t`Update saved deck` : t`Save deck`}
-              className="min-h-11 min-w-11 touch-manipulation"
-              disabled={footerLocked || !isReady}
-              onClick={() => setSheetOpen(true)}
-            >
-              {savedFlash ? (
-                <BookmarkCheck className="size-5" aria-hidden />
-              ) : (
-                <Bookmark className="size-5" aria-hidden />
-              )}
-            </Button>
 
             <motion.div
               className="min-w-0 shrink"

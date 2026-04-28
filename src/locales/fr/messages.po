@@ -168,8 +168,8 @@ msgid "Back Squats"
 msgstr "Squats arrière"
 
 #: src/routes/SavedDecks.tsx
-msgid "Back to setup"
-msgstr ""
+#~ msgid "Back to setup"
+#~ msgstr ""
 
 #: src/i18n/exercises.ts
 msgid "Barbell Curls"
@@ -746,6 +746,10 @@ msgstr "Souvent : 8–10 · Rares : 2–3"
 msgid "Most: 9–10 · Rare: 2"
 msgstr "Souvent : 9–10 · Rares : 2"
 
+#: src/components/SaveDeckSheet.tsx
+msgid "Name your deck so you can find it when you replay."
+msgstr ""
+
 #: src/components/SetupWizard.tsx
 msgid "Next"
 msgstr "Suivant"
@@ -959,6 +963,10 @@ msgstr ""
 #: src/routes/DeckBuilder.tsx
 #: src/routes/Summary.tsx
 msgid "Save deck"
+msgstr ""
+
+#: src/routes/DeckBuilder.tsx
+msgid "Saved"
 msgstr ""
 
 #: src/routes/SavedDecks.tsx
