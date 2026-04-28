@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import type { Card } from '@/domain/card';
 import { type SetupConfig, DEFAULT_CONFIG, type Equipment, type Theme } from '@/domain/config';
-import { build54, draw, drawNonAce, drawNonJoker, type DrawResult } from '@/domain/deck';
+import { build54, buildDevJokersOnly, draw, drawNonAce, drawNonJoker, type DrawResult } from '@/domain/deck';
 import type { Difficulty } from '@/domain/difficulty';
 import { resolve, type Exercise } from '@/domain/exercise';
 import type { PlanOverrides, SlotKey, SlotOverride } from '@/domain/plan';
@@ -27,6 +27,20 @@ function validateConfig(config: SetupConfig): boolean {
     VALID_THEME.has(config.theme) &&
     typeof config.cardio === 'boolean'
   );
+}
+
+/** Set to `'1'` in dev (`localStorage`) to start sessions with only the two jokers. */
+export const DEV_JOKER_ONLY_DECK_KEY = 'sd:dev:joker-only-deck';
+
+function initialDeckForNewSession(): Card[] {
+  if (
+    import.meta.env.DEV &&
+    typeof localStorage !== 'undefined' &&
+    localStorage.getItem(DEV_JOKER_ONLY_DECK_KEY) === '1'
+  ) {
+    return buildDevJokersOnly();
+  }
+  return build54();
 }
 
 type EndReason = 'deck' | 'manual';
@@ -111,7 +125,7 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
     set({
       ...makeInitialState(),
       config,
-      deck: build54(),
+      deck: initialDeckForNewSession(),
       startedAt: Date.now(),
       rng: createRng(Date.now()),
       overrides: currentOverrides,

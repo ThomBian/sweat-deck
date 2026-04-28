@@ -1,6 +1,6 @@
 import type { Card } from '@/domain/card';
 import { describe, it, expect } from 'vitest';
-import { build54, draw, drawNonJoker } from '@/domain/deck';
+import { build54, buildDevJokersOnly, draw, drawNonJoker } from '@/domain/deck';
 import { createRng } from '@/lib/rng';
 
 describe('build54', () => {
@@ -11,6 +11,12 @@ describe('build54', () => {
   it('contains 2 jokers', () => {
     const jokers = build54().filter((c) => c.type === 'joker');
     expect(jokers).toHaveLength(2);
+  });
+
+  it('buildDevJokersOnly returns only the two jokers', () => {
+    const d = buildDevJokersOnly();
+    expect(d).toHaveLength(2);
+    expect(d.every((c) => c.type === 'joker')).toBe(true);
   });
 
   it('contains 4 aces, one per suit', () => {

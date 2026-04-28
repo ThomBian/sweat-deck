@@ -32,6 +32,12 @@ export const build54 = (): Card[] => {
   return cards;
 };
 
+/** Both jokers only — for local UI/testing. Enable via `gameStore` start when dev + `localStorage` flag (see gameStore). */
+export const buildDevJokersOnly = (): Card[] => [
+  { type: 'joker', id: 1 },
+  { type: 'joker', id: 2 },
+];
+
 type DrawArgs = { remaining: Card[]; difficulty: Difficulty; rng: Rng };
 export type DrawResult = { card: Card; remaining: Card[] };
 

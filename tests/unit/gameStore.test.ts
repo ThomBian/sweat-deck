@@ -1,5 +1,5 @@
-import { describe, it, expect, beforeEach } from 'vitest';
-import { useGameStore } from '@/store/gameStore';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { DEV_JOKER_ONLY_DECK_KEY, useGameStore } from '@/store/gameStore';
 
 beforeEach(() => {
   useGameStore.getState().reset();
@@ -45,5 +45,25 @@ describe('override actions', () => {
     useGameStore.getState().setOverride('suit:hearts', { id: 'pike-pushups' });
     useGameStore.getState().reset();
     expect(useGameStore.getState().overrides).toEqual({});
+  });
+});
+
+describe.skipIf(!import.meta.env.DEV)('dev joker-only deck', () => {
+  afterEach(() => {
+    localStorage.removeItem(DEV_JOKER_ONLY_DECK_KEY);
+    useGameStore.getState().reset();
+  });
+
+  it('start() uses two jokers when localStorage flag is set', () => {
+    localStorage.setItem(DEV_JOKER_ONLY_DECK_KEY, '1');
+    useGameStore.getState().start({
+      difficulty: 'intermediate',
+      equipment: 'bodyweight',
+      theme: 'full',
+      cardio: false,
+    });
+    const deck = useGameStore.getState().deck;
+    expect(deck).toHaveLength(2);
+    expect(deck.every((c) => c.type === 'joker')).toBe(true);
   });
 });
