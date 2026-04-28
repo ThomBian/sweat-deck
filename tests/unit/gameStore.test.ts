@@ -95,4 +95,16 @@ describe.skipIf(!import.meta.env.DEV)('dev playtest deck', () => {
     expect(drawn[7]).toEqual({ type: 'number', suit: 'spades', value: 6 });
     expect(drawn[8]).toEqual({ type: 'number', suit: 'spades', value: 8 });
   });
+
+  it('playtest joker always resolves to Double Up', () => {
+    localStorage.setItem(DEV_PLAYTEST_DECK_KEY, '1');
+    useGameStore.getState().start({
+      difficulty: 'intermediate',
+      equipment: 'bodyweight',
+      theme: 'full',
+      cardio: false,
+    });
+    for (let i = 0; i < 10; i++) useGameStore.getState().drawNext();
+    expect(useGameStore.getState().current?.id).toBe('double-up');
+  });
 });
