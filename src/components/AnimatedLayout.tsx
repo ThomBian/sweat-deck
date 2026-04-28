@@ -14,7 +14,7 @@ export function AnimatedLayout() {
     <div className="min-h-dvh w-full">
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
-          key={location.pathname}
+          key={location.key}
           className="min-h-dvh w-full"
           initial={reduce ? { opacity: 0 } : { opacity: 0, y }}
           animate={reduce ? { opacity: 1 } : { opacity: 1, y: 0 }}

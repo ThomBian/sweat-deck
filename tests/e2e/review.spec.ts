@@ -116,4 +116,17 @@ test.describe('manual mode', () => {
     const startBtn = page.getByRole('button', { name: 'Start workout' });
     await expect(startBtn).toBeDisabled();
   });
+
+  test('Back from manual /deck shows setup landing content', async ({ page }) => {
+    await expect(page).toHaveURL(/\/onboarding$|\/$/);
+    await page.getByRole('button', { name: 'Got it' }).click();
+    await expect(page).toHaveURL(/\/setup$/);
+    await page.getByRole('button', { name: 'Manual' }).click();
+    await page.getByRole('button', { name: 'Go!' }).click();
+    await expect(page).toHaveURL(/\/deck$/);
+    await page.getByRole('button', { name: 'Back' }).click();
+    await expect(page).toHaveURL(/\/setup$/);
+    await expect(page.getByRole('heading', { level: 1, name: /build your deck/i })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Go!' })).toBeVisible();
+  });
 });

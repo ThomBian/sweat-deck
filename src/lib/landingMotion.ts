@@ -1,7 +1,19 @@
 import { EASE_OUT } from '@/lib/motion';
 
 /** Staggered landing reveal — one beat per block; disabled when `reduceMotion` is true. */
-export function getLandingVariants(reduceMotion: boolean) {
+export function getLandingVariants(reduceMotion: boolean, instantReveal?: boolean) {
+  if (instantReveal) {
+    return {
+      container: {
+        hidden: { opacity: 1 },
+        show: { opacity: 1 },
+      },
+      item: {
+        hidden: { opacity: 1, y: 0 },
+        show: { opacity: 1, y: 0 },
+      },
+    } as const;
+  }
   if (reduceMotion) {
     return {
       container: {

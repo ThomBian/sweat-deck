@@ -146,7 +146,11 @@ function DeckBuilderInner({
                 variant="outline"
                 className="min-h-11 touch-manipulation"
                 disabled={footerLocked}
-                onClick={() => navigate('/setup', { state: config ? { config } : undefined })}
+                onClick={() =>
+                  navigate('/setup', {
+                    state: config ? { config } : { skipLandingEntrance: true },
+                  })
+                }
               >
                 <Trans>Back</Trans>
               </Button>

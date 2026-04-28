@@ -17,14 +17,18 @@ import { cn } from '@/lib/utils';
 const helpButtonClassName =
   'inline-flex size-11 shrink-0 touch-manipulation items-center justify-center rounded-lg border border-border/50 bg-card/60 text-muted-foreground transition-colors hover:bg-card hover:text-foreground active:bg-card/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
 
+type SetupLocationState = { config?: SetupConfig; skipLandingEntrance?: boolean } | null;
+
 export default function Setup() {
   const location = useLocation();
   const navigate = useNavigate();
-  const returnedConfig = (location.state as { config?: SetupConfig } | null)?.config;
+  const setupState = location.state as SetupLocationState;
+  const returnedConfig = setupState?.config;
+  const skipLandingEntrance = setupState?.skipLandingEntrance === true;
   const [phase, setPhase] = useState<'landing' | 'wizard'>(() => (returnedConfig ? 'wizard' : 'landing'));
   const [setupMode, setSetupMode] = useState<'guided' | 'manual'>('guided');
   const reduceMotion = useReducedMotion();
-  const landingV = getLandingVariants(!!reduceMotion);
+  const landingV = getLandingVariants(!!reduceMotion, skipLandingEntrance);
 
   const isLanding = phase === 'landing';
 
@@ -104,24 +108,15 @@ export default function Setup() {
                     aria-pressed={setupMode === m}
                     onClick={() => setSetupMode(m)}
                     className={cn(
-                      'relative z-0 min-h-11 min-w-0 flex-1 touch-manipulation rounded-md px-3 text-sm font-medium',
+                      'relative z-10 min-h-11 min-w-0 flex-1 touch-manipulation rounded-md px-3 text-sm font-medium',
                       'outline-none transition-[color,transform] duration-150',
                       'focus-visible:z-20 focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-offset-0',
                       setupMode === m
-                        ? 'text-foreground'
+                        ? 'bg-background text-foreground shadow-sm'
                         : 'text-muted-foreground hover:text-foreground',
                     )}
                   >
-                    {setupMode === m ? (
-                      <motion.div
-                        layoutId="setup-landing-mode"
-                        className="absolute inset-0 rounded-md bg-background shadow-sm -z-10"
-                        transition={{ type: 'spring', stiffness: 520, damping: 38 }}
-                      />
-                    ) : null}
-                    <span className="relative z-10">
-                      {m === 'guided' ? <Trans>Guided</Trans> : <Trans>Manual</Trans>}
-                    </span>
+                    {m === 'guided' ? <Trans>Guided</Trans> : <Trans>Manual</Trans>}
                   </button>
                 ))}
               </div>
