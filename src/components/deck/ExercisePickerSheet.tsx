@@ -191,7 +191,7 @@ export function ExercisePickerSheet({
           <div
             className={cn(
               'min-h-0 flex-1 overflow-y-auto overscroll-y-contain touch-pan-y',
-              'max-h-[min(56dvh,calc(80dvh-10.5rem))]',
+              'max-h-[min(56lvh,calc(80lvh-10.5rem))]',
             )}
           >
             {showRecommendedOnly ? (
