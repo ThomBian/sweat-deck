@@ -150,30 +150,6 @@ function DeckBuilderInner({
               <p className="max-w-[65ch] text-pretty text-balance break-words text-sm leading-relaxed text-muted-foreground [overflow-wrap:anywhere]">
                 {subheading}
               </p>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: reduceMotion ? 0.1 : DURATION.fast, ease: EASE_OUT, delay: reduceMotion ? 0 : 0.06 }}
-              >
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="min-h-11 w-full touch-manipulation sm:w-auto"
-                  disabled={footerLocked || !isReady}
-                  onClick={() => setSheetOpen(true)}
-                >
-                  {savedFlash ? (
-                    <span className="inline-flex items-center gap-2">
-                      <BookmarkCheck className="size-4 shrink-0 text-primary" aria-hidden />
-                      <Trans>Saved</Trans>
-                    </span>
-                  ) : savedDeckId != null ? (
-                    <Trans>Update saved deck</Trans>
-                  ) : (
-                    <Trans>Save deck</Trans>
-                  )}
-                </Button>
-              </motion.div>
             </header>
 
             <div
@@ -214,6 +190,33 @@ function DeckBuilderInner({
                 </motion.div>
               </div>
             ) : null}
+
+            <div className="mt-2 border-t border-border/40 pt-5 sm:pt-6">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: reduceMotion ? 0.1 : DURATION.fast, ease: EASE_OUT }}
+              >
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="min-h-11 w-full touch-manipulation sm:w-auto"
+                  disabled={footerLocked || !isReady}
+                  onClick={() => setSheetOpen(true)}
+                >
+                  {savedFlash ? (
+                    <span className="inline-flex items-center gap-2">
+                      <BookmarkCheck className="size-4 shrink-0 text-primary" aria-hidden />
+                      <Trans>Saved</Trans>
+                    </span>
+                  ) : savedDeckId != null ? (
+                    <Trans>Update saved deck</Trans>
+                  ) : (
+                    <Trans>Save deck</Trans>
+                  )}
+                </Button>
+              </motion.div>
+            </div>
           </motion.div>
         </div>
 
