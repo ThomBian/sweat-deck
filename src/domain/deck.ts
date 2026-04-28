@@ -32,24 +32,6 @@ export const build54 = (): Card[] => {
   return cards;
 };
 
-/**
- * Dev playtest stack (10 cards). Order is **bottom → top**; with sequential dev draw, the top card
- * (last index) is drawn first. Yields: 7 filler hearts, then 6♠ + 8♠, then joker on draw 10 so Double Up
- * can show two real cards. Enable only in dev via `gameStore` + `localStorage` (see gameStore).
- */
-export const buildDevPlaytestDeck = (): Card[] => {
-  const filler: Card[] = [];
-  for (const value of NUMBER_VALUES) {
-    if (value >= 2 && value <= 8) {
-      filler.push({ type: 'number', suit: 'hearts', value });
-    }
-  }
-  const pairOlder: Card = { type: 'number', suit: 'spades', value: 6 };
-  const pairNewer: Card = { type: 'number', suit: 'spades', value: 8 };
-  const joker: Card = { type: 'joker', id: 1 };
-  return [joker, pairNewer, pairOlder, ...filler];
-};
-
 type DrawArgs = { remaining: Card[]; difficulty: Difficulty; rng: Rng };
 export type DrawResult = { card: Card; remaining: Card[] };
 

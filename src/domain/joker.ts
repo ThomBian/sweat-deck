@@ -20,7 +20,7 @@ const SUDDEN_DEATH_OPTIONS: Exercise[] = [
   { id: 'sudden-death-500m-skierg', distanceM: 500 },
 ];
 
-export const DOUBLE_UP_EXERCISE: Exercise = { id: 'double-up' };
+const DOUBLE_UP_EXERCISE: Exercise = { id: 'double-up' };
 
 const UPPER_SUITS: ReadonlySet<Suit> = new Set(['hearts', 'diamonds']);
 

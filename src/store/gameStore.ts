@@ -1,11 +1,11 @@
 import { create } from 'zustand';
 import type { Card } from '@/domain/card';
 import { type SetupConfig, DEFAULT_CONFIG, type Equipment, type Theme } from '@/domain/config';
-import { build54, buildDevPlaytestDeck, draw, drawNonAce, drawNonJoker, type DrawResult } from '@/domain/deck';
+import { build54, draw, drawNonAce, drawNonJoker, type DrawResult } from '@/domain/deck';
 import type { Difficulty } from '@/domain/difficulty';
 import { resolve, type Exercise } from '@/domain/exercise';
 import type { PlanOverrides, SlotKey, SlotOverride } from '@/domain/plan';
-import { DOUBLE_UP_EXERCISE, pickJokerEffect } from '@/domain/joker';
+import { pickJokerEffect } from '@/domain/joker';
 import { createRng, type Rng } from '@/lib/rng';
 import { computeEffortSec, getLimitSecFromConfig, isDeckEffortOnlyCard } from '@/lib/sessionTimer';
 import { recordSession, saveLastConfig } from './db';
@@ -29,33 +29,10 @@ function validateConfig(config: SetupConfig): boolean {
   );
 }
 
-/** Set to `'1'` in dev (`localStorage`) for a fixed 10-card stack ending in 6♠, 8♠, joker (sequential draw). */
-export const DEV_PLAYTEST_DECK_KEY = 'sd:dev:playtest-deck';
-
-/** @deprecated Use `DEV_PLAYTEST_DECK_KEY`; still honored. */
-export const DEV_JOKER_ONLY_DECK_KEY = 'sd:dev:joker-only-deck';
-
-function isDevPlaytestDeckEnabled(): boolean {
-  if (!import.meta.env.DEV || typeof localStorage === 'undefined') return false;
-  return (
-    localStorage.getItem(DEV_PLAYTEST_DECK_KEY) === '1' ||
-    localStorage.getItem(DEV_JOKER_ONLY_DECK_KEY) === '1'
-  );
-}
-
-function initialSessionDeck(): { deck: Card[]; sequentialDeckDraw: boolean } {
-  if (isDevPlaytestDeckEnabled()) {
-    return { deck: buildDevPlaytestDeck(), sequentialDeckDraw: true };
-  }
-  return { deck: build54(), sequentialDeckDraw: false };
-}
-
 type EndReason = 'deck' | 'manual';
 
 type GameState = {
   config: SetupConfig;
-  /** Dev playtest: draw from top of stack in order (see `buildDevPlaytestDeck`). */
-  sequentialDeckDraw: boolean;
   deck: Card[];
   drawn: Card[];
   current: Exercise | null;
@@ -96,7 +73,6 @@ type GameActions = {
 
 const makeInitialState = (): GameState => ({
   config: DEFAULT_CONFIG,
-  sequentialDeckDraw: false,
   deck: [],
   drawn: [],
   current: null,
@@ -120,12 +96,9 @@ const exerciseFromCard = (
   overrides: PlanOverrides,
   historyBefore: Card[],
   rng: Rng,
-  jokerAlwaysDoubleUp: boolean,
 ): Exercise =>
   card.type === 'joker'
-    ? jokerAlwaysDoubleUp
-      ? DOUBLE_UP_EXERCISE
-      : pickJokerEffect({ history: historyBefore, rng }).exercise
+    ? pickJokerEffect({ history: historyBefore, rng }).exercise
     : resolve({ card, config, overrides });
 
 export const useGameStore = create<GameState & GameActions>((set, get) => ({
@@ -135,12 +108,10 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
     if (!validateConfig(config)) return;
     void saveLastConfig(config);
     const { overrides: currentOverrides, savedDeckId: currentSavedDeckId } = get();
-    const { deck, sequentialDeckDraw } = initialSessionDeck();
     set({
       ...makeInitialState(),
       config,
-      deck,
-      sequentialDeckDraw,
+      deck: build54(),
       startedAt: Date.now(),
       rng: createRng(Date.now()),
       overrides: currentOverrides,
@@ -166,13 +137,7 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
     const { config, rng } = s0;
     const { difficulty } = config;
 
-    let result: DrawResult = s0.sequentialDeckDraw
-      ? (() => {
-          const remaining = s0.deck;
-          const card = remaining[remaining.length - 1]!;
-          return { card, remaining: remaining.slice(0, -1) };
-        })()
-      : draw({ remaining: s0.deck, difficulty, rng });
+    let result: DrawResult = draw({ remaining: s0.deck, difficulty, rng });
     if (result.card.type === 'ace') {
       const mustBlockAce = drawnCount < 15 || sinceLastRest < intervalSec * 0.7;
       if (mustBlockAce) {
@@ -214,14 +179,7 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
     }
 
     const historyBefore = s0.drawn;
-    const exercise = exerciseFromCard(
-      card,
-      config,
-      s0.overrides,
-      historyBefore,
-      rng,
-      s0.sequentialDeckDraw,
-    );
+    const exercise = exerciseFromCard(card, config, s0.overrides, historyBefore, rng);
     const nextDrawn = [...s0.drawn, card];
     const updateRest = card.type === 'ace';
 
