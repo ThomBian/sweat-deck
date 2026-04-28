@@ -929,6 +929,7 @@ msgid "Save"
 msgstr "Save"
 
 #: src/components/SaveDeckSheet.tsx
+#: src/routes/DeckBuilder.tsx
 msgid "Save deck"
 msgstr "Save deck"
 
@@ -1199,6 +1200,7 @@ msgid "Update"
 msgstr "Update"
 
 #: src/components/SaveDeckSheet.tsx
+#: src/routes/DeckBuilder.tsx
 msgid "Update saved deck"
 msgstr "Update saved deck"
 

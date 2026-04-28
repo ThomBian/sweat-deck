@@ -1,10 +1,11 @@
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
+import { Bookmark, BookmarkCheck } from 'lucide-react';
 import { t } from '@lingui/core/macro';
 import { Trans } from '@lingui/react/macro';
 import { DEFAULT_CONFIG, type SetupConfig } from '@/domain/config';
-import type { SlotKey } from '@/domain/plan';
+import type { PlanOverrides, SlotKey } from '@/domain/plan';
 import { DeckSlotCard } from '@/components/deck/DeckSlotCard';
 import type { PrescriptionType } from '@/components/deck/PrescriptionStepper';
 import { useGameStore } from '@/store/gameStore';
@@ -14,8 +15,16 @@ import { DURATION, EASE_OUT } from '@/lib/motion';
 import { SHELL_SETUP } from '@/lib/layout';
 import { cn } from '@/lib/utils';
 import { useDeckComposer } from '@/hooks/useDeckComposer';
+import { SaveDeckSheet } from '@/components/SaveDeckSheet';
+import { listSavedDecks } from '@/store/db';
 
-type LocationState = { mode?: 'guided' | 'manual'; config?: SetupConfig } | null;
+type LocationState = {
+  mode?: 'guided' | 'manual';
+  config?: SetupConfig;
+  overrides?: PlanOverrides;
+  savedDeckId?: number;
+  from?: 'saved-decks';
+} | null;
 
 export default function DeckBuilder() {
   const navigate = useNavigate();
@@ -23,10 +32,20 @@ export default function DeckBuilder() {
   const state = location.state as LocationState;
   const mode = state?.mode ?? 'guided';
   const config = state?.config;
+  const initialOverrides = state?.overrides;
+  const stateSavedDeckId = state?.savedDeckId;
+  const fromSavedDecks = state?.from === 'saved-decks';
+  const setSavedDeckId = useGameStore((s) => s.setSavedDeckId);
 
   useEffect(() => {
     if (mode === 'guided' && !config) {
       navigate('/setup', { replace: true });
+      return;
+    }
+    if (stateSavedDeckId !== undefined) {
+      setSavedDeckId(stateSavedDeckId);
+    } else if (!fromSavedDecks) {
+      setSavedDeckId(null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -35,27 +54,67 @@ export default function DeckBuilder() {
 
   const composerInput =
     mode === 'manual'
-      ? { mode: 'manual' as const }
-      : { mode: 'guided' as const, config: config! };
+      ? { mode: 'manual' as const, ...(initialOverrides ? { initialOverrides } : {}) }
+      : { mode: 'guided' as const, config: config!, ...(initialOverrides ? { initialOverrides } : {}) };
 
-  return <DeckBuilderInner config={config} composerInput={composerInput} />;
+  return (
+    <DeckBuilderInner config={config} composerInput={composerInput} fromSavedDecks={fromSavedDecks} />
+  );
 }
 
 function DeckBuilderInner({
   config,
   composerInput,
+  fromSavedDecks,
 }: {
   config: SetupConfig | undefined;
-  composerInput: { mode: 'guided'; config: SetupConfig } | { mode: 'manual' };
+  composerInput:
+    | { mode: 'guided'; config: SetupConfig; initialOverrides?: PlanOverrides }
+    | { mode: 'manual'; initialOverrides?: PlanOverrides };
+  fromSavedDecks: boolean;
 }) {
   const navigate = useNavigate();
   const reduceMotion = useReducedMotion();
   const mergePrescriptionOverride = useGameStore((s) => s.mergePrescriptionOverride);
+  const overrides = useGameStore((s) => s.overrides);
+  const savedDeckId = useGameStore((s) => s.savedDeckId);
   const { slots, isReady, setSlot, handleStart, footerLocked, showShuffle, hasOverrides, resetOverrides } =
     useDeckComposer(composerInput);
 
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const [savedDeckName, setSavedDeckName] = useState<string | undefined>(undefined);
+  const [savedFlash, setSavedFlash] = useState(false);
+
+  useEffect(() => {
+    if (savedDeckId == null) {
+      setSavedDeckName(undefined);
+      return;
+    }
+    void listSavedDecks().then((rows) => {
+      const found = rows.find((r) => r.id === savedDeckId);
+      setSavedDeckName(found?.name);
+    });
+  }, [savedDeckId]);
+
   const handlePrescriptionChange = (key: SlotKey, field: PrescriptionType, value: number) => {
     mergePrescriptionOverride(key, field, value);
+  };
+
+  const sheetConfig = composerInput.mode === 'guided' ? composerInput.config : DEFAULT_CONFIG;
+  const handleSheetClose = () => {
+    setSheetOpen(false);
+    setSavedFlash(true);
+    setTimeout(() => setSavedFlash(false), 1200);
+  };
+
+  const handleBack = () => {
+    if (fromSavedDecks) {
+      navigate('/saved-decks');
+      return;
+    }
+    navigate('/setup', {
+      state: config ? { config } : { skipLandingEntrance: true },
+    });
   };
 
   /** Same title + lede in guided and manual — slot cards show empty/filled; behavior differs (e.g. Start disabled). */
@@ -146,15 +205,28 @@ function DeckBuilderInner({
                 variant="outline"
                 className="min-h-11 touch-manipulation"
                 disabled={footerLocked}
-                onClick={() =>
-                  navigate('/setup', {
-                    state: config ? { config } : { skipLandingEntrance: true },
-                  })
-                }
+                onClick={handleBack}
               >
                 <Trans>Back</Trans>
               </Button>
             </motion.div>
+
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              aria-label={savedDeckId != null ? t`Update saved deck` : t`Save deck`}
+              className="min-h-11 min-w-11 touch-manipulation"
+              disabled={footerLocked || !isReady}
+              onClick={() => setSheetOpen(true)}
+            >
+              {savedFlash ? (
+                <BookmarkCheck className="size-5" aria-hidden />
+              ) : (
+                <Bookmark className="size-5" aria-hidden />
+              )}
+            </Button>
+
             <motion.div
               className="min-w-0 shrink"
               whileHover={{ scale: reduceMotion || footerLocked || !isReady ? 1 : 1.02 }}
@@ -176,6 +248,14 @@ function DeckBuilderInner({
       {showShuffle ? (
         <ShuffleTransition onComplete={() => navigate('/play', { replace: true })} />
       ) : null}
+      <SaveDeckSheet
+        open={sheetOpen}
+        onClose={handleSheetClose}
+        config={sheetConfig}
+        overrides={overrides}
+        {...(savedDeckId != null ? { savedDeckId } : {})}
+        {...(savedDeckName != null ? { initialName: savedDeckName } : {})}
+      />
     </Fragment>
   );
 }
