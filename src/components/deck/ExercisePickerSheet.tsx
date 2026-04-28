@@ -3,7 +3,6 @@ import { Dialog } from '@base-ui/react/dialog';
 import { t } from '@lingui/core/macro';
 import { Trans } from '@lingui/react/macro';
 import { useLingui } from '@lingui/react';
-import { cn } from '@/lib/utils';
 import { tExercise } from '@/i18n/exercises';
 import type { FaceRank } from '@/domain/card';
 import { faceFreePickPrescription, recommendedFor, ALL_EXERCISES, type ExerciseEntry } from '@/domain/exerciseDb';
@@ -183,17 +182,20 @@ export function ExercisePickerSheet({
               autoComplete="off"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
+              onFocus={(e) => {
+                const el = e.currentTarget;
+                requestAnimationFrame(() => {
+                  if (el && typeof el.scrollIntoView === 'function') {
+                    el.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+                  }
+                });
+              }}
               placeholder={t`Search exercises…`}
               className="min-h-12 w-full rounded-xl border border-border/60 bg-card px-4 py-3 text-base outline-none transition-[border-color,box-shadow] focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50"
             />
           </div>
 
-          <div
-            className={cn(
-              'min-h-0 flex-1 overflow-y-auto overscroll-y-contain touch-pan-y',
-              'max-h-[min(56lvh,calc(80lvh-10.5rem))]',
-            )}
-          >
+          <div className="min-h-0 flex-1 overflow-y-auto overscroll-y-contain touch-pan-y">
             {showRecommendedOnly ? (
               <div className="flex flex-col px-5 pt-5 pb-6 sm:px-6">
                 <h2 className="mb-3 text-[0.6875rem] font-semibold tracking-wider text-muted-foreground uppercase">

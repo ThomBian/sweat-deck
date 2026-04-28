@@ -14,6 +14,43 @@ export function readKeyboardInset(): number {
   return Math.max(0, layoutH - vv.offsetTop - vv.height);
 }
 
+/**
+ * Max height for a fixed bottom sheet: never taller than the **visible** viewport, so flex
+ * content (handle → search → list) isn’t clipped from the top when the keyboard is open.
+ * Still capped at ~80% of layout height when the keyboard is closed.
+ */
+export function readMaxSheetHeight(): number {
+  if (typeof window === 'undefined') return 1024;
+  const vv = window.visualViewport;
+  const inner = window.innerHeight;
+  const cap80 = inner * 0.8;
+  if (!vv) return Math.min(cap80, inner);
+  return Math.min(cap80, vv.height);
+}
+
+const METRICS_CLOSED: { keyboardInset: number; maxSheetHeight: number } = {
+  keyboardInset: 0,
+  maxSheetHeight: 1024,
+};
+
+let metricsCacheKey = '';
+let metricsCache: { keyboardInset: number; maxSheetHeight: number } | null = null;
+
+function readSheetMetricsSnapshot(overlayActive: boolean): { keyboardInset: number; maxSheetHeight: number } {
+  if (!overlayActive) {
+    return METRICS_CLOSED;
+  }
+  const keyboardInset = readKeyboardInset();
+  const maxSheetHeight = readMaxSheetHeight();
+  const key = `${keyboardInset}|${maxSheetHeight}`;
+  if (key === metricsCacheKey && metricsCache) {
+    return metricsCache;
+  }
+  metricsCacheKey = key;
+  metricsCache = { keyboardInset, maxSheetHeight };
+  return metricsCache;
+}
+
 function createSubscribe(overlayActive: boolean) {
   return (onChange: () => void) => {
     if (!overlayActive || typeof window === 'undefined') {
@@ -79,16 +116,20 @@ function createSubscribe(overlayActive: boolean) {
 }
 
 /**
- * Tracks the virtual keyboard via the Visual Viewport API. Pair with `bottom: inset px`
- * (fixed to the layout viewport bottom) — not a shrinking max-height — so the UI stays above the keyboard.
+ * Metrics for fixed bottom sheets: lift by `keyboardInset` and **cap height** so the panel
+ * never extends above the visible visual viewport (otherwise the top — including search — is
+ * clipped while the bottom list stays on screen).
  *
  * @param overlayActive Pass `false` when the overlay is closed to detach listeners.
  */
-export function useVisualViewportKeyboardInset(overlayActive: boolean): number {
+export function useVisualViewportSheetMetrics(overlayActive: boolean): {
+  keyboardInset: number;
+  maxSheetHeight: number;
+} {
   const subscribe = useMemo(() => createSubscribe(overlayActive), [overlayActive]);
   const getSnapshot = useCallback(
-    () => (overlayActive ? readKeyboardInset() : 0),
+    () => readSheetMetricsSnapshot(overlayActive),
     [overlayActive],
   );
-  return useSyncExternalStore(subscribe, getSnapshot, () => 0);
+  return useSyncExternalStore(subscribe, getSnapshot, () => METRICS_CLOSED);
 }

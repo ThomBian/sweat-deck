@@ -1,7 +1,7 @@
 import { type CSSProperties, type ReactNode } from 'react';
 import { Dialog } from '@base-ui/react/dialog';
 import { motion, useDragControls, useReducedMotion, type PanInfo } from 'framer-motion';
-import { useVisualViewportKeyboardInset } from '@/hooks/useVisualViewportOverlay';
+import { useVisualViewportSheetMetrics } from '@/hooks/useVisualViewportOverlay';
 import { cn } from '@/lib/utils';
 
 const DISMISS_OFFSET_PX = 72;
@@ -24,10 +24,11 @@ type BottomSheetProps = {
 export function BottomSheet({ open, onOpenChange, children }: BottomSheetProps) {
   const reduceMotion = useReducedMotion() ?? false;
   const dragControls = useDragControls();
-  const keyboardInset = useVisualViewportKeyboardInset(open);
+  const { keyboardInset, maxSheetHeight } = useVisualViewportSheetMetrics(open);
 
   const overlayStyle = {
     bottom: keyboardInset,
+    maxHeight: maxSheetHeight,
   } satisfies CSSProperties;
 
   return (
@@ -35,11 +36,7 @@ export function BottomSheet({ open, onOpenChange, children }: BottomSheetProps) 
       <Dialog.Portal>
         <Dialog.Backdrop className="fixed inset-0 z-[100] bg-black/50" />
         <Dialog.Popup
-          className={cn(
-            'fixed inset-x-0 z-[101] flex min-h-0 w-full max-w-full flex-col outline-none',
-            /* lvh stays tied to browser chrome, not the shrinking dvh used when the keyboard opens */
-            'max-h-[80vh] max-h-[80lvh]',
-          )}
+          className="fixed inset-x-0 z-[101] flex min-h-0 w-full max-w-full flex-col outline-none"
           style={overlayStyle}
         >
           <motion.div
