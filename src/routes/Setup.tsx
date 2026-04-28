@@ -26,7 +26,7 @@ export default function Setup() {
   const returnedConfig = setupState?.config;
   const skipLandingEntrance = setupState?.skipLandingEntrance === true;
   const [phase, setPhase] = useState<'landing' | 'wizard'>(() => (returnedConfig ? 'wizard' : 'landing'));
-  const [setupMode, setSetupMode] = useState<'guided' | 'manual'>('guided');
+  const [setupMode, setSetupMode] = useState<'guided' | 'manual' | 'replay'>('guided');
   const reduceMotion = useReducedMotion();
   const landingV = getLandingVariants(!!reduceMotion, skipLandingEntrance);
 
@@ -101,7 +101,7 @@ export default function Setup() {
                 role="group"
                 aria-label={t`Setup mode`}
               >
-                {(['guided', 'manual'] as const).map((m) => (
+                {(['guided', 'manual', 'replay'] as const).map((m) => (
                   <button
                     key={m}
                     type="button"
@@ -116,7 +116,13 @@ export default function Setup() {
                         : 'text-muted-foreground hover:text-foreground',
                     )}
                   >
-                    {m === 'guided' ? <Trans>Guided</Trans> : <Trans>Manual</Trans>}
+                    {m === 'guided' ? (
+                      <Trans>Guided</Trans>
+                    ) : m === 'manual' ? (
+                      <Trans>Manual</Trans>
+                    ) : (
+                      <Trans>Replay</Trans>
+                    )}
                   </button>
                 ))}
               </div>
@@ -133,8 +139,10 @@ export default function Setup() {
                   >
                     {setupMode === 'guided' ? (
                       <Trans>We&apos;ll build your deck based on your level and gear.</Trans>
-                    ) : (
+                    ) : setupMode === 'manual' ? (
                       <Trans>Assign an exercise to every card yourself.</Trans>
+                    ) : (
+                      <Trans>Pick a saved deck and go.</Trans>
                     )}
                   </motion.p>
                 </AnimatePresence>
@@ -151,6 +159,8 @@ export default function Setup() {
                   onClick={() => {
                     if (setupMode === 'manual') {
                       navigate('/deck', { state: { mode: 'manual' } });
+                    } else if (setupMode === 'replay') {
+                      navigate('/saved-decks');
                     } else {
                       setPhase('wizard');
                     }
