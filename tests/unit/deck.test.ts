@@ -1,6 +1,6 @@
 import type { Card } from '@/domain/card';
 import { describe, it, expect } from 'vitest';
-import { build54, buildDevJokersOnly, draw, drawNonJoker } from '@/domain/deck';
+import { build54, buildDevPlaytestDeck, draw, drawNonJoker } from '@/domain/deck';
 import { createRng } from '@/lib/rng';
 
 describe('build54', () => {
@@ -13,10 +13,23 @@ describe('build54', () => {
     expect(jokers).toHaveLength(2);
   });
 
-  it('buildDevJokersOnly returns only the two jokers', () => {
-    const d = buildDevJokersOnly();
-    expect(d).toHaveLength(2);
-    expect(d.every((c) => c.type === 'joker')).toBe(true);
+  it('buildDevPlaytestDeck returns 10 cards with one joker at stack bottom', () => {
+    const d = buildDevPlaytestDeck();
+    expect(d).toHaveLength(10);
+    expect(d[0]?.type).toBe('joker');
+    expect(d.filter((c) => c.type === 'joker')).toHaveLength(1);
+  });
+
+  it('buildDevPlaytestDeck sequential pops end with 6♠, 8♠, then joker', () => {
+    let rem = buildDevPlaytestDeck();
+    const order: Card[] = [];
+    while (rem.length) {
+      order.push(rem[rem.length - 1]!);
+      rem = rem.slice(0, -1);
+    }
+    expect(order[7]).toEqual({ type: 'number', suit: 'spades', value: 6 });
+    expect(order[8]).toEqual({ type: 'number', suit: 'spades', value: 8 });
+    expect(order[9]?.type).toBe('joker');
   });
 
   it('contains 4 aces, one per suit', () => {
