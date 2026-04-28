@@ -69,6 +69,10 @@ msgstr "×{aligned} rép."
 msgid "×N reps"
 msgstr "×N rép."
 
+#: src/components/ExercisePanel.tsx
+msgid "10 reps each"
+msgstr "10 répétitions chacun"
+
 #: src/i18n/exercises.ts
 msgid "100m Sprint"
 msgstr "Sprint 100 m"
@@ -305,8 +309,12 @@ msgid "Clubs"
 msgstr "Trèfles"
 
 #: src/components/ExercisePanel.tsx
-msgid "Combine the last 2 exercises — 10 reps each"
-msgstr "Combinez les 2 derniers exercices — 10 répétitions chacun"
+msgid "Combine {nameA} and {nameB} — 10 reps each"
+msgstr "Combinez {nameA} et {nameB} — 10 répétitions chacun"
+
+#: src/components/ExercisePanel.tsx
+#~ msgid "Combine the last 2 exercises — 10 reps each"
+#~ msgstr "Combinez les 2 derniers exercices — 10 répétitions chacun"
 
 #: src/routes/SavedDecks.tsx
 msgid "Confirm delete"
