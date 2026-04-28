@@ -6,14 +6,15 @@ import {
   type SlotKey,
   type PlanSlot,
   type SlotOverride,
+  type PlanOverrides,
 } from '@/domain/plan';
 import { DEFAULT_CONFIG, type SetupConfig } from '@/domain/config';
 import type { ExerciseId } from '@/domain/exercise';
 import { saveLastConfig } from '@/store/db';
 
 export type ComposerMode =
-  | { mode: 'guided'; config: SetupConfig }
-  | { mode: 'manual' };
+  | { mode: 'guided'; config: SetupConfig; initialOverrides?: PlanOverrides }
+  | { mode: 'manual'; initialOverrides?: PlanOverrides };
 
 export type ComposerSlot = {
   key: SlotKey;
@@ -53,7 +54,14 @@ export function useDeckComposer(input: ComposerMode): DeckComposerState {
   const [isStarting, setIsStarting] = useState(false);
 
   useEffect(() => {
-    storeResetOverrides();
+    if (input.initialOverrides && Object.keys(input.initialOverrides).length > 0) {
+      storeResetOverrides();
+      for (const [key, ov] of Object.entries(input.initialOverrides)) {
+        if (ov) setOverride(key as SlotKey, ov);
+      }
+    } else {
+      storeResetOverrides();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
