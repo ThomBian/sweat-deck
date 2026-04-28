@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import type { Card } from '@/domain/card';
 import { type SetupConfig, DEFAULT_CONFIG, type Equipment, type Theme } from '@/domain/config';
-import { build54, draw, drawNonAce, type DrawResult } from '@/domain/deck';
+import { build54, draw, drawNonAce, drawNonJoker, type DrawResult } from '@/domain/deck';
 import type { Difficulty } from '@/domain/difficulty';
 import { resolve, type Exercise } from '@/domain/exercise';
 import type { PlanOverrides, SlotKey, SlotOverride } from '@/domain/plan';
@@ -147,6 +147,15 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
           const alt = drawNonAce({ remaining: full, difficulty, rng });
           if (alt) result = alt;
         }
+      }
+    }
+
+    if (result.card.type === 'joker' && drawnCount < 10) {
+      const full = [result.card, ...result.remaining];
+      const canAvoidJoker = full.some((c) => c.type !== 'joker');
+      if (canAvoidJoker) {
+        const alt = drawNonJoker({ remaining: full, difficulty, rng });
+        if (alt) result = alt;
       }
     }
 
