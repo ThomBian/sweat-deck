@@ -1,5 +1,6 @@
+import type { Card } from '@/domain/card';
 import { describe, it, expect } from 'vitest';
-import { build54, draw } from '@/domain/deck';
+import { build54, draw, drawNonJoker } from '@/domain/deck';
 import { createRng } from '@/lib/rng';
 
 describe('build54', () => {
@@ -71,5 +72,33 @@ describe('draw', () => {
       }
     }
     expect(highDraws).toBeGreaterThan(lowDraws * 2);
+  });
+});
+
+describe('drawNonJoker', () => {
+  it('returns null when only jokers remain', () => {
+    const onlyJokers: Card[] = [
+      { type: 'joker', id: 1 },
+      { type: 'joker', id: 2 },
+    ];
+    const result = drawNonJoker({
+      remaining: onlyJokers,
+      difficulty: 'intermediate',
+      rng: createRng(1),
+    });
+    expect(result).toBeNull();
+  });
+
+  it('never picks a joker and keeps jokers in the returned remaining pile', () => {
+    const deck = build54();
+    const rng = createRng(7);
+    for (let i = 0; i < 100; i++) {
+      const result = drawNonJoker({ remaining: deck, difficulty: 'intermediate', rng });
+      expect(result).not.toBeNull();
+      expect(result!.card.type).not.toBe('joker');
+      const jokersInRem = result!.remaining.filter((c) => c.type === 'joker').length;
+      expect(jokersInRem).toBe(2);
+      expect(result!.remaining).toHaveLength(53);
+    }
   });
 });

@@ -44,6 +44,15 @@ export const drawNonAce = ({ remaining, difficulty, rng }: DrawArgs): DrawResult
   return { card, remaining: [...poolRem, ...aces] };
 };
 
+/** Draw only from non-Joker cards; all Jokers stay in the returned remaining pile. */
+export const drawNonJoker = ({ remaining, difficulty, rng }: DrawArgs): DrawResult | null => {
+  const pool = remaining.filter((c) => c.type !== 'joker');
+  if (pool.length === 0) return null;
+  const { card, remaining: poolRem } = draw({ remaining: pool, difficulty, rng });
+  const jokers = remaining.filter((c) => c.type === 'joker');
+  return { card, remaining: [...poolRem, ...jokers] };
+};
+
 export const draw = ({ remaining, difficulty, rng }: DrawArgs): DrawResult => {
   if (remaining.length === 0) throw new Error('cannot draw from empty deck');
 
