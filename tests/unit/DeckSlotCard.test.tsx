@@ -39,3 +39,54 @@ describe('DeckSlotCard', () => {
     expect(screen.queryByText(/×\d+ reps/)).toBeNull();
   });
 });
+
+const baseSlot: ComposerSlot = {
+  key: 'suit:hearts',
+  selected: 'pushup',
+  defaultExercise: { id: 'squat', reps: 0 },
+  options: [
+    { id: 'pushup', reps: 10 },
+    { id: 'squat', reps: 10 },
+  ],
+};
+
+describe('DeckSlotCard highlight', () => {
+  beforeEach(() => i18n.activate('en'));
+
+  it('does NOT highlight when selection matches baseline override', () => {
+    const { container } = render(
+      wrap(
+        <DeckSlotCard
+          config={DEFAULT_CONFIG}
+          slot={{
+            ...baseSlot,
+            baselineOverride: { id: 'pushup' },
+          }}
+          onPick={() => {}}
+        />,
+      ),
+    );
+    expect(container.querySelector('.ring-primary\\/40')).toBeNull();
+  });
+
+  it('highlights when selection differs from baseline override', () => {
+    const { container } = render(
+      wrap(
+        <DeckSlotCard
+          config={DEFAULT_CONFIG}
+          slot={{
+            ...baseSlot,
+            baselineOverride: { id: 'squat' },
+          }}
+          onPick={() => {}}
+        />,
+      ),
+    );
+    expect(container.querySelector('.ring-primary\\/40')).not.toBeNull();
+  });
+
+  it('falls back to default-vs-selection when no baselineOverride', () => {
+    const { container } = render(wrap(<DeckSlotCard config={DEFAULT_CONFIG} slot={baseSlot} onPick={() => {}} />));
+    expect(container.querySelector('.ring-primary\\/40')).not.toBeNull();
+  });
+});

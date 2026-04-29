@@ -18,6 +18,7 @@ import type { ComposerSlot } from '@/hooks/useDeckComposer';
 import { formatMSS } from '@/lib/formatTime';
 import { slotHeaderParts } from '@/lib/reviewSlotContext';
 import { DURATION, EASE_OUT } from '@/lib/motion';
+import { slotOverrideEqual } from '@/lib/planDiff';
 
 const SUIT_GLYPH: Record<string, string> = {
   hearts: '♥',
@@ -97,10 +98,27 @@ export function DeckSlotCard({ config, slot, onPick, onPrescriptionChange }: Pro
   }, [open, searchOpen, hasAlts, reduceMotion, scrollSectionIntoView]);
 
   const isEmpty = slot.selected === undefined;
-  const swappedFromDefault =
-    slot.defaultExercise !== undefined && slot.selected !== slot.defaultExercise.id;
-  const rxCustom = slot.prescriptionOverride != null;
-  const isOverridden = !isEmpty && (swappedFromDefault || rxCustom);
+
+  const currentOverrideForCompare = (() => {
+    const ov: SlotOverride = {};
+    if (slot.selected !== undefined) ov.id = slot.selected;
+    const rx = slot.prescriptionOverride;
+    if (rx?.reps !== undefined) ov.reps = rx.reps;
+    if (rx?.durationSec !== undefined) ov.durationSec = rx.durationSec;
+    if (rx?.distanceM !== undefined) ov.distanceM = rx.distanceM;
+    return ov;
+  })();
+
+  const isOverridden = (() => {
+    if (isEmpty) return false;
+    if (slot.baselineOverride) {
+      return !slotOverrideEqual(currentOverrideForCompare, slot.baselineOverride);
+    }
+    const swappedFromDefault =
+      slot.defaultExercise !== undefined && slot.selected !== slot.defaultExercise.id;
+    const rxCustom = slot.prescriptionOverride != null;
+    return swappedFromDefault || rxCustom;
+  })();
 
   const isFaceSlot = slot.key.startsWith('face:');
 
