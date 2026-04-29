@@ -28,6 +28,7 @@ export function SaveDeckSheet({
   const [name, setName] = useState(initialName ?? '');
   const [submitting, setSubmitting] = useState(false);
   const setSavedDeckId = useGameStore((s) => s.setSavedDeckId);
+  const setSavedBaseline = useGameStore((s) => s.setSavedBaseline);
 
   useEffect(() => {
     if (open) setName(initialName ?? '');
@@ -47,6 +48,7 @@ export function SaveDeckSheet({
         const id = await saveDeck({ name: trimmed, config, overrides });
         setSavedDeckId(id);
       }
+      setSavedBaseline({ config, overrides });
       onClose();
     } finally {
       setSubmitting(false);

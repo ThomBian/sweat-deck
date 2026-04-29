@@ -9,6 +9,7 @@ import { SaveDeckSheet } from '@/components/SaveDeckSheet';
 import * as dbMod from '@/store/db';
 import type { SetupConfig } from '@/domain/config';
 import { useGameStore } from '@/store/gameStore';
+import { DEFAULT_CONFIG } from '@/domain/config';
 
 const cfg: SetupConfig = {
   difficulty: 'intermediate',
@@ -88,5 +89,39 @@ describe('SaveDeckSheet', () => {
       }),
     );
     expect(onClose).toHaveBeenCalled();
+  });
+});
+
+describe('SaveDeckSheet sets savedBaseline', () => {
+  beforeEach(() => {
+    i18n.activate('en');
+    vi.restoreAllMocks();
+    useGameStore.getState().reset();
+  });
+
+  it('sets savedBaseline after save', async () => {
+    const overrides = { 'suit:hearts': { id: 'pushup' } } as const;
+    vi.spyOn(dbMod, 'saveDeck').mockResolvedValue(456);
+    const user = userEvent.setup();
+    render(
+      wrap(
+        <SaveDeckSheet
+          open
+          onClose={() => {}}
+          config={DEFAULT_CONFIG}
+          overrides={overrides}
+        />,
+      ),
+    );
+
+    await user.type(screen.getByLabelText(/Deck name/i), 'My Deck');
+    await user.click(screen.getByRole('button', { name: /^Save$/i }));
+
+    await waitFor(() => {
+      expect(useGameStore.getState().savedBaseline).toEqual({
+        config: DEFAULT_CONFIG,
+        overrides,
+      });
+    });
   });
 });
