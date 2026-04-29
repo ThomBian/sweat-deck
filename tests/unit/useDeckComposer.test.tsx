@@ -53,18 +53,18 @@ describe('useDeckComposer — guided mode', () => {
     expect(result.current.slots.find((s) => s.key === firstKey)?.selected).toBe(firstOption);
   });
 
-  it('hasOverrides is false initially', () => {
+  it('hasUnsavedChanges is false initially', () => {
     const { result } = renderHook(() => useDeckComposer(guidedInput), { wrapper });
-    expect(result.current.hasOverrides).toBe(false);
+    expect(result.current.hasUnsavedChanges).toBe(false);
   });
 
-  it('hasOverrides is true after setSlot', () => {
+  it('hasUnsavedChanges is true after setSlot', () => {
     const { result } = renderHook(() => useDeckComposer(guidedInput), { wrapper });
     const firstKey = result.current.slots[0]!.key;
     const altId = result.current.slots[0]!.options[1]?.id;
     if (!altId) return;
     act(() => result.current.setSlot(firstKey, altId));
-    expect(result.current.hasOverrides).toBe(true);
+    expect(result.current.hasUnsavedChanges).toBe(true);
   });
 
   it('resetOverrides clears overrides', () => {
@@ -74,7 +74,7 @@ describe('useDeckComposer — guided mode', () => {
     if (!altId) return;
     act(() => result.current.setSlot(firstKey, altId));
     act(() => result.current.resetOverrides());
-    expect(result.current.hasOverrides).toBe(false);
+    expect(result.current.hasUnsavedChanges).toBe(false);
   });
 });
 
@@ -110,12 +110,12 @@ describe('useDeckComposer — manual mode', () => {
     expect(result.current.isReady).toBe(true);
   });
 
-  it('hasOverrides is always false in manual mode', () => {
+  it('hasUnsavedChanges is always false in manual mode', () => {
     const { result } = renderHook(() => useDeckComposer(manualInput), { wrapper });
     act(() => {
       result.current.slots.forEach((s) => result.current.setSlot(s.key, 'pushups' as ExerciseId));
     });
-    expect(result.current.hasOverrides).toBe(false);
+    expect(result.current.hasUnsavedChanges).toBe(false);
   });
 
   it('all slots have no defaultExercise or options', () => {
@@ -123,5 +123,100 @@ describe('useDeckComposer — manual mode', () => {
     expect(
       result.current.slots.every((s) => s.defaultExercise === undefined && s.options.length === 0),
     ).toBe(true);
+  });
+});
+
+describe('useDeckComposer baseline behavior', () => {
+  beforeEach(() => {
+    i18n.activate('en');
+    vi.clearAllMocks();
+    useGameStore.getState().reset();
+  });
+
+  it('hasUnsavedChanges is false when overrides match baseline', () => {
+    const baselineOverrides = { 'suit:hearts': { id: 'pushup' } } as const;
+    useGameStore.getState().setSavedBaseline({
+      config: DEFAULT_CONFIG,
+      overrides: baselineOverrides,
+    });
+
+    const { result } = renderHook(
+      () =>
+        useDeckComposer({
+          mode: 'guided',
+          config: DEFAULT_CONFIG,
+          initialOverrides: baselineOverrides,
+        }),
+      { wrapper },
+    );
+
+    expect(result.current.hasUnsavedChanges).toBe(false);
+  });
+
+  it('hasUnsavedChanges flips true when an override changes', () => {
+    const baselineOverrides = { 'suit:hearts': { id: 'pushup' } } as const;
+    useGameStore.getState().setSavedBaseline({
+      config: DEFAULT_CONFIG,
+      overrides: baselineOverrides,
+    });
+
+    const { result } = renderHook(
+      () =>
+        useDeckComposer({
+          mode: 'guided',
+          config: DEFAULT_CONFIG,
+          initialOverrides: baselineOverrides,
+        }),
+      { wrapper },
+    );
+
+    act(() => {
+      useGameStore.getState().setOverride('suit:hearts', { id: 'squat' });
+    });
+
+    expect(result.current.hasUnsavedChanges).toBe(true);
+  });
+
+  it('resetOverrides restores the baseline when one is set', () => {
+    const baselineOverrides = { 'suit:hearts': { id: 'pushup' } } as const;
+    useGameStore.getState().setSavedBaseline({
+      config: DEFAULT_CONFIG,
+      overrides: baselineOverrides,
+    });
+
+    const { result } = renderHook(
+      () =>
+        useDeckComposer({
+          mode: 'guided',
+          config: DEFAULT_CONFIG,
+          initialOverrides: baselineOverrides,
+        }),
+      { wrapper },
+    );
+
+    act(() => {
+      useGameStore.getState().setOverride('suit:hearts', { id: 'squat' });
+    });
+    expect(result.current.hasUnsavedChanges).toBe(true);
+
+    act(() => result.current.resetOverrides());
+
+    expect(useGameStore.getState().overrides).toEqual(baselineOverrides);
+    expect(result.current.hasUnsavedChanges).toBe(false);
+  });
+
+  it('without baseline resetOverrides clears overrides (legacy behavior)', () => {
+    const { result } = renderHook(() => useDeckComposer({ mode: 'guided', config: DEFAULT_CONFIG }), {
+      wrapper,
+    });
+
+    act(() => {
+      useGameStore.getState().setOverride('suit:hearts', { id: 'squat' });
+    });
+    expect(result.current.hasUnsavedChanges).toBe(true);
+
+    act(() => result.current.resetOverrides());
+    expect(useGameStore.getState().overrides).toEqual({});
+    expect(result.current.hasUnsavedChanges).toBe(false);
   });
 });

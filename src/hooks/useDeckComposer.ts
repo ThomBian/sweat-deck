@@ -11,6 +11,7 @@ import {
 import { DEFAULT_CONFIG, type SetupConfig } from '@/domain/config';
 import type { ExerciseId } from '@/domain/exercise';
 import { saveLastConfig } from '@/store/db';
+import { overridesEqual } from '@/lib/planDiff';
 
 export type ComposerMode =
   | { mode: 'guided'; config: SetupConfig; initialOverrides?: PlanOverrides }
@@ -22,6 +23,7 @@ export type ComposerSlot = {
   options: PlanSlot['options'];
   defaultExercise: PlanSlot['defaultExercise'] | undefined;
   prescriptionOverride?: PlanSlot['prescriptionOverride'];
+  baselineOverride?: SlotOverride;
 };
 
 function prescriptionFromOverride(ov: SlotOverride | undefined): PlanSlot['prescriptionOverride'] {
@@ -41,7 +43,7 @@ export type DeckComposerState = {
   handleStart: () => Promise<void>;
   footerLocked: boolean;
   showShuffle: boolean;
-  hasOverrides: boolean;
+  hasUnsavedChanges: boolean;
   resetOverrides: () => void;
 };
 
@@ -49,6 +51,7 @@ export function useDeckComposer(input: ComposerMode): DeckComposerState {
   const overrides = useGameStore((s) => s.overrides);
   const setOverride = useGameStore((s) => s.setOverride);
   const storeResetOverrides = useGameStore((s) => s.resetOverrides);
+  const savedBaseline = useGameStore((s) => s.savedBaseline);
   const start = useGameStore((s) => s.start);
   const [showShuffle, setShowShuffle] = useState(false);
   const [isStarting, setIsStarting] = useState(false);
@@ -67,7 +70,13 @@ export function useDeckComposer(input: ComposerMode): DeckComposerState {
 
   const config = input.mode === 'guided' ? input.config : DEFAULT_CONFIG;
 
-  const slots: ComposerSlot[] =
+  const hasUnsavedChanges =
+    input.mode === 'guided' &&
+    (savedBaseline
+      ? !overridesEqual(overrides, savedBaseline.overrides)
+      : Object.keys(overrides).length > 0);
+
+  const baseSlots: ComposerSlot[] =
     input.mode === 'guided'
       ? buildPlan({ config, overrides }).map((s) => ({
           key: s.key,
@@ -87,13 +96,28 @@ export function useDeckComposer(input: ComposerMode): DeckComposerState {
           };
         });
 
+  const slots: ComposerSlot[] = baseSlots.map((s) =>
+    savedBaseline?.overrides[s.key]
+      ? { ...s, baselineOverride: savedBaseline.overrides[s.key] }
+      : s,
+  );
+
   const isReady =
     input.mode === 'guided' ? true : slots.every((s) => s.selected !== undefined);
 
-  const hasOverrides = input.mode === 'guided' && Object.keys(overrides).length > 0;
-
   const setSlot = (key: SlotKey, id: ExerciseId) => {
     setOverride(key, { id });
+  };
+
+  const resetOverrides = () => {
+    if (savedBaseline) {
+      storeResetOverrides();
+      for (const [key, ov] of Object.entries(savedBaseline.overrides)) {
+        if (ov) setOverride(key as SlotKey, ov);
+      }
+    } else {
+      storeResetOverrides();
+    }
   };
 
   const handleStart = async () => {
@@ -117,7 +141,7 @@ export function useDeckComposer(input: ComposerMode): DeckComposerState {
     handleStart,
     footerLocked: showShuffle || isStarting,
     showShuffle,
-    hasOverrides,
-    resetOverrides: storeResetOverrides,
+    hasUnsavedChanges,
+    resetOverrides,
   };
 }
