@@ -12,6 +12,7 @@ import { tSummaryKudoFor } from '@/lib/summaryKudos';
 import { tDifficulty } from '@/i18n/labels';
 import { getLimitSecFromConfig } from '@/lib/sessionTimer';
 import { cn } from '@/lib/utils';
+import { overridesEqual } from '@/lib/planDiff';
 
 export default function Summary() {
   const navigate = useNavigate();
@@ -23,9 +24,15 @@ export default function Summary() {
   const reset = useGameStore((s) => s.reset);
   const overrides = useGameStore((s) => s.overrides);
   const savedDeckId = useGameStore((s) => s.savedDeckId);
+  const savedBaseline = useGameStore((s) => s.savedBaseline);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [savedDeckName, setSavedDeckName] = useState<string | undefined>(undefined);
   const reduceMotion = useReducedMotion();
+
+  const hasUnsavedChanges = savedBaseline
+    ? !overridesEqual(overrides, savedBaseline.overrides)
+    : Object.keys(overrides).length > 0;
+  const showSaveInvite = savedDeckId == null || hasUnsavedChanges;
 
   useEffect(() => {
     if (savedDeckId == null) {
@@ -90,22 +97,31 @@ export default function Summary() {
             </div>
           </dl>
 
-          <p className="mt-10 max-w-[min(100%,34ch)] text-pretty text-sm leading-relaxed text-muted-foreground sm:mt-12">
-            <Trans>
-              Liked the workout? <span className="font-medium text-deck-reward">Save it</span> — replays later
-              with one tap.
-            </Trans>
-          </p>
+          {showSaveInvite ? (
+            <>
+              <p className="mt-10 max-w-[min(100%,34ch)] text-pretty text-sm leading-relaxed text-muted-foreground sm:mt-12">
+                <Trans>
+                  Liked the workout?{' '}
+                  <span className="font-medium text-deck-reward">Save it</span> — replays later with one tap.
+                </Trans>
+              </p>
+
+              <div className="mt-4 flex w-full max-w-md flex-col gap-3 sm:gap-3.5">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="min-h-11 w-full min-w-0 shrink touch-manipulation"
+                  onClick={() => setSheetOpen(true)}
+                >
+                  <span className="truncate">
+                    {savedDeckId != null ? <Trans>Update saved deck</Trans> : <Trans>Save deck</Trans>}
+                  </span>
+                </Button>
+              </div>
+            </>
+          ) : null}
 
           <div className="mt-4 flex w-full max-w-md flex-col gap-3 sm:gap-3.5">
-            <Button
-              type="button"
-              variant="outline"
-              className="min-h-11 w-full min-w-0 shrink touch-manipulation"
-              onClick={() => setSheetOpen(true)}
-            >
-              <span className="truncate">{savedDeckId != null ? <Trans>Update saved deck</Trans> : <Trans>Save deck</Trans>}</span>
-            </Button>
             <Button type="button" className="min-h-11 w-full min-w-0 shrink touch-manipulation" onClick={finish}>
               <span className="truncate">
                 <Trans>Finish</Trans>
