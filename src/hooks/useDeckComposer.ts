@@ -96,11 +96,10 @@ export function useDeckComposer(input: ComposerMode): DeckComposerState {
           };
         });
 
-  const slots: ComposerSlot[] = baseSlots.map((s) =>
-    savedBaseline?.overrides[s.key]
-      ? { ...s, baselineOverride: savedBaseline.overrides[s.key] }
-      : s,
-  );
+  const slots: ComposerSlot[] = baseSlots.map((s) => {
+    const baselineOverride = savedBaseline?.overrides[s.key];
+    return baselineOverride ? { ...s, baselineOverride } : s;
+  });
 
   const isReady =
     input.mode === 'guided' ? true : slots.every((s) => s.selected !== undefined);

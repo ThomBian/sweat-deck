@@ -11,7 +11,7 @@ import { PrescriptionStepper } from '@/components/deck/PrescriptionStepper';
 import type { PrescriptionType } from '@/components/deck/PrescriptionStepper';
 import type { FaceRank } from '@/domain/card';
 import { faceFreePickPrescription } from '@/domain/exerciseDb';
-import type { PlanSlot } from '@/domain/plan';
+import type { PlanSlot, SlotOverride } from '@/domain/plan';
 import type { ExerciseId } from '@/domain/exercise';
 import type { SetupConfig } from '@/domain/config';
 import type { ComposerSlot } from '@/hooks/useDeckComposer';
