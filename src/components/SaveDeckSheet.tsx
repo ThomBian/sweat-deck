@@ -80,7 +80,7 @@ export function SaveDeckSheet({
 
             <div className="px-5 sm:px-6">
               <Dialog.Title className="px-0.5 font-display text-xl font-semibold tracking-tight text-balance">
-                {isUpdate ? <Trans>Update saved deck</Trans> : <Trans>Save deck</Trans>}
+                {isUpdate ? <Trans>Update deck</Trans> : <Trans>Save deck</Trans>}
               </Dialog.Title>
               <Dialog.Description className="px-0.5 pt-1.5 text-sm leading-relaxed text-muted-foreground">
                 <Trans>Name your deck so you can find it when you replay.</Trans>

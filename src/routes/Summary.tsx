@@ -114,7 +114,7 @@ export default function Summary() {
                   onClick={() => setSheetOpen(true)}
                 >
                   <span className="truncate">
-                    {savedDeckId != null ? <Trans>Update saved deck</Trans> : <Trans>Save deck</Trans>}
+                    {savedDeckId != null ? <Trans>Update deck</Trans> : <Trans>Save deck</Trans>}
                   </span>
                 </Button>
               </div>

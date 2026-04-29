@@ -942,8 +942,12 @@ msgid "Replay tutorial"
 msgstr "Replay tutorial"
 
 #: src/routes/DeckBuilder.tsx
-msgid "Reset swaps"
-msgstr "Reset swaps"
+msgid "Reset changes"
+msgstr "Reset changes"
+
+#: src/routes/DeckBuilder.tsx
+#~ msgid "Reset swaps"
+#~ msgstr "Reset swaps"
 
 #: src/routes/Summary.tsx
 #~ msgid "Respect—deck served"
@@ -1285,8 +1289,8 @@ msgstr "Update"
 #: src/components/SaveDeckSheet.tsx
 #: src/routes/DeckBuilder.tsx
 #: src/routes/Summary.tsx
-msgid "Update saved deck"
-msgstr "Update saved deck"
+msgid "Update deck"
+msgstr "Update deck"
 
 #: src/i18n/labels.ts
 msgid "Upper"

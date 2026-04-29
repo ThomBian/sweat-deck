@@ -185,31 +185,33 @@ function DeckBuilderInner({
             </div>
 
             <div className="mt-2 flex flex-col items-center gap-3 border-t border-border/40 pt-5 text-center sm:gap-3.5 sm:pt-6">
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: reduceMotion ? 0.1 : DURATION.fast, ease: EASE_OUT }}
-                className="w-full sm:w-auto"
-              >
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="min-h-11 w-full touch-manipulation sm:w-auto"
-                  disabled={footerLocked || !isReady}
-                  onClick={() => setSheetOpen(true)}
+              {(savedDeckId == null || hasUnsavedChanges || savedFlash) && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: reduceMotion ? 0.1 : DURATION.fast, ease: EASE_OUT }}
+                  className="w-full sm:w-auto"
                 >
-                  {savedFlash ? (
-                    <span className="inline-flex items-center gap-2">
-                      <BookmarkCheck className="size-4 shrink-0 text-primary" aria-hidden />
-                      <Trans>Saved</Trans>
-                    </span>
-                  ) : savedDeckId != null ? (
-                    <Trans>Update saved deck</Trans>
-                  ) : (
-                    <Trans>Save deck</Trans>
-                  )}
-                </Button>
-              </motion.div>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="min-h-11 w-full touch-manipulation sm:w-auto"
+                    disabled={footerLocked || !isReady}
+                    onClick={() => setSheetOpen(true)}
+                  >
+                    {savedFlash ? (
+                      <span className="inline-flex items-center gap-2">
+                        <BookmarkCheck className="size-4 shrink-0 text-primary" aria-hidden />
+                        <Trans>Saved</Trans>
+                      </span>
+                    ) : savedDeckId != null ? (
+                      <Trans>Update deck</Trans>
+                    ) : (
+                      <Trans>Save deck</Trans>
+                    )}
+                  </Button>
+                </motion.div>
+              )}
               {hasUnsavedChanges ? (
                 <motion.div
                   className="flex w-full min-w-0 justify-center"
@@ -226,7 +228,7 @@ function DeckBuilderInner({
                     onClick={() => resetOverrides()}
                   >
                     <span className="text-pretty break-words text-sm font-normal">
-                      <Trans>Reset swaps</Trans>
+                      <Trans>Reset changes</Trans>
                     </span>
                   </Button>
                 </motion.div>

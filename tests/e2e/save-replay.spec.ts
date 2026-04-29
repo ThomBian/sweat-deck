@@ -65,7 +65,7 @@ test.describe('save & replay deck', () => {
     await page.getByRole('button', { name: /Open Smoke Deck/i }).click();
 
     await expect(page).toHaveURL(/\/deck$/);
-    await expect(page.getByRole('button', { name: 'Update saved deck' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Update deck' })).toBeVisible();
   });
 
   test('summary hides save invite once saved with no edits', async ({ page }) => {
@@ -85,7 +85,7 @@ test.describe('save & replay deck', () => {
     await page.getByLabel(/Deck name/i).fill('Test Deck');
     await page.getByRole('dialog').getByRole('button', { name: 'Save', exact: true }).click();
 
-    await expect(page.getByRole('button', { name: /Update saved deck/i })).toHaveCount(0);
+    await expect(page.getByRole('button', { name: /Update deck/i })).toHaveCount(0);
     await expect(page.getByRole('button', { name: /Save deck/i })).toHaveCount(0);
     await expect(page.getByRole('button', { name: /^Finish$/i })).toBeVisible();
   });
