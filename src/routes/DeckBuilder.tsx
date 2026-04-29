@@ -78,8 +78,17 @@ function DeckBuilderInner({
   const mergePrescriptionOverride = useGameStore((s) => s.mergePrescriptionOverride);
   const overrides = useGameStore((s) => s.overrides);
   const savedDeckId = useGameStore((s) => s.savedDeckId);
-  const { slots, isReady, setSlot, handleStart, footerLocked, showShuffle, hasOverrides, resetOverrides } =
-    useDeckComposer(composerInput);
+  const setSavedBaseline = useGameStore((s) => s.setSavedBaseline);
+  const {
+    slots,
+    isReady,
+    setSlot,
+    handleStart,
+    footerLocked,
+    showShuffle,
+    hasUnsavedChanges,
+    resetOverrides,
+  } = useDeckComposer(composerInput);
 
   const [sheetOpen, setSheetOpen] = useState(false);
   const [savedDeckName, setSavedDeckName] = useState<string | undefined>(undefined);
@@ -88,12 +97,17 @@ function DeckBuilderInner({
   useEffect(() => {
     if (savedDeckId == null) {
       setSavedDeckName(undefined);
+      setSavedBaseline(null);
       return;
     }
     void listSavedDecks().then((rows) => {
       const found = rows.find((r) => r.id === savedDeckId);
       setSavedDeckName(found?.name);
+      if (found) {
+        setSavedBaseline({ config: found.config, overrides: found.overrides });
+      }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [savedDeckId]);
 
   const handlePrescriptionChange = (key: SlotKey, field: PrescriptionType, value: number) => {
@@ -196,7 +210,7 @@ function DeckBuilderInner({
                   )}
                 </Button>
               </motion.div>
-              {hasOverrides ? (
+              {hasUnsavedChanges ? (
                 <motion.div
                   className="flex w-full min-w-0 justify-center"
                   initial={{ opacity: 0 }}
