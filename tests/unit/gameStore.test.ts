@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { useGameStore } from '@/store/gameStore';
+import { DEFAULT_CONFIG } from '@/domain/config';
 
 beforeEach(() => {
   useGameStore.getState().reset();
@@ -45,5 +46,35 @@ describe('override actions', () => {
     useGameStore.getState().setOverride('suit:hearts', { id: 'pike-pushups' });
     useGameStore.getState().reset();
     expect(useGameStore.getState().overrides).toEqual({});
+  });
+});
+
+describe('gameStore.savedBaseline', () => {
+  beforeEach(() => {
+    useGameStore.getState().reset();
+  });
+
+  it('starts null', () => {
+    expect(useGameStore.getState().savedBaseline).toBeNull();
+  });
+
+  it('setSavedBaseline updates state', () => {
+    useGameStore.getState().setSavedBaseline({
+      config: DEFAULT_CONFIG,
+      overrides: { 'suit:hearts': { id: 'pushup' } },
+    });
+    expect(useGameStore.getState().savedBaseline).toEqual({
+      config: DEFAULT_CONFIG,
+      overrides: { 'suit:hearts': { id: 'pushup' } },
+    });
+  });
+
+  it('reset clears savedBaseline', () => {
+    useGameStore.getState().setSavedBaseline({
+      config: DEFAULT_CONFIG,
+      overrides: {},
+    });
+    useGameStore.getState().reset();
+    expect(useGameStore.getState().savedBaseline).toBeNull();
   });
 });

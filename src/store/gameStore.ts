@@ -31,6 +31,11 @@ function validateConfig(config: SetupConfig): boolean {
 
 type EndReason = 'deck' | 'manual';
 
+export type SavedBaseline = {
+  config: SetupConfig;
+  overrides: PlanOverrides;
+};
+
 type GameState = {
   config: SetupConfig;
   deck: Card[];
@@ -48,6 +53,7 @@ type GameState = {
   rng: Rng;
   overrides: PlanOverrides;
   savedDeckId: number | null;
+  savedBaseline: SavedBaseline | null;
 };
 
 type FinishOpts = { reason: EndReason; completedDeck: boolean };
@@ -69,6 +75,7 @@ type GameActions = {
   clearOverride: (key: SlotKey) => void;
   resetOverrides: () => void;
   setSavedDeckId: (id: number | null) => void;
+  setSavedBaseline: (baseline: SavedBaseline | null) => void;
 };
 
 const makeInitialState = (): GameState => ({
@@ -88,6 +95,7 @@ const makeInitialState = (): GameState => ({
   rng: createRng(Date.now()),
   overrides: {},
   savedDeckId: null,
+  savedBaseline: null,
 });
 
 const exerciseFromCard = (
@@ -107,7 +115,11 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
   start: (config) => {
     if (!validateConfig(config)) return;
     void saveLastConfig(config);
-    const { overrides: currentOverrides, savedDeckId: currentSavedDeckId } = get();
+    const {
+      overrides: currentOverrides,
+      savedDeckId: currentSavedDeckId,
+      savedBaseline: currentBaseline,
+    } = get();
     set({
       ...makeInitialState(),
       config,
@@ -116,6 +128,7 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
       rng: createRng(Date.now()),
       overrides: currentOverrides,
       savedDeckId: currentSavedDeckId,
+      savedBaseline: currentBaseline,
     });
   },
 
@@ -278,4 +291,6 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
   resetOverrides: () => set({ overrides: {} }),
 
   setSavedDeckId: (id) => set({ savedDeckId: id }),
+
+  setSavedBaseline: (baseline) => set({ savedBaseline: baseline }),
 }));
